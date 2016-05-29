@@ -138,7 +138,6 @@ public class PlayerMain : MonoBehaviour {
     public void AddHitPoints(float hitPointsDiff)
     {
         this.hitPoints += hitPointsDiff;
-        Debug.LogFormat("{0} Hit points: {1}/{2}", name, hitPoints, defHitPoints);
         if(lifeBar)
         {
             lifeBar.setValue(LifeFraction());

@@ -44,8 +44,7 @@ public class HitArea : MonoBehaviour
 
         if(playerHit != null && !spawner.isAlly(playerHit))
         {
-            Debug.LogFormat("HitArea: Hit on {0}", other.gameObject.name);
-
+            //Debug.LogFormat("HitArea: Hit on {0}", other.gameObject.name
             playerHit.DamageWith(playerWeaponDef);
 
             switch (playerWeaponDef.projectileType)
