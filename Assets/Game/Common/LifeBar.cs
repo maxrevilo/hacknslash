@@ -7,7 +7,7 @@ public class LifeBar : MonoBehaviour {
     [SerializeField]
     private RectTransform lifeBarCanvas;
 
-    private float value = 100;
+    private float value = 1;
 
     public void setValue(float value)
     {
@@ -23,7 +23,7 @@ public class LifeBar : MonoBehaviour {
         lifeBarCanvas.position = position;
 
         Vector3 localScale = lifeBarCanvas.localScale;
-        localScale.x = value / 100;
+        localScale.x = value;
         lifeBarCanvas.localScale = localScale;
 
         //lifeBarCanvas.gameObject.SetActive(value < 100);

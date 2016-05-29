@@ -2,24 +2,28 @@
 using UnityEngine;
 using System.Collections;
 
-public class HitArea : MonoBehaviour {
-    public delegate void HitEvent();
-    public static event HitEvent OnHitEvent;
+public class HitArea : MonoBehaviour
+{
+    // public delegate void HitEvent();
+    // public static event HitEvent OnHitEvent;
 
-    public PlayerMain spawner;
-    public PlayerWeaponDef playerWeaponDef;
+    public PlayerMain spawner { get; set; }
+    public PlayerWeaponDef playerWeaponDef { get; set; }
 
-    public float timeOfLife;
+    private float timeOfLife;
 
-    void Reset() {
+    void Reset()
+    {
         timeOfLife = 0;
     }
 
-    void Start () {
+    void Start ()
+    {
         if (playerWeaponDef == null) throw new Exception("playerWeaponDef not set");
     }
 
-	void Update () {
+	void Update ()
+    {
     }
 
     void FixedUpdate()
@@ -32,11 +36,19 @@ public class HitArea : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider other) {
-        if(other.gameObject != spawner.gameObject) {
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == spawner.gameObject) return;
+
+        PlayerMain playerHit = other.GetComponent<PlayerMain>();
+
+        if(playerHit != null && !spawner.isAlly(playerHit))
+        {
             Debug.LogFormat("HitArea: Hit on {0}", other.gameObject.name);
 
-            switch(playerWeaponDef.projectileType)
+            playerHit.DamageWith(playerWeaponDef);
+
+            switch (playerWeaponDef.projectileType)
             {
                 case PlayerWeaponDef.ProjectileType.SingleHit:
                     this.Destroy();
