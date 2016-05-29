@@ -7,6 +7,8 @@ public class PlayerControl : MonoBehaviour {
 
 	private Camera mainCamera;
 
+    public float axisVectorDeadZone = 0.1f;
+
 	void Awake() {
 		playerMain = GetComponent<PlayerMain>();
 		mainCamera = Camera.main;
@@ -29,5 +31,22 @@ public class PlayerControl : MonoBehaviour {
 				Debug.LogError("Failed projection of the mouse");
 			}
 		}
-	}
+        else
+        {
+            float xAxis = Input.GetAxis("Horizontal");
+            float yAxis = Input.GetAxis("Vertical");
+
+            Vector3 direction = new Vector3(xAxis, 0, yAxis);
+
+            if(direction.sqrMagnitude >= axisVectorDeadZone * axisVectorDeadZone)
+            {
+                playerMain.LookTowards(direction);
+                playerMain.Advance();
+            }
+            else
+            {
+                playerMain.Stop();
+            }
+        } 
+    }
 }

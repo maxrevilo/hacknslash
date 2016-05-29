@@ -10,7 +10,6 @@ public class PlayerMain : MonoBehaviour {
         if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
         playerWeaponDef = GetComponent<PlayerWeaponDef>();
         #endregion
-
         #region Health
         lifeBar = GetComponentInChildren<LifeBar>();
         #endregion
@@ -59,18 +58,28 @@ public class PlayerMain : MonoBehaviour {
     private Rigidbody playerRigidBody;
 
     public void Advance() {
-        advancing = true;
+        if(!this.isAtacking()) advancing = true;
     }
     public void Stop() {
         advancing = false;
     }
 
-    public void LookAt(Vector3 position) {
-        Vector3 forward = position - transform.position;
-        forward.y = 0;
-        playerRigidBody.MoveRotation(
-            Quaternion.LookRotation(forward, transform.up)
-        );
+    public void LookAt(Vector3 position, bool force = false) {
+        if (force || !this.isAtacking())
+        {
+            LookTowards(position - transform.position, force);
+        }
+    }
+
+    public void LookTowards(Vector3 direction, bool force = false)
+    {
+        if (force || !this.isAtacking())
+        {
+            direction.y = 0;
+            playerRigidBody.MoveRotation(
+                Quaternion.LookRotation(direction, transform.up)
+            );
+        }
     }
     #endregion
 
@@ -85,10 +94,11 @@ public class PlayerMain : MonoBehaviour {
     private float currentAttackCooldown;
 
     public void Attack(Vector3 position) {
-        if (currentAttackCooldown <= 0) {
+        if (!isAtacking()) {
             //Debug.DrawLine(transform.position, position, Color.red, 0.05f);
+            this.Stop();
             currentAttackCooldown = defAttackCooldown;
-            LookAt(position);
+            LookAt(position, true);
             StartCoroutine(ActivateAtackArea());
         }
     }
@@ -104,6 +114,11 @@ public class PlayerMain : MonoBehaviour {
         HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
         hitArea.spawner = this;
         hitArea.playerWeaponDef = playerWeaponDef;
+    }
+
+    public bool isAtacking()
+    {
+        return currentAttackCooldown > 0;
     }
     #endregion
 
