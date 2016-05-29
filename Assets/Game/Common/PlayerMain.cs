@@ -6,18 +6,20 @@ using System.Collections;
 public class PlayerMain : MonoBehaviour {
 	public int team = 1;
 
-	void Awake() {
-		if (atackArea == null) throw new Exception("<atackArea> not set");
-		atackArea.gameObject.SetActive(false);
-	}
+    PlayerWeaponDef playerWeaponDef;
+
+    void Awake() {
+        if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
+        playerWeaponDef = GetComponent<PlayerWeaponDef>();
+    }
 
 	void Start () {
-	#region Atack
+	    #region Atack
 		currentAttackCooldown = 0;
-	#endregion
-	#region Motion
-		playerRigidBody = GetComponent<Rigidbody>();
-	#endregion
+        #endregion
+        #region Motion
+        playerRigidBody = GetComponent<Rigidbody>();
+        #endregion
 	}
 	
 	// Update is called once per frame
@@ -25,19 +27,19 @@ public class PlayerMain : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-	#region Atack
+	    #region Atack
 		currentAttackCooldown -= Time.fixedDeltaTime;
-	#endregion
-	#region Motion
+	    #endregion
+	    #region Motion
 		if(advancing) {
 			playerRigidBody.MovePosition(
 				transform.position + defSpeed * transform.forward
 			);
 		}
-	#endregion
+	    #endregion
 	}
 
-#region Motion
+    #region Motion
 	[SerializeField]
 	private float defSpeed = 0.3f;
 	private bool advancing;
@@ -57,29 +59,36 @@ public class PlayerMain : MonoBehaviour {
 			Quaternion.LookRotation(forward, transform.up)
 		);
 	}
-#endregion
+    #endregion
 
-#region Atack
-	public Transform atackArea;
+    #region Atack
+	public Transform hitAreaSpawnZone;
 
 	[SerializeField]
 	private float defAttackCooldown = 1;
 
-	private float currentAttackCooldown;
+    private float currentAttackCooldown;
 
-	public void Attack(Vector3 position) {
+    public void Attack(Vector3 position) {
 		if(currentAttackCooldown <= 0) {
 			//Debug.DrawLine(transform.position, position, Color.red, 0.05f);
 			currentAttackCooldown = defAttackCooldown;
 			LookAt(position);
-			StartCoroutine(ActivateAtackArea());
-		}
+            StartCoroutine(ActivateAtackArea());
+        }
 	}
 
 	private IEnumerator ActivateAtackArea() {
-		atackArea.gameObject.SetActive(true);
-		yield return new WaitForEndOfFrame();
-		atackArea.gameObject.SetActive(false);
-	}
-#endregion
+        yield return new WaitForFixedUpdate();
+        GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
+            "HitArea",
+            hitAreaSpawnZone.position,
+            hitAreaSpawnZone.rotation,
+            transform.parent.gameObject
+        );
+        HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
+        hitArea.spawner = this;
+        hitArea.playerWeaponDef = playerWeaponDef;
+    }
+    #endregion
 }
