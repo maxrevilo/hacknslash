@@ -95,7 +95,7 @@ public class PlayerMain : MonoBehaviour {
 
     public void Attack(Vector3 position) {
         if (!isAtacking()) {
-            //Debug.DrawLine(transform.position, position, Color.red, 0.05f);
+            Debug.DrawLine(transform.position, position, Color.red, 0.05f);
             this.Stop();
             currentAttackCooldown = defAttackCooldown;
             LookAt(position, true);
