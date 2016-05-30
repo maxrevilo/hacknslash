@@ -7,7 +7,14 @@ public class PlayerControl : MonoBehaviour {
 
 	private Camera mainCamera;
 
-    public float axisVectorDeadZone = 0.1f;
+    [SerializeField]
+    private TouchType tt;
+
+    [SerializeField]
+    private float axisVectorDeadZone = 0.1f;
+    [SerializeField]
+    private float timeToEnterInHolding = 0.3f;
+
     float pressBegin = -1;
 
     private enum TouchType
@@ -24,10 +31,17 @@ public class PlayerControl : MonoBehaviour {
 
     void Update()
     {
-        switch (CheckTouchType())
+        tt = CheckTouchType();
+        switch (tt)
         {
             case TouchType.Tap:
                 TriggerAtack();
+                break;
+            case TouchType.Holding:
+                playerMain.ChargeHeavyAttack();
+                break;
+            case TouchType.HoldRelase:
+                playerMain.ReleaseHeavyAttack();
                 break;
             default:
                 CheckJoysticInput();
@@ -41,7 +55,7 @@ public class PlayerControl : MonoBehaviour {
     TouchType CheckTouchType()
     {
         float elapsedTime = Time.realtimeSinceStartup - pressBegin;
-        float timeToEnterInHolding = 0.3f;
+        bool isHolding = pressBegin != -1 && elapsedTime >= timeToEnterInHolding;
         TouchType result = TouchType.None;
 
         if (Input.GetMouseButtonDown(0))
@@ -49,7 +63,7 @@ public class PlayerControl : MonoBehaviour {
             pressBegin = Time.realtimeSinceStartup;
         }
 
-        if (elapsedTime >= timeToEnterInHolding)
+        if (isHolding)
         {
             result = TouchType.Holding;
         }
@@ -57,7 +71,7 @@ public class PlayerControl : MonoBehaviour {
         if (Input.GetMouseButtonUp(0))
         {
             pressBegin = -1;
-            if (elapsedTime >= timeToEnterInHolding)
+            if (isHolding)
             {
                 result = TouchType.HoldRelase;
             }

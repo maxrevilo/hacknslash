@@ -28,7 +28,8 @@ public class PlayerMain : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {}
+    void Update() {
+    }
 
     void FixedUpdate() {
         #region Atack
@@ -93,6 +94,8 @@ public class PlayerMain : MonoBehaviour {
 
     private float currentAttackCooldown;
 
+    public float chargingStartedAt = 0;
+
     public void Attack(Vector3 position) {
         if (!isAtacking()) {
             Debug.DrawLine(transform.position, position, Color.red, 0.05f);
@@ -120,6 +123,23 @@ public class PlayerMain : MonoBehaviour {
     {
         return currentAttackCooldown > 0;
     }
+
+    public void ChargeHeavyAttack()
+    {
+        if(!isChargingHeavyAttack())
+        {
+            chargingStartedAt = Time.time;
+            this.Stop();
+        }
+    }
+
+    public void ReleaseHeavyAttack()
+    {
+        chargingStartedAt = 0;
+    }
+
+    public bool isChargingHeavyAttack()
+    {  return chargingStartedAt != 0; }
     #endregion
 
     #region Health
