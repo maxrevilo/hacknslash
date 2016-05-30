@@ -33,16 +33,17 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		attackDelay -= Time.fixedDeltaTime;
-		
 		if(target == null) {
 			foreach (PlayerMain player in battleGameScene.players) {
 				if(player.team != playerMain.team) {
 					target = player;
+					attackDelay = defAttackDelay;
 					break;
 				}
 			}
 		} else {
+			attackDelay -= Time.fixedDeltaTime;
+
 			float distance = Vector3.Distance(target.transform.position, transform.position);
 			if(distance >= defAttackDistance) {
 				playerMain.LookAt(target.transform.position);

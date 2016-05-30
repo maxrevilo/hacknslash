@@ -176,7 +176,7 @@ GameObject:
   - 222: {fileID: 174483550}
   - 114: {fileID: 174483549}
   m_Layer: 0
-  m_Name: Panel
+  m_Name: LifeBarContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,19 +278,51 @@ Prefab:
       objectReference: {fileID: 1612081477}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 7.4497976
+      value: 7.449957
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1112.8523
+      value: 1082.7705
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -272.64105
+      value: -473.52155
       objectReference: {fileID: 0}
     - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_Name
       value: Enemy (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.directionalPushStrenght
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackDmg
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackRestitution
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.chargeTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defSpeed
+      value: 0.035
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -401,19 +433,51 @@ Prefab:
       objectReference: {fileID: 1612081477}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -2.5002022
+      value: -2.5000427
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 431.0746
+      value: -75.27365
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 215.53903
+      value: 371.2282
       objectReference: {fileID: 0}
     - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_Name
       value: Enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.directionalPushStrenght
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackDmg
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackRestitution
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.chargeTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defSpeed
+      value: 0.035
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -463,19 +527,51 @@ Prefab:
       objectReference: {fileID: 1612081477}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -9.810203
+      value: -9.810043
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1260.2979
+      value: 1344.5398
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 184.42178
+      value: 317.3827
       objectReference: {fileID: 0}
     - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_Name
       value: Enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.directionalPushStrenght
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackDmg
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackRestitution
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.chargeTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defSpeed
+      value: 0.035
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -509,6 +605,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 174483548}
+  - {fileID: 1706126788}
   m_Father: {fileID: 761220461}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -656,16 +753,12 @@ Prefab:
       value: 
       objectReference: {fileID: 1612081477}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 8.429798
-      objectReference: {fileID: 0}
-    - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 474.77618
+      value: -7.047348
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -114.06604
+      value: -199.12238
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -680,6 +773,7 @@ GameObject:
   - 4: {fileID: 922499300}
   - 114: {fileID: 922499301}
   - 114: {fileID: 922499302}
+  - 114: {fileID: 922499303}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -737,6 +831,18 @@ MonoBehaviour:
     amount: 4
   defaultPoolAmount: 10
   poolExpand: 1
+--- !u!114 &922499303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 922499299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f285b2362656f4d7aaa06a3e12b46a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoText: {fileID: 1706126785}
 --- !u!1001 &992976345
 Prefab:
   m_ObjectHideFlags: 0
@@ -782,19 +888,51 @@ Prefab:
       objectReference: {fileID: 1612081477}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 7.339798
+      value: 7.339957
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 25.429108
+      value: -773.4824
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 49.202065
+      value: 83.39773
       objectReference: {fileID: 0}
     - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_Name
       value: Enemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.directionalPushStrenght
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackDmg
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackCooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.attackRestitution
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: meleeWeaponDef.chargeTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defAttackDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: defSpeed
+      value: 0.035
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -1002,6 +1140,79 @@ Transform:
   m_Children: []
   m_Father: {fileID: 922499300}
   m_RootOrder: 0
+--- !u!1 &1706126785
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 1706126788}
+  - 222: {fileID: 1706126787}
+  - 114: {fileID: 1706126786}
+  m_Layer: 0
+  m_Name: TapToStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1706126786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1706126785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 48
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 48
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Tap to start
+--- !u!222 &1706126787
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1706126785}
+--- !u!224 &1706126788
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1706126785}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 545590216}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 5, y: 70}
+  m_SizeDelta: {x: 300, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1724697888
 GameObject:
   m_ObjectHideFlags: 0
