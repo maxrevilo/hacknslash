@@ -8,7 +8,6 @@ public class PlayerMain : MonoBehaviour {
     {
         #region Atack
         if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
-        playerWeaponDef = GetComponent<PlayerWeaponDef>();
         #endregion
         #region Health
         lifeBar = GetComponentInChildren<LifeBar>();
@@ -17,7 +16,10 @@ public class PlayerMain : MonoBehaviour {
 
     void Start() {
         #region Atack
-        currentAttackCooldown = 0;
+        meleeAttackCooldown = 0;
+        meleeAttackRestitution = 0;
+        chargedAttackCooldown = 0;
+        chargedAttackRestitution = 0;
         #endregion
         #region Motion
         playerRigidBody = GetComponent<Rigidbody>();
@@ -33,7 +35,11 @@ public class PlayerMain : MonoBehaviour {
 
     void FixedUpdate() {
         #region Atack
-        currentAttackCooldown -= Time.fixedDeltaTime;
+        //TODO: This shouldn't be integral but use timestamp diffs.
+        meleeAttackCooldown -= Time.fixedDeltaTime;
+        meleeAttackRestitution -= Time.fixedDeltaTime;
+        chargedAttackCooldown -= Time.fixedDeltaTime;
+        chargedAttackRestitution -= Time.fixedDeltaTime;
         #endregion
         #region Motion
         if (advancing) {
@@ -61,6 +67,7 @@ public class PlayerMain : MonoBehaviour {
     public void Advance() {
         if(!this.isAtacking()) advancing = true;
     }
+
     public void Stop() {
         advancing = false;
     }
@@ -87,20 +94,23 @@ public class PlayerMain : MonoBehaviour {
     #region Atack
     public Transform hitAreaSpawnZone;
 
-    [SerializeField]
-    private float defAttackCooldown = 1;
+    public PlayerWeaponDef meleeWeaponDef;
+    public PlayerWeaponDef chargedWeaponDef;
 
-    PlayerWeaponDef playerWeaponDef;
+    private float meleeAttackCooldown;
+    private float meleeAttackRestitution;
 
-    private float currentAttackCooldown;
+    private float chargedAttackCooldown;
+    private float chargedAttackRestitution;
 
     public float chargingStartedAt = 0;
 
     public void Attack(Vector3 position) {
-        if (!isAtacking()) {
+        if (!isAtacking() && meleeAttackCooldown <= 0) {
             Debug.DrawLine(transform.position, position, Color.red, 0.05f);
             this.Stop();
-            currentAttackCooldown = defAttackCooldown;
+            meleeAttackCooldown = meleeWeaponDef.attackCooldown;
+            meleeAttackRestitution = meleeWeaponDef.attackRestitution;
             LookAt(position, true);
             StartCoroutine(ActivateAtackArea());
         }
@@ -116,17 +126,17 @@ public class PlayerMain : MonoBehaviour {
         );
         HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
         hitArea.spawner = this;
-        hitArea.playerWeaponDef = playerWeaponDef;
+        hitArea.playerWeaponDef = meleeWeaponDef;
     }
 
     public bool isAtacking()
     {
-        return currentAttackCooldown > 0;
+        return meleeAttackRestitution > 0 || chargedAttackRestitution > 0;
     }
 
     public void ChargeHeavyAttack()
     {
-        if(!isChargingHeavyAttack())
+        if(!isAtacking() && chargedAttackCooldown <= 0 && !isChargingHeavyAttack())
         {
             chargingStartedAt = Time.time;
             this.Stop();
@@ -135,7 +145,30 @@ public class PlayerMain : MonoBehaviour {
 
     public void ReleaseHeavyAttack()
     {
+        float chargeTime = Time.time - chargingStartedAt;
+        bool isCharged = chargingStartedAt != 0 && chargeTime >= chargedWeaponDef.chargeTime;
         chargingStartedAt = 0;
+        if (isCharged)
+        {
+            chargedAttackCooldown = chargedWeaponDef.attackCooldown;
+            chargedAttackRestitution = chargedWeaponDef.attackRestitution;
+
+            StartCoroutine(ActivateChargedAttackArea());
+        }
+    }
+
+    private IEnumerator ActivateChargedAttackArea()
+    {
+        yield return new WaitForFixedUpdate();
+        GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
+            "HitAreaChargedWave",
+            transform.position,
+            transform.rotation,
+            transform.parent.gameObject
+        );
+        HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
+        hitArea.spawner = this;
+        hitArea.playerWeaponDef = chargedWeaponDef;
     }
 
     public bool isChargingHeavyAttack()
@@ -180,6 +213,13 @@ public class PlayerMain : MonoBehaviour {
     public void Die()
     {
         gameObject.DestroyAPS();
+    }
+    #endregion
+
+    #region Physics
+    public void Push(Vector3 pushVector)
+    {
+        playerRigidBody.velocity += pushVector;
     }
     #endregion
 }

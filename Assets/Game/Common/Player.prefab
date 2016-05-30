@@ -92,7 +92,6 @@ GameObject:
   - 114: {fileID: 11426144}
   - 114: {fileID: 11473888}
   - 54: {fileID: 5494148}
-  - 114: {fileID: 11454816}
   - 136: {fileID: 13694742}
   - 114: {fileID: 11467170}
   m_Layer: 8
@@ -411,25 +410,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
-  defSpeed: 0.04
+  defSpeed: 0.1
   hitAreaSpawnZone: {fileID: 447674}
-  defAttackCooldown: 0.2
+  meleeWeaponDef:
+    attackDmg: 25
+    projectileType: 0
+    hitAreaLifeSpan: 0.1
+    attackCooldown: 0.15
+    attackRestitution: 0.2
+    directionalPushStrenght: 1
+    radialPushStrenght: 0
+    elevatingPushStrenght: 0
+    chargeTime: 0
+  chargedWeaponDef:
+    attackDmg: 70
+    projectileType: 1
+    hitAreaLifeSpan: 0.5
+    attackCooldown: 5
+    attackRestitution: 0.5
+    directionalPushStrenght: 0
+    radialPushStrenght: 10
+    elevatingPushStrenght: 2
+    chargeTime: 1.5
   chargingStartedAt: 0
-  defHitPoints: 100
---- !u!114 &11454816
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 162346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 845af6daa12748d4285709d0e1e32b18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDmg: 20
-  projectileType: 0
-  hitAreaLifeSpan: 0.1
+  defHitPoints: 500
 --- !u!114 &11467170
 MonoBehaviour:
   m_ObjectHideFlags: 1
