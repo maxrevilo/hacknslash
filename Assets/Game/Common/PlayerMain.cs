@@ -154,8 +154,6 @@ public class PlayerMain : MonoBehaviour {
         if (!isAtacking()) {
             Debug.DrawLine(transform.position, transform.position + direction * dashWeaponDef.dashDistance, Color.green, 1.5f);
             this.Stop();
-            dashCooldown = dashWeaponDef.attackCooldown;
-            dashRestitution = dashWeaponDef.attackRestitution;
             LookTowards(direction, true);
             StartCoroutine(ActivateDashMode());
         }
@@ -163,7 +161,8 @@ public class PlayerMain : MonoBehaviour {
     
     private IEnumerator ActivateDashMode() {
         yield return new WaitForFixedUpdate();
-        
+        dashCooldown = dashWeaponDef.attackCooldown;
+        dashRestitution = dashWeaponDef.attackRestitution;
     }
 
     public void ChargeHeavyAttack()
