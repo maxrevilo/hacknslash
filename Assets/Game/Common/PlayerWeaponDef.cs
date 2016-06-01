@@ -21,4 +21,7 @@ public class PlayerWeaponDef {
 
     //Charged
     public float chargeTime = 1.5f;
+
+    //Dash
+    public float dashDistance = 15f;
 }

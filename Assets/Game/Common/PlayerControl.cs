@@ -8,17 +8,19 @@ public class PlayerControl : MonoBehaviour {
 	private Camera mainCamera;
 
     [SerializeField]
-    private TouchType tt;
-
-    [SerializeField]
     private float axisVectorDeadZone = 0.1f;
     [SerializeField]
     private float timeToEnterInHolding = 0.3f;
+    [SerializeField]
+    private float distanceToConsiderDash = 0.6f;
 
-    float pressBegin = -1;
+    private float pressBegin = -1;
+    private Vector3 pressPosition;
+    private Vector3 lastDashWorldVector;
 
     private enum TouchType
     { None, Tap, Holding, HoldRelase, Dash, HeldDash }
+    
 
     void Awake() {
 		playerMain = GetComponent<PlayerMain>();
@@ -31,8 +33,7 @@ public class PlayerControl : MonoBehaviour {
 
     void Update()
     {
-        tt = CheckTouchType();
-        switch (tt)
+        switch (CheckTouchType())
         {
             case TouchType.Tap:
                 TriggerAtack();
@@ -42,6 +43,9 @@ public class PlayerControl : MonoBehaviour {
                 break;
             case TouchType.HoldRelase:
                 playerMain.ReleaseHeavyAttack();
+                break;
+            case TouchType.Dash:
+                playerMain.Dash(lastDashWorldVector.normalized);
                 break;
             default:
                 CheckJoysticInput();
@@ -61,6 +65,7 @@ public class PlayerControl : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             pressBegin = Time.realtimeSinceStartup;
+            pressPosition = Input.mousePosition;
         }
 
         if (isHolding)
@@ -71,9 +76,22 @@ public class PlayerControl : MonoBehaviour {
         if (Input.GetMouseButtonUp(0))
         {
             pressBegin = -1;
+
+            Vector3 raisePosition = Input.mousePosition;
+            Vector3 dashScreenVector = raisePosition - pressPosition;
+            float swipeDistance = Vector3.Magnitude(dashScreenVector) / Screen.dpi;
+
             if (isHolding)
             {
                 result = TouchType.HoldRelase;
+            }
+            else if(swipeDistance >= distanceToConsiderDash)
+            {
+                Vector3 raisePositionWorld = GetScreenPositonProjectedOnFloor(raisePosition);
+                Vector3 pressPositionWorld = GetScreenPositonProjectedOnFloor(pressPosition);
+                lastDashWorldVector = raisePositionWorld - pressPositionWorld;
+                lastDashWorldVector.y = 0;
+                result = TouchType.Dash;
             }
             else
             {
@@ -86,19 +104,29 @@ public class PlayerControl : MonoBehaviour {
 
     void TriggerAtack()
     {
-        Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = 1;
-        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(mousePosition);
-        Ray mouseRay = new Ray(worldPosition, mainCamera.transform.forward);
+        Vector3 worldPosition = GetScreenPositonProjectedOnFloor(Input.mousePosition);
+        playerMain.Attack(worldPosition);
+    }
+    
+    Vector3 GetScreenPositonProjectedOnFloor(Vector3 screenPosition) {
+        Ray screenRay;
+        screenPosition.z = -mainCamera.nearClipPlane;
+            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
+        if(mainCamera.orthographic) {
+            screenRay = new Ray(worldPosition, mainCamera.transform.forward);
+        } else {
+            Vector3 direction = mainCamera.transform.position - worldPosition;
+            screenRay = new Ray(mainCamera.transform.position, direction);
+        }
+
         RaycastHit hit;
-        if (Physics.Raycast(mouseRay, out hit))
+        if (Physics.Raycast(screenRay, out hit))
         {
-            playerMain.Attack(hit.point);
+            return hit.point;
         }
-        else
-        {
-            Debug.LogError("Failed projection of the mouse");
-        }
+        else throw new Exception(String.Format(
+            "Failed projection of the screen point {0}", screenPosition
+        ));
     }
 
     void CheckJoysticInput()

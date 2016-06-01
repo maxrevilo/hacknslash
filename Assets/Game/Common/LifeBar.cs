@@ -26,6 +26,6 @@ public class LifeBar : MonoBehaviour {
         localScale.x = value;
         lifeBarCanvas.localScale = localScale;
 
-        //lifeBarCanvas.gameObject.SetActive(value < 100);
+        lifeBarCanvas.gameObject.SetActive(value < 1);
     }
 }

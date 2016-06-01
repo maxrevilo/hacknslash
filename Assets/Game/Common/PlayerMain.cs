@@ -20,6 +20,8 @@ public class PlayerMain : MonoBehaviour {
         meleeAttackRestitution = 0;
         chargedAttackCooldown = 0;
         chargedAttackRestitution = 0;
+        dashCooldown = 0;
+        dashRestitution = 0;
         #endregion
         #region Motion
         playerRigidBody = GetComponent<Rigidbody>();
@@ -40,11 +42,19 @@ public class PlayerMain : MonoBehaviour {
         meleeAttackRestitution -= Time.fixedDeltaTime;
         chargedAttackCooldown -= Time.fixedDeltaTime;
         chargedAttackRestitution -= Time.fixedDeltaTime;
+        dashCooldown -= Time.fixedDeltaTime;
+        dashRestitution -= Time.fixedDeltaTime;
+        if (dashRestitution > 0) {
+            float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
+            playerRigidBody.MovePosition(
+                transform.position + dashSpeed * Time.fixedDeltaTime * transform.forward
+            );
+        }
         #endregion
         #region Motion
         if (advancing) {
             playerRigidBody.MovePosition(
-                transform.position + defSpeed * transform.forward
+                transform.position + defSpeed * Time.fixedDeltaTime * transform.forward
             );
         }
         #endregion
@@ -96,9 +106,13 @@ public class PlayerMain : MonoBehaviour {
 
     public PlayerWeaponDef meleeWeaponDef;
     public PlayerWeaponDef chargedWeaponDef;
+    public PlayerWeaponDef dashWeaponDef;
 
     private float meleeAttackCooldown;
     private float meleeAttackRestitution;
+
+    private float dashCooldown;
+    private float dashRestitution;
 
     private float chargedAttackCooldown;
     private float chargedAttackRestitution;
@@ -107,7 +121,7 @@ public class PlayerMain : MonoBehaviour {
 
     public void Attack(Vector3 position) {
         if (!isAtacking() && meleeAttackCooldown <= 0) {
-            Debug.DrawLine(transform.position, position, Color.red, 0.05f);
+            Debug.DrawLine(transform.position, position, Color.red, 1f);
             this.Stop();
             meleeAttackCooldown = meleeWeaponDef.attackCooldown;
             meleeAttackRestitution = meleeWeaponDef.attackRestitution;
@@ -131,7 +145,25 @@ public class PlayerMain : MonoBehaviour {
 
     public bool isAtacking()
     {
-        return meleeAttackRestitution > 0 || chargedAttackRestitution > 0;
+        return meleeAttackRestitution > 0
+            || dashRestitution > 0
+            || chargedAttackRestitution > 0;
+    }
+
+    public void Dash(Vector3 direction) {
+        if (!isAtacking()) {
+            Debug.DrawLine(transform.position, transform.position + direction * dashWeaponDef.dashDistance, Color.green, 1.5f);
+            this.Stop();
+            dashCooldown = dashWeaponDef.attackCooldown;
+            dashRestitution = dashWeaponDef.attackRestitution;
+            LookTowards(direction, true);
+            StartCoroutine(ActivateDashMode());
+        }
+    }
+    
+    private IEnumerator ActivateDashMode() {
+        yield return new WaitForFixedUpdate();
+        
     }
 
     public void ChargeHeavyAttack()

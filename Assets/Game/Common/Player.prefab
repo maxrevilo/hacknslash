@@ -374,13 +374,13 @@ Rigidbody:
   m_GameObject: {fileID: 162346}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!95 &9574834
 Animator:
   serializedVersion: 3
@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
-  defSpeed: 0.1
+  defSpeed: 5
   hitAreaSpawnZone: {fileID: 447674}
   meleeWeaponDef:
     attackDmg: 25
@@ -422,6 +422,7 @@ MonoBehaviour:
     radialPushStrenght: 0
     elevatingPushStrenght: 0
     chargeTime: 0
+    dashDistance: 15
   chargedWeaponDef:
     attackDmg: 70
     projectileType: 1
@@ -432,6 +433,18 @@ MonoBehaviour:
     radialPushStrenght: 10
     elevatingPushStrenght: 2
     chargeTime: 1.5
+    dashDistance: 15
+  dashWeaponDef:
+    attackDmg: 0
+    projectileType: 0
+    hitAreaLifeSpan: 0.1
+    attackCooldown: 0.2
+    attackRestitution: 0.1
+    directionalPushStrenght: 1
+    radialPushStrenght: 0
+    elevatingPushStrenght: 0
+    chargeTime: 1.5
+    dashDistance: 10
   chargingStartedAt: 0
   defHitPoints: 500
 --- !u!114 &11467170
@@ -458,9 +471,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fe64ca2da584278bc55734b31d8d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tt: 0
   axisVectorDeadZone: 0.1
   timeToEnterInHolding: 0.3
+  distanceToConsiderDash: 0.6
 --- !u!136 &13694742
 CapsuleCollider:
   m_ObjectHideFlags: 1
