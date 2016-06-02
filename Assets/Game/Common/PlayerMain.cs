@@ -56,10 +56,13 @@ public class PlayerMain : MonoBehaviour {
             }
 
             float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
-            playerRigidBody.MovePosition(
-                transform.position + dashSpeed * dashDeltaTime * transform.forward
-            );
-            
+            if(useVelocityForDash) {
+                playerRigidBody.velocity = transform.forward * dashSpeed;
+            } else {
+                playerRigidBody.MovePosition(
+                    transform.position + dashSpeed * dashDeltaTime * transform.forward
+                );
+            }
             dashRestitution -= fixedDeltaTime;
         }
         dashCooldown -= fixedDeltaTime;
@@ -117,6 +120,8 @@ public class PlayerMain : MonoBehaviour {
     #region Atack
     private int dashingLayer;
     private int playerLayer;
+    
+    public bool useVelocityForDash = false;
     
     public Transform hitAreaSpawnZone;
 
@@ -178,13 +183,19 @@ public class PlayerMain : MonoBehaviour {
     private IEnumerator ActivateDashMode() {
         yield return new WaitForFixedUpdate();
         dashCooldown = dashWeaponDef.attackCooldown;
-        dashRestitution = dashWeaponDef.attackRestitution + Time.fixedDeltaTime/2;
+        dashRestitution = dashWeaponDef.attackRestitution;
+        if(!useVelocityForDash) {
+            dashRestitution += Time.fixedDeltaTime/2;
+        }
         gameObject.layer = dashingLayer;
     }
     
     private IEnumerator FinishDashing() {
         yield return new WaitForFixedUpdate();
         gameObject.layer = playerLayer;
+        if(useVelocityForDash) {
+            playerRigidBody.velocity = Vector3.zero;
+        }
     }
 
     public void ChargeHeavyAttack()
