@@ -8,6 +8,8 @@ public class PlayerMain : MonoBehaviour {
     {
         #region Atack
         if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
+        playerLayer = gameObject.layer;
+        dashingLayer = LayerMask.NameToLayer("Dashing");
         #endregion
         #region Health
         lifeBar = GetComponentInChildren<LifeBar>();
@@ -38,18 +40,29 @@ public class PlayerMain : MonoBehaviour {
     void FixedUpdate() {
         #region Atack
         //TODO: This shouldn't be integral but use timestamp diffs.
-        meleeAttackCooldown -= Time.fixedDeltaTime;
-        meleeAttackRestitution -= Time.fixedDeltaTime;
-        chargedAttackCooldown -= Time.fixedDeltaTime;
-        chargedAttackRestitution -= Time.fixedDeltaTime;
-        dashCooldown -= Time.fixedDeltaTime;
-        dashRestitution -= Time.fixedDeltaTime;
+        float fixedDeltaTime = Time.fixedDeltaTime;
+        meleeAttackCooldown -= fixedDeltaTime;
+        meleeAttackRestitution -= fixedDeltaTime;
+        chargedAttackCooldown -= fixedDeltaTime;
+        chargedAttackRestitution -= fixedDeltaTime;
+        
         if (dashRestitution > 0) {
+            float dashDeltaTime = fixedDeltaTime;
+            if(dashRestitution - fixedDeltaTime <= 0) {
+                dashRestitution = 0;
+                StartCoroutine(FinishDashing());
+                dashDeltaTime = dashRestitution;
+                Debug.LogFormat("DashDeltaTime {0}/{1}", dashDeltaTime, fixedDeltaTime);
+            }
+
             float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
             playerRigidBody.MovePosition(
-                transform.position + dashSpeed * Time.fixedDeltaTime * transform.forward
+                transform.position + dashSpeed * dashDeltaTime * transform.forward
             );
+            
+            dashRestitution -= fixedDeltaTime;
         }
+        dashCooldown -= fixedDeltaTime;
         #endregion
         #region Motion
         if (advancing) {
@@ -102,6 +115,9 @@ public class PlayerMain : MonoBehaviour {
     #endregion
 
     #region Atack
+    private int dashingLayer;
+    private int playerLayer;
+    
     public Transform hitAreaSpawnZone;
 
     public PlayerWeaponDef meleeWeaponDef;
@@ -162,7 +178,13 @@ public class PlayerMain : MonoBehaviour {
     private IEnumerator ActivateDashMode() {
         yield return new WaitForFixedUpdate();
         dashCooldown = dashWeaponDef.attackCooldown;
-        dashRestitution = dashWeaponDef.attackRestitution;
+        dashRestitution = dashWeaponDef.attackRestitution + Time.fixedDeltaTime/2;
+        gameObject.layer = dashingLayer;
+    }
+    
+    private IEnumerator FinishDashing() {
+        yield return new WaitForFixedUpdate();
+        gameObject.layer = playerLayer;
     }
 
     public void ChargeHeavyAttack()
