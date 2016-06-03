@@ -7,6 +7,12 @@ using System.Collections;
 [RequireComponent(typeof(PlayerMotion))]
 public class PlayerAttack : MonoBehaviour {
 
+    public delegate void ChargingHeavyAttackEvent(PlayerMain playerMain);
+    public event ChargingHeavyAttackEvent OnChargingHeavyAttackEvent;
+    
+    public delegate void ReleaseHeavyAttackEvent(PlayerMain playerMain, bool fullyCharged);
+    public event ReleaseHeavyAttackEvent OnReleaseHeavyAttackEvent;
+    
     public bool useVelocityForDash = false;
     
     public Transform hitAreaSpawnZone;
@@ -157,6 +163,8 @@ public class PlayerAttack : MonoBehaviour {
         {
             chargingStartedAt = Time.time;
             playerMotion.Stop();
+            
+            if(OnChargingHeavyAttackEvent != null) OnChargingHeavyAttackEvent(playerMain);
         }
     }
 
@@ -172,6 +180,8 @@ public class PlayerAttack : MonoBehaviour {
 
             StartCoroutine(ActivateChargedAttackArea());
         }
+        
+        if(OnReleaseHeavyAttackEvent != null) OnReleaseHeavyAttackEvent(playerMain, isCharged);
     }
 
     private IEnumerator ActivateChargedAttackArea()
