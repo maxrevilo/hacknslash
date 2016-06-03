@@ -1,24 +1,49 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMain))]
 public class PlayerConstitution : MonoBehaviour {
-    // private PlayerMain playerMain;
     
-    private LifeBar lifeBar;
+    public delegate void LifeChangeEvent(PlayerMain playerMain, float current, float previous);
+    public event LifeChangeEvent OnLifeChangeEventEvent;
+    
+    public delegate void DieEvent(PlayerMain playerMain, float lastHit);
+    public event DieEvent OnDieEvent;
+    
+    public bool spawnLifeBar = true;
+    
+    private PlayerMain playerMain;
 
-    [SerializeField]
-    private float defHitPoints = 100;
+    public float defHitPoints = 100;
+    
+    private GameObject lifeBarGO;
 
     void Awake()
     {
-        // playerMain = GetComponent<PlayerMain>();
-        lifeBar = GetComponentInChildren<LifeBar>();
+        playerMain = GetComponent<PlayerMain>();
     }
 
     void Start() {
-        #region Health
         hitPoints = defHitPoints;
-        #endregion
+        StartCoroutine(InitiateLifeBar());
+    }
+
+    private IEnumerator InitiateLifeBar() {
+        yield return new WaitForFixedUpdate();
+        
+        if(spawnLifeBar) {
+            lifeBarGO = PoolingSystem.Instance.InstantiateAPS(
+                "LifeBar",
+                transform.position,
+                transform.rotation,
+                transform.parent.gameObject
+            );
+            
+            LifeBar lifeBar = lifeBarGO.GetComponent<LifeBar>();
+            lifeBar.playerConstitution = this;
+        }
+
+        AddHitPoints(0);
     }
     
     public float hitPoints { get; private set; }
@@ -30,17 +55,24 @@ public class PlayerConstitution : MonoBehaviour {
 
     public void AddHitPoints(float hitPointsDiff)
     {
-        this.hitPoints += hitPointsDiff;
-        if(lifeBar)
+        float newHitPoints = hitPoints + hitPointsDiff;
+        
+        if (newHitPoints > defHitPoints)
         {
-            lifeBar.setValue(LifeFraction());
+            newHitPoints = defHitPoints;
         }
-
-        if (hitPoints > defHitPoints)
+        else if(newHitPoints <= 0)
         {
-            hitPoints = defHitPoints;
-        } else if(hitPoints <= 0)
-        {
+            newHitPoints = 0;
+        }
+        
+        if(OnLifeChangeEventEvent != null) {
+            OnLifeChangeEventEvent(playerMain, newHitPoints, hitPoints);
+        }
+        
+        hitPoints = newHitPoints;
+        if (hitPoints == 0) {
+            if(OnDieEvent != null) OnDieEvent(playerMain, hitPointsDiff);
             Die();
         }
     }
@@ -53,5 +85,8 @@ public class PlayerConstitution : MonoBehaviour {
     public void Die()
     {
         gameObject.DestroyAPS();
+        if(lifeBarGO != null) {
+            lifeBarGO.DestroyAPS();
+        }
     }
 }

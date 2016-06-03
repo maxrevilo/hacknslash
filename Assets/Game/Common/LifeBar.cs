@@ -1,31 +1,63 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 
 [ExecuteInEditMode]
 public class LifeBar : MonoBehaviour {
+    [SerializeField]
+    private Vector3 worldDisplacement = new Vector3(0, 2f, 0);
 
     [SerializeField]
     private RectTransform lifeBarCanvas;
+    
+    [SerializeField]
+    private RectTransform lifeFill;
 
-    private float value = 1;
+    public PlayerConstitution playerConstitution;
+    
+    [SerializeField]
+    private float lifeBarChangeSpeed = 0.1f;
 
-    public void setValue(float value)
-    {
-        this.value = value;
+    private float lifeFraction = 1;
+
+    void Start () {
+        if(lifeBarCanvas == null) {
+            throw new Exception("lifeBarCanvas not set");
+        }
+        if(lifeFill == null) {
+            throw new Exception("lifeFill not set");
+        }
+        if(playerConstitution == null) {
+            throw new Exception("playerConstitution not set");
+        }
+        
+        playerConstitution.OnLifeChangeEventEvent += LifeChangeEvent;
+        playerConstitution.OnDieEvent += DieEvent;
+    }
+    
+    void LifeChangeEvent(PlayerMain playerMain, float current, float previous) {
+        if(current > 0) lifeBarCanvas.gameObject.SetActive(true);
+
+        lifeFraction = current / playerConstitution.defHitPoints;
+    }
+    
+    void DieEvent(PlayerMain playerMain, float lastHit) {
+        lifeBarCanvas.gameObject.SetActive(false);
     }
 
-    // Use this for initialization
-    void Start () {}
-	
-	// Update is called once per frame
 	void Update () {
-        Vector2 position = RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position);
+        Vector2 position = RectTransformUtility.WorldToScreenPoint(
+            Camera.main,
+            playerConstitution.transform.position + worldDisplacement
+        );
         lifeBarCanvas.position = position;
+        transform.position = position;
 
-        Vector3 localScale = lifeBarCanvas.localScale;
-        localScale.x = value;
-        lifeBarCanvas.localScale = localScale;
+        Vector3 localScale = lifeFill.localScale;
+        localScale.x += (lifeFraction - localScale.x) * lifeBarChangeSpeed;
+        lifeFill.localScale = localScale;
 
-        lifeBarCanvas.gameObject.SetActive(value < 1);
+        if(lifeFraction > 0) {
+            lifeBarCanvas.gameObject.SetActive(lifeFraction < 1f);
+        }
     }
 }

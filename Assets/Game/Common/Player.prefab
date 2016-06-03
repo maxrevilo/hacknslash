@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec13c8fd149f4cc0a67cf1e25d8c801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnLifeBar: 0
   defHitPoints: 500
 --- !u!114 &11485902
 MonoBehaviour:
