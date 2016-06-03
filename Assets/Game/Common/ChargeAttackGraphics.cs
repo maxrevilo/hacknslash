@@ -1,24 +1,23 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 
-[RequireComponent(typeof(PlayerMain))]
+[RequireComponent(typeof(PlayerAttack))]
 public class ChargeAttackGraphics : MonoBehaviour {
 
-    private PlayerMain playerMain;
+    private PlayerAttack playerAttack;
     public GameObject graphics;
     public GameObject releaseGraphics;
 
     private bool active = false;
     
 	void Awake () {
-        playerMain = GetComponent<PlayerMain>();
+        playerAttack = GetComponent<PlayerAttack>();
         if (graphics == null) throw new Exception("graphics not set");
         if (releaseGraphics == null) throw new Exception("releaseGraphics not set");
     }
 	
 	void Update () {
-	    if(playerMain.isChargingHeavyAttack())
+	    if(playerAttack.isChargingHeavyAttack())
         {
             if(!active)
             {

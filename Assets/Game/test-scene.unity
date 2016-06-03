@@ -316,69 +316,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 22310090, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1612081477}
+    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: m_Name
+      value: Enemy (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
       value: 7.4498186
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1352.4352
+      value: 1352.4353
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
       value: -630.8669
-      objectReference: {fileID: 0}
-    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Name
-      value: Enemy (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.directionalPushStrenght
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackDmg
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackCooldown
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackRestitution
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.chargeTime
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDistance
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDelay
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defSpeed
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 129116, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Drag
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -483,69 +435,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 22310090, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1612081477}
+    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: m_Name
+      value: Enemy (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
       value: -2.5001812
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 508.13507
+      value: 508.135
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 301.455
-      objectReference: {fileID: 0}
-    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Name
-      value: Enemy (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.directionalPushStrenght
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackDmg
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackCooldown
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackRestitution
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.chargeTime
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDistance
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDelay
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defSpeed
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 129116, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Drag
-      value: 1
+      value: 301.45496
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -589,69 +493,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 22310090, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1612081477}
+    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: m_Name
+      value: Enemy (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
       value: -9.810182
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1222.0892
+      value: 1222.0894
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 269.6231
-      objectReference: {fileID: 0}
-    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Name
-      value: Enemy (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.directionalPushStrenght
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackDmg
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackCooldown
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackRestitution
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.chargeTime
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDistance
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDelay
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defSpeed
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 129116, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Drag
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -828,22 +684,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 22310090, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1612081477}
-    - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 419.92706
-      objectReference: {fileID: 0}
-    - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -182.47131
-      objectReference: {fileID: 0}
-    - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 8.429819
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
   m_IsPrefabParent: 0
@@ -967,10 +807,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 22310090, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1612081477}
+    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: m_Name
+      value: Enemy (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_LocalPosition.z
       value: 7.339819
@@ -981,55 +821,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22487294, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 104.19919
-      objectReference: {fileID: 0}
-    - target: {fileID: 135500, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Name
-      value: Enemy (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.directionalPushStrenght
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackDmg
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackCooldown
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.attackRestitution
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: meleeWeaponDef.chargeTime
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDistance
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11446892, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defAttackDelay
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11450900, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defSpeed
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 129116, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5453596, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: m_Drag
-      value: 1
+      value: 104.19917
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -1072,50 +864,6 @@ Prefab:
     - target: {fileID: 478024, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 186324, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 193222, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 127774, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 108240, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114696, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 121946, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 166454, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 122712, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 162346, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 11426144, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: dashWeaponDef.attackRestitution
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5494148, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}
-      propertyPath: m_Interpolate
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f8c81a9cdeae53345aa54126eb21ce8c, type: 2}

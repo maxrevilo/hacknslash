@@ -1,9 +1,14 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMain))]
+// [RequireComponent(typeof(PlayerMain))]
+[RequireComponent(typeof(PlayerAttack))]
+[RequireComponent(typeof(PlayerMotion))]
 public class PlayerControl : MonoBehaviour {
-	private PlayerMain playerMain;
+	
+    // private PlayerMain playerMain;
+    private PlayerAttack playerAttack;
+    private PlayerMotion playerMotion;
 
 	private Camera mainCamera;
 
@@ -23,7 +28,9 @@ public class PlayerControl : MonoBehaviour {
     
 
     void Awake() {
-		playerMain = GetComponent<PlayerMain>();
+		// playerMain = GetComponent<PlayerMain>();
+		playerAttack = GetComponent<PlayerAttack>();
+		playerMotion = GetComponent<PlayerMotion>();
 		mainCamera = Camera.main;
 	}
 
@@ -39,13 +46,13 @@ public class PlayerControl : MonoBehaviour {
                 TriggerAtack();
                 break;
             case TouchType.Holding:
-                playerMain.ChargeHeavyAttack();
+                playerAttack.ChargeHeavyAttack();
                 break;
             case TouchType.HoldRelase:
-                playerMain.ReleaseHeavyAttack();
+                playerAttack.ReleaseHeavyAttack();
                 break;
             case TouchType.Dash:
-                playerMain.Dash(lastDashWorldVector.normalized);
+                playerAttack.Dash(lastDashWorldVector.normalized);
                 break;
             default:
                 CheckJoysticInput();
@@ -105,7 +112,7 @@ public class PlayerControl : MonoBehaviour {
     void TriggerAtack()
     {
         Vector3 worldPosition = GetScreenPositonProjectedOnFloor(Input.mousePosition);
-        playerMain.Attack(worldPosition);
+        playerAttack.Attack(worldPosition);
     }
     
     Vector3 GetScreenPositonProjectedOnFloor(Vector3 screenPosition) {
@@ -138,12 +145,12 @@ public class PlayerControl : MonoBehaviour {
 
         if (direction.sqrMagnitude >= axisVectorDeadZone * axisVectorDeadZone)
         {
-            playerMain.LookTowards(direction);
-            playerMain.Advance();
+            playerMotion.LookTowards(direction);
+            playerMotion.Advance();
         }
         else
         {
-            playerMain.Stop();
+            playerMotion.Stop();
         }
     }
 }

@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMain))]
+[RequireComponent(typeof(PlayerAttack))]
+[RequireComponent(typeof(PlayerMotion))]
 public class EnemyAI : MonoBehaviour {
-	private PlayerMain playerMain;
-	
 	public float defAttackDistance = 1.3f; 
 	
 	[SerializeField]
@@ -15,10 +15,16 @@ public class EnemyAI : MonoBehaviour {
 	private BattleGameScene battleGameScene;
 
 	private PlayerMain target;
+	
+    private PlayerMain playerMain;
+    private PlayerAttack playerAttack;
+    private PlayerMotion playerMotion;
 
 	void Awake() {
 		target = null;
 		playerMain = GetComponent<PlayerMain>();
+		playerAttack = GetComponent<PlayerAttack>();
+		playerMotion = GetComponent<PlayerMotion>();
 	}
 
 	void Start () {
@@ -46,13 +52,13 @@ public class EnemyAI : MonoBehaviour {
 
 			float distance = Vector3.Distance(target.transform.position, transform.position);
 			if(distance >= defAttackDistance) {
-				playerMain.LookAt(target.transform.position);
-				playerMain.Advance();
+				playerMotion.LookAt(target.transform.position);
+				playerMotion.Advance();
 			} else {
-				playerMain.Stop();
+				playerMotion.Stop();
 				
 				if(attackDelay <= 0) {
-					playerMain.Attack(target.transform.position);
+					playerAttack.Attack(target.transform.position);
 					attackDelay = defAttackDelay;
 				}
 			}

@@ -95,6 +95,8 @@ GameObject:
   - 4: {fileID: 405802}
   - 114: {fileID: 11450900}
   - 114: {fileID: 11446892}
+  - 114: {fileID: 11481948}
+  - 114: {fileID: 11479514}
   - 54: {fileID: 5453596}
   - 136: {fileID: 13628572}
   m_Layer: 8
@@ -306,18 +308,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
-  defSpeed: 1.5
+  defHitPoints: 100
+--- !u!114 &11461332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 108160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a435b7ecc5efe7542bb1ca1697e374e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeBarCanvas: {fileID: 22487294}
+--- !u!114 &11479514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a321965720c0d4efa93097b312c585e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useVelocityForDash: 0
   hitAreaSpawnZone: {fileID: 459258}
   meleeWeaponDef:
-    attackDmg: 20
+    attackDmg: 15
     projectileType: 0
     hitAreaLifeSpan: 0.1
-    attackCooldown: 3
-    attackRestitution: 0.4
-    directionalPushStrenght: 0.5
+    attackCooldown: 2
+    attackRestitution: 1
+    directionalPushStrenght: 0.3
     radialPushStrenght: 0
     elevatingPushStrenght: 0
-    chargeTime: 0
+    chargeTime: 1.5
     dashDistance: 15
   chargedWeaponDef:
     attackDmg: 0
@@ -342,19 +368,6 @@ MonoBehaviour:
     chargeTime: 1.5
     dashDistance: 15
   chargingStartedAt: 0
-  defHitPoints: 100
---- !u!114 &11461332
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 108160}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a435b7ecc5efe7542bb1ca1697e374e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeBarCanvas: {fileID: 22487294}
 --- !u!114 &11481500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -376,6 +389,18 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &11481948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ea78da7016846de9c8d0564612edaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defSpeed: 1.5
 --- !u!114 &11492378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -455,7 +480,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 419.92703, y: -182.47131}
+  m_AnchoredPosition: {x: 419.92706, y: -182.47131}
   m_SizeDelta: {x: 100, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22493346
