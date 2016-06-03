@@ -65,7 +65,8 @@ public class PlayerAttack : MonoBehaviour {
         
         if (dashRestitution > 0) {
             float dashDeltaTime = fixedDeltaTime;
-            if(dashRestitution - fixedDeltaTime <= 0) {
+            bool isFinishingDash = dashRestitution - fixedDeltaTime <= 0;
+            if(isFinishingDash) {
                 dashRestitution = 0;
                 StartCoroutine(FinishDashing());
                 dashDeltaTime = dashRestitution;
@@ -81,7 +82,11 @@ public class PlayerAttack : MonoBehaviour {
             }
             dashRestitution -= fixedDeltaTime;
             
-            generateDashHitArea(dashSpeed * dashDeltaTime);
+            if(isFinishingDash && useVelocityForDash) {
+                generateDashHitArea(dashSpeed * (dashDeltaTime + fixedDeltaTime));
+            } else {
+                generateDashHitArea(dashSpeed * dashDeltaTime);
+            }
         }
         dashCooldown -= fixedDeltaTime;
 	}
@@ -140,6 +145,8 @@ public class PlayerAttack : MonoBehaviour {
         yield return new WaitForFixedUpdate();
         gameObject.layer = playerLayer;
         if(useVelocityForDash) {
+            // float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
+            // generateDashHitArea(dashSpeed * Time.fixedDeltaTime);
             playerRigidBody.velocity = Vector3.zero;
         }
     }
