@@ -754,6 +754,8 @@ MonoBehaviour:
     amount: 3
   - prefab: {fileID: 138748, guid: c5341f9185813e745904400ffa083507, type: 2}
     amount: 4
+  - prefab: {fileID: 105416, guid: 5d11d69a984034da1a686412ea9017c7, type: 2}
+    amount: 10
   defaultPoolAmount: 10
   poolExpand: 1
 --- !u!114 &922499303

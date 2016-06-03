@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour {
 
     private Rigidbody playerRigidBody;
 
-    public float chargingStartedAt = 0;
+    private float chargingStartedAt = 0;
     
 	private int dashingLayer;
     private int playerLayer;
@@ -46,7 +46,6 @@ public class PlayerAttack : MonoBehaviour {
         dashingLayer = LayerMask.NameToLayer("Dashing");
 	}
 
-	// Use this for initialization
 	void Start () {
 		meleeAttackCooldown = 0;
         meleeAttackRestitution = 0;
@@ -56,8 +55,7 @@ public class PlayerAttack : MonoBehaviour {
         dashRestitution = 0;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		//TODO: This shouldn't be integral but use timestamp diffs.
         float fixedDeltaTime = Time.fixedDeltaTime;
         meleeAttackCooldown -= fixedDeltaTime;
@@ -71,7 +69,6 @@ public class PlayerAttack : MonoBehaviour {
                 dashRestitution = 0;
                 StartCoroutine(FinishDashing());
                 dashDeltaTime = dashRestitution;
-                Debug.LogFormat("DashDeltaTime {0}/{1}", dashDeltaTime, fixedDeltaTime);
             }
 
             float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
@@ -83,6 +80,8 @@ public class PlayerAttack : MonoBehaviour {
                 );
             }
             dashRestitution -= fixedDeltaTime;
+            
+            generateDashHitArea(dashSpeed * dashDeltaTime);
         }
         dashCooldown -= fixedDeltaTime;
 	}
@@ -180,6 +179,27 @@ public class PlayerAttack : MonoBehaviour {
         HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
         hitArea.spawner = playerMain;
         hitArea.playerWeaponDef = chargedWeaponDef;
+    }
+    
+    private void generateDashHitArea(float distance)
+    {
+        GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
+            "HitAreaDash",
+            transform.position,
+            transform.rotation,
+            transform.parent.gameObject
+        );
+        HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
+        hitArea.spawner = playerMain;
+        hitArea.playerWeaponDef = dashWeaponDef;
+        
+        Vector3 scale = hitArea.transform.localScale;
+        scale.z = distance;
+        hitArea.transform.localScale = scale;
+
+        Vector3 position = hitArea.transform.position;
+        position += hitArea.transform.forward * distance * 0.5f;
+        hitArea.transform.position = position;
     }
 
     public bool isChargingHeavyAttack()

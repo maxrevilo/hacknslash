@@ -438,7 +438,7 @@ MonoBehaviour:
   dashWeaponDef:
     attackDmg: 10
     projectileType: 1
-    hitAreaLifeSpan: 0.1
+    hitAreaLifeSpan: 0.2
     attackCooldown: 0.25
     attackRestitution: 0.08
     directionalPushStrenght: 3
@@ -446,7 +446,6 @@ MonoBehaviour:
     elevatingPushStrenght: 2
     chargeTime: 0
     dashDistance: 10
-  chargingStartedAt: 0
 --- !u!114 &11426144
 MonoBehaviour:
   m_ObjectHideFlags: 1
