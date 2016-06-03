@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &122712
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +90,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 478024}
   - 114: {fileID: 11426144}
+  - 114: {fileID: 11482738}
   - 114: {fileID: 11408062}
   - 114: {fileID: 11485902}
   - 114: {fileID: 11473888}
@@ -382,7 +383,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!95 &9574834
 Animator:
   serializedVersion: 3
@@ -411,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a321965720c0d4efa93097b312c585e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useVelocityForDash: 0
+  useVelocityForDash: 1
   hitAreaSpawnZone: {fileID: 447674}
   meleeWeaponDef:
     attackDmg: 15
@@ -458,7 +459,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
-  defHitPoints: 500
 --- !u!114 &11467170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -486,6 +486,18 @@ MonoBehaviour:
   axisVectorDeadZone: 0.1
   timeToEnterInHolding: 0.3
   distanceToConsiderDash: 0.6
+--- !u!114 &11482738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec13c8fd149f4cc0a67cf1e25d8c801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defHitPoints: 500
 --- !u!114 &11485902
 MonoBehaviour:
   m_ObjectHideFlags: 1

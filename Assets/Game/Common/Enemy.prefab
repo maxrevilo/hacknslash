@@ -94,9 +94,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 405802}
   - 114: {fileID: 11450900}
-  - 114: {fileID: 11446892}
+  - 114: {fileID: 11439634}
   - 114: {fileID: 11481948}
   - 114: {fileID: 11479514}
+  - 114: {fileID: 11446892}
   - 54: {fileID: 5453596}
   - 136: {fileID: 13628572}
   m_Layer: 8
@@ -267,6 +268,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &11439634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 135500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ec13c8fd149f4cc0a67cf1e25d8c801, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defHitPoints: 100
 --- !u!114 &11446892
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -308,7 +321,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
-  defHitPoints: 100
 --- !u!114 &11461332
 MonoBehaviour:
   m_ObjectHideFlags: 1

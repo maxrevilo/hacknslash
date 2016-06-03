@@ -37,23 +37,5 @@ public class ChargeAttackGraphics : MonoBehaviour {
         }
     }
     
-	void Update () {
-	    // if(playerAttack.isChargingHeavyAttack())
-        // {
-        //     if(!active)
-        //     {
-        //         active = true;
-        //         graphics.SetActive(true);
-        //         releaseGraphics.SetActive(false);
-        //     }
-        // } else
-        // {
-        //     if(active)
-        //     {
-        //         releaseGraphics.SetActive(true);
-        //     }
-        //     active = false;
-        //     graphics.SetActive(false);
-        // }
-	}
+	void Update () {}
 }

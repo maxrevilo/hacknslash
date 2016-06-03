@@ -75,7 +75,8 @@ public class HitArea : MonoBehaviour
 
             if(doHit)
             {
-                playerHit.DamageWith(playerWeaponDef);
+                PlayerConstitution playerHitConstitution = other.GetComponent<PlayerConstitution>();
+                playerHitConstitution.DamageWith(playerWeaponDef);
 
                 Vector3 directionalPushVector = transform.forward * playerWeaponDef.directionalPushStrenght;
                 Vector3 vectorToPlayer = Vector3.Normalize(playerHit.transform.position - transform.position);

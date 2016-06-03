@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [RequireComponent(typeof(RectTransform))]
 public class MainPlayerLifeBar : MonoBehaviour {
 
-    public PlayerMain player;
+    public PlayerConstitution playerConstitution;
 
     private RectTransform reactTransform;
 
@@ -16,7 +15,7 @@ public class MainPlayerLifeBar : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Vector3 localScale = reactTransform.localScale;
-        localScale.x = player.LifeFraction();
+        localScale.x = playerConstitution.LifeFraction();
         reactTransform.localScale = localScale;
     }
 }
