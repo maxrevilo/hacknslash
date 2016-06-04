@@ -453,6 +453,14 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBody
+      value: 
+      objectReference: {fileID: 159386, guid: 4b4db957954844af4b2f04fe49e8fc0b, type: 2}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBodyPrefabName
+      value: DeadEnemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
   m_IsPrefabParent: 0
@@ -570,6 +578,14 @@ Prefab:
     - target: {fileID: 108160, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBody
+      value: 
+      objectReference: {fileID: 159386, guid: 4b4db957954844af4b2f04fe49e8fc0b, type: 2}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBodyPrefabName
+      value: DeadEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -818,6 +834,14 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBody
+      value: 
+      objectReference: {fileID: 159386, guid: 4b4db957954844af4b2f04fe49e8fc0b, type: 2}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBodyPrefabName
+      value: DeadEnemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
   m_IsPrefabParent: 0
@@ -891,6 +915,8 @@ MonoBehaviour:
   - prefab: {fileID: 105416, guid: 5d11d69a984034da1a686412ea9017c7, type: 2}
     amount: 10
   - prefab: {fileID: 159358, guid: 91cbf34bacbe6408e9820480283c891d, type: 2}
+    amount: 10
+  - prefab: {fileID: 159386, guid: 4b4db957954844af4b2f04fe49e8fc0b, type: 2}
     amount: 10
   defaultPoolAmount: 10
   poolExpand: 1
@@ -1020,6 +1046,14 @@ Prefab:
     - target: {fileID: 108160, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBody
+      value: 
+      objectReference: {fileID: 159386, guid: 4b4db957954844af4b2f04fe49e8fc0b, type: 2}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBodyPrefabName
+      value: DeadEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
@@ -1664,6 +1698,14 @@ Prefab:
     - target: {fileID: 108160, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBody
+      value: 
+      objectReference: {fileID: 159386, guid: 4b4db957954844af4b2f04fe49e8fc0b, type: 2}
+    - target: {fileID: 11439634, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
+      propertyPath: DeadBodyPrefabName
+      value: DeadEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}

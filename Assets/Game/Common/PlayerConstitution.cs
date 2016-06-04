@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMain))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerConstitution : MonoBehaviour {
     
     public delegate void LifeChangeEvent(PlayerMain playerMain, float current, float previous);
@@ -16,11 +17,16 @@ public class PlayerConstitution : MonoBehaviour {
 
     public float defHitPoints = 100;
     
+    public string DeadBodyPrefabName;
+    
     private GameObject lifeBarGO;
+    
+    private Rigidbody _rigidBody;
 
     void Awake()
     {
         playerMain = GetComponent<PlayerMain>();
+        _rigidBody = GetComponent<Rigidbody>();
     }
 
     void Start() {
@@ -84,9 +90,28 @@ public class PlayerConstitution : MonoBehaviour {
 
     public void Die()
     {
+        StartCoroutine(DieCorruoutine());
+    }
+    
+    private IEnumerator DieCorruoutine() {
+        yield return new WaitForFixedUpdate();
+        
         gameObject.DestroyAPS();
         if(lifeBarGO != null) {
             lifeBarGO.DestroyAPS();
+        }
+
+        if(DeadBodyPrefabName != null) {
+            GameObject deadBodyGO = PoolingSystem.Instance.InstantiateAPS(
+                DeadBodyPrefabName,
+                transform.position,
+                transform.rotation,
+                transform.parent.gameObject
+            );
+            
+            Rigidbody deadBodyRB = deadBodyGO.GetComponentInChildren<Rigidbody>();
+            deadBodyRB.velocity = this._rigidBody.velocity;
+            deadBodyRB.angularVelocity = this._rigidBody.angularVelocity;
         }
     }
 }
