@@ -117,6 +117,8 @@ public class PlayerControl : MonoBehaviour {
     
     Vector3 GetScreenPositonProjectedOnFloor(Vector3 screenPosition) {
         Ray screenRay;
+        Plane groundPlane = new Plane(transform.up, transform.position);
+
         screenPosition.z = -mainCamera.nearClipPlane;
             Vector3 worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
         if(mainCamera.orthographic) {
@@ -126,10 +128,10 @@ public class PlayerControl : MonoBehaviour {
             screenRay = new Ray(mainCamera.transform.position, direction);
         }
 
-        RaycastHit hit;
-        if (Physics.Raycast(screenRay, out hit))
+        float hitDistance;
+        if (groundPlane.Raycast(screenRay, out hitDistance))
         {
-            return hit.point;
+            return screenRay.GetPoint(hitDistance);
         }
         else throw new Exception(String.Format(
             "Failed projection of the screen point {0}", screenPosition
