@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMain))]
@@ -20,17 +21,68 @@ public class EnemyAI : MonoBehaviour {
     private PlayerAttack playerAttack;
     private PlayerMotion playerMotion;
 
+	[SerializeField]
+	private CollisionPub sightColliderPub;
+
+	private ArrayList enemiesInSight;
+
 	void Awake() {
 		target = null;
 		playerMain = GetComponent<PlayerMain>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerMotion = GetComponent<PlayerMotion>();
+
+		enemiesInSight = new ArrayList();
 	}
 
 	void Start () {
 		battleGameScene = (BattleGameScene) GetComponentInParent(typeof(BattleGameScene));
-		if(battleGameScene == null) throw new Exception("BattleGameScene not found");
+		if(battleGameScene == null) throw new Exception("battleGameScene not found");
+
+		if(sightColliderPub == null) throw new Exception("sightColliderPub not found");
+		sightColliderPub.OnTriggerEnterEvent += OnSight;
+		sightColliderPub.OnTriggerExitEvent += OutOfSight;
 	}
+
+	void OnSight(Collider other) {
+		PlayerMain player = other.GetComponent<PlayerMain>();
+
+		if(player == null) return;
+
+		if(isAlly(player)) {
+
+		} else {
+			if(target == null) {
+				LockTarget(player);
+			}
+			enemiesInSight.Add(player);
+		}
+	}
+
+	void OutOfSight(Collider other) {
+		PlayerMain player = other.GetComponent<PlayerMain>();
+		if(player == null) return;
+
+		if(isAlly(player)) {
+
+		} else {
+			if(player == target) {
+				Disengage();
+			}
+			enemiesInSight.Remove(player);
+		}
+	}
+
+	void LockTarget(PlayerMain player) {
+		target = player;
+		attackDelay = defAttackDelay;
+	}
+
+	void Disengage() {
+		target = null;
+	}
+
+	bool isAlly(PlayerMain player) { return player.team == playerMain.team;}
 
 	void Update () {
 		if(target != null) {
@@ -39,15 +91,7 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		if(target == null) {
-			foreach (PlayerMain player in battleGameScene.players) {
-				if(player.team != playerMain.team) {
-					target = player;
-					attackDelay = defAttackDelay;
-					break;
-				}
-			}
-		} else {
+		if(target != null) {
 			attackDelay -= Time.fixedDeltaTime;
 
 			float distance = Vector3.Distance(target.transform.position, transform.position);
@@ -62,6 +106,8 @@ public class EnemyAI : MonoBehaviour {
 					attackDelay = defAttackDelay;
 				}
 			}
+		} else {
+			playerMotion.Stop();
 		}
 	}
 }
