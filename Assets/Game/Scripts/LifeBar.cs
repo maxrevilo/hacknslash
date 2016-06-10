@@ -1,13 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class LifeBar : MonoBehaviour {
     [SerializeField]
     private Vector3 worldDisplacement = new Vector3(0, 2f, 0);
 
     [SerializeField]
-    private RectTransform lifeBarCanvas;
+    private RectTransform lifeBarContainer;
+
+    [SerializeField]
+    private RectTransform canvas;
     
     [SerializeField]
     private RectTransform lifeFill;
@@ -20,7 +22,7 @@ public class LifeBar : MonoBehaviour {
     private float lifeFraction = 1;
 
     void Start () {
-        if(lifeBarCanvas == null) {
+        if(lifeBarContainer == null) {
             throw new Exception("lifeBarCanvas not set");
         }
         if(lifeFill == null) {
@@ -35,29 +37,38 @@ public class LifeBar : MonoBehaviour {
     }
     
     void LifeChangeEvent(PlayerMain playerMain, float current, float previous) {
-        if(current > 0) lifeBarCanvas.gameObject.SetActive(true);
+        if(current > 0) canvas.gameObject.SetActive(true);
 
         lifeFraction = current / playerConstitution.defHitPoints;
     }
     
     void DieEvent(PlayerMain playerMain, float lastHit) {
-        lifeBarCanvas.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(false);
     }
 
 	void Update () {
-        Vector2 position = RectTransformUtility.WorldToScreenPoint(
-            Camera.main,
+        UpdatePosition();
+        UpdateLifeFillScale();
+    }
+
+    void UpdatePosition() {
+        Vector3 position = Camera.main.WorldToScreenPoint(
             playerConstitution.transform.position + worldDisplacement
         );
-        lifeBarCanvas.position = position;
-        transform.position = position;
 
+        lifeBarContainer.anchoredPosition = new Vector2(
+            position.x / Screen.width * canvas.sizeDelta.x,
+            position.y / Screen.height * canvas.sizeDelta.y
+        );
+    }
+
+    void UpdateLifeFillScale() {
         Vector3 localScale = lifeFill.localScale;
         localScale.x += (lifeFraction - localScale.x) * lifeBarChangeSpeed;
         lifeFill.localScale = localScale;
 
         if(lifeFraction > 0) {
-            lifeBarCanvas.gameObject.SetActive(lifeFraction < 1f);
+            canvas.gameObject.SetActive(lifeFraction < 1f);
         }
     }
 }

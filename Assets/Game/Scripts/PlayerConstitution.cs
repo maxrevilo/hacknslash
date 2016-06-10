@@ -40,8 +40,8 @@ public class PlayerConstitution : MonoBehaviour {
         if(spawnLifeBar) {
             lifeBarGO = PoolingSystem.Instance.InstantiateAPS(
                 "LifeBar",
-                transform.position,
-                transform.rotation,
+                Vector3.zero,
+                Quaternion.identity,
                 transform.parent.gameObject
             );
             

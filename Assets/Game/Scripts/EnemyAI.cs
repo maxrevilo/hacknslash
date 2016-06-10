@@ -53,6 +53,8 @@ public class EnemyAI : MonoBehaviour {
 
 		} else {
 			if(target == null) {
+				// TODO: T1. This should be a procedure to look on the
+				// enemiesInSight list for the best target to lock on
 				LockTarget(player);
 			}
 			enemiesInSight.Add(player);
@@ -67,6 +69,8 @@ public class EnemyAI : MonoBehaviour {
 
 		} else {
 			if(player == target) {
+				// TODO: T2. The new version of LockTarget (as mentioned in T1)
+				// should run here to look at for other enemies on sight.
 				Disengage();
 			}
 			enemiesInSight.Remove(player);
