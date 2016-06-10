@@ -145,8 +145,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 135500}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: -2.96, y: 0, z: -4.47}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 446992}
@@ -200,7 +200,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 151286}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.558, z: 0.771}
+  m_LocalPosition: {x: 0, y: 0.558, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 405802}
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnLifeBar: 1
-  defHitPoints: 100
+  defHitPoints: 60
   DeadBodyPrefabName: DeadEnemy
 --- !u!114 &11446892
 MonoBehaviour:
@@ -323,8 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8dc07ef4b32c4a8892f14720048a4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defAttackDistance: 1.5
-  defAttackDelay: 5
+  defAttackDistance: 3
+  defAttackDelay: 3
   sightColliderPub: {fileID: 11497790}
 --- !u!114 &11449612
 MonoBehaviour:

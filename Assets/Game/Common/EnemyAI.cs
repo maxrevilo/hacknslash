@@ -92,11 +92,12 @@ public class EnemyAI : MonoBehaviour {
 
 	void FixedUpdate () {
 		if(target != null) {
+			playerMotion.LookAt(target.transform.position);
+
 			attackDelay -= Time.fixedDeltaTime;
 
 			float distance = Vector3.Distance(target.transform.position, transform.position);
 			if(distance >= defAttackDistance) {
-				playerMotion.LookAt(target.transform.position);
 				playerMotion.Advance();
 			} else {
 				playerMotion.Stop();
