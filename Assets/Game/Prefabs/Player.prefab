@@ -97,6 +97,8 @@ GameObject:
   - 114: {fileID: 11467170}
   - 54: {fileID: 5494148}
   - 136: {fileID: 13694742}
+  - 95: {fileID: 9595288}
+  - 114: {fileID: 11449532}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -209,8 +211,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162346}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.4412506, z: 0, w: -0.8973839}
+  m_LocalPosition: {x: 47.6, y: 0, z: -47.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 486996}
@@ -401,6 +403,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &9595288
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162346}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 54afa740bb1f042fbb23113519ec2e4f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11408062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -459,6 +478,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 0
+--- !u!114 &11449532
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ecc1e7899ce94b128256d9f828c4706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animation: {fileID: 9595288}
 --- !u!114 &11467170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -498,7 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnLifeBar: 0
-  defHitPoints: 100
+  defHitPoints: 130
   DeadBodyPrefabName: 
 --- !u!114 &11485902
 MonoBehaviour:
@@ -740,7 +771,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 3196649621
+        rgba: 3523150033
       minMaxState: 0
     startSize:
       scalar: 2

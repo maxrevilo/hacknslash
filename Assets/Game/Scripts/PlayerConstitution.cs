@@ -8,6 +8,9 @@ public class PlayerConstitution : MonoBehaviour {
     public delegate void LifeChangeEvent(PlayerMain playerMain, float current, float previous);
     public event LifeChangeEvent OnLifeChangeEventEvent;
     
+    public delegate void AttackedEvent(PlayerMain playerMain, PlayerWeaponDef weapon);
+    public event AttackedEvent OnAttackedEvent;
+    
     public delegate void DieEvent(PlayerMain playerMain, float lastHit);
     public event DieEvent OnDieEvent;
     
@@ -56,6 +59,7 @@ public class PlayerConstitution : MonoBehaviour {
 
     public void DamageWith(PlayerWeaponDef weapon)
     {
+        if(OnAttackedEvent != null) OnAttackedEvent(playerMain, weapon);
         this.AddHitPoints(-weapon.attackDmg);
     }
 

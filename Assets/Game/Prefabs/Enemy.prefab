@@ -64,6 +64,8 @@ GameObject:
   - 114: {fileID: 11497696}
   - 54: {fileID: 5400628}
   - 136: {fileID: 13673134}
+  - 95: {fileID: 9523198}
+  - 114: {fileID: 11493990}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Player
@@ -119,8 +121,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177202}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0.9517637, z: 0, w: 0.30683216}
+  m_LocalPosition: {x: 42.33, y: 0, z: -41.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 423442}
@@ -233,6 +235,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!95 &9523198
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177202}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3bbba802da05d4593942f7751a416f0a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11420614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -276,8 +295,8 @@ MonoBehaviour:
     attackDmg: 15
     projectileType: 0
     hitAreaLifeSpan: 0.1
-    attackCooldown: 2
-    attackRestitution: 1
+    attackCooldown: 0.7
+    attackRestitution: 0.7
     directionalPushStrenght: 0.3
     radialPushStrenght: 0
     elevatingPushStrenght: 0
@@ -328,6 +347,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e7c4197d9e0f4b20b76afb062eee251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11493990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ecc1e7899ce94b128256d9f828c4706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animation: {fileID: 9523198}
 --- !u!114 &11497696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -340,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defAttackDistance: 3
-  defAttackDelay: 3
+  defAttackDelay: 2
   sightColliderPub: {fileID: 11488352}
 --- !u!135 &13532492
 SphereCollider:
