@@ -200,8 +200,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2754812, z: 0.48613375}
-  m_LocalScale: {x: 0.6944768, y: 0.39467221, z: 0.37501746}
+  m_LocalPosition: {x: -0, y: 0.38, z: 0.413}
+  m_LocalScale: {x: 0.525, y: 0.525, z: 0.23058394}
   m_Children: []
   m_Father: {fileID: 486996}
   m_RootOrder: 0
@@ -266,8 +266,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.651, z: 0}
-  m_LocalScale: {x: 0.7199665, y: 1.2668741, z: 0.7199665}
+  m_LocalPosition: {x: -0.0025645, y: 0.828, z: 0.0033261}
+  m_LocalScale: {x: 0.8100929, y: 0.8100928, z: 0.8100928}
   m_Children:
   - {fileID: 459872}
   m_Father: {fileID: 478024}
@@ -356,7 +356,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 122712}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &3372936
 MeshFilter:
   m_ObjectHideFlags: 1
@@ -514,9 +514,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fe64ca2da584278bc55734b31d8d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceToStopOnTap: 0.5
+  distanceToAttackOnTap: 5.5
   axisVectorDeadZone: 0.1
   timeToEnterInHolding: 0.3
-  distanceToConsiderDash: 0.6
+  distanceToConsiderDash: 0.45
+  tapRayRadius: 0.7
 --- !u!114 &11482738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -529,7 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnLifeBar: 0
-  defHitPoints: 130
+  defHitPoints: 150
   DeadBodyPrefabName: 
 --- !u!114 &11485902
 MonoBehaviour:
@@ -542,7 +545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ea78da7016846de9c8d0564612edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defSpeed: 3
+  defSpeed: 5
 --- !u!136 &13694742
 CapsuleCollider:
   m_ObjectHideFlags: 1

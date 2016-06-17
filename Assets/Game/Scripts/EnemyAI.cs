@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerMotion))]
 public class EnemyAI : MonoBehaviour {
-	public float defAttackDistance = 1.3f; 
+	public float defAttackDistance = 3f; 
 	
 	[SerializeField]
 	private float defAttackDelay = 1f;

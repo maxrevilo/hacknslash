@@ -11,6 +11,9 @@ public class BattleGameScene : MonoBehaviour {
 	}
 
 	void Start () {
+		Screen.autorotateToPortrait = true;
+		Screen.autorotateToPortraitUpsideDown = true;
+		Screen.orientation = ScreenOrientation.AutoRotation;
 	}
 	
 	void FixedUpdate () {

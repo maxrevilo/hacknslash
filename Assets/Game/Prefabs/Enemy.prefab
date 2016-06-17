@@ -292,7 +292,7 @@ MonoBehaviour:
   useVelocityForDash: 0
   hitAreaSpawnZone: {fileID: 482190}
   meleeWeaponDef:
-    attackDmg: 15
+    attackDmg: 8
     projectileType: 0
     hitAreaLifeSpan: 0.1
     attackCooldown: 0.7
