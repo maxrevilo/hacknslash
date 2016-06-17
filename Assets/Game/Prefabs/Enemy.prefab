@@ -62,10 +62,10 @@ GameObject:
   - 114: {fileID: 11420614}
   - 114: {fileID: 11451272}
   - 114: {fileID: 11497696}
+  - 114: {fileID: 11493990}
   - 54: {fileID: 5400628}
   - 136: {fileID: 13673134}
   - 95: {fileID: 9523198}
-  - 114: {fileID: 11493990}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Player
@@ -278,6 +278,7 @@ MonoBehaviour:
   spawnLifeBar: 1
   defHitPoints: 60
   DeadBodyPrefabName: DeadEnemy
+  hitPoints: 0
 --- !u!114 &11451272
 MonoBehaviour:
   m_ObjectHideFlags: 1

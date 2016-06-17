@@ -13,10 +13,10 @@ GameObject:
   - 114: {fileID: 11426132}
   - 114: {fileID: 11406680}
   - 114: {fileID: 11401732}
-  - 54: {fileID: 5458182}
-  - 136: {fileID: 13698886}
-  - 95: {fileID: 9554188}
   - 114: {fileID: 11438414}
+  - 54: {fileID: 5458182}
+  - 95: {fileID: 9554188}
+  - 136: {fileID: 13698886}
   - 65: {fileID: 6576240}
   m_Layer: 8
   m_Name: Boss
@@ -386,6 +386,7 @@ MonoBehaviour:
   spawnLifeBar: 1
   defHitPoints: 600
   DeadBodyPrefabName: DeadBoss
+  hitPoints: 0
 --- !u!135 &13542084
 SphereCollider:
   m_ObjectHideFlags: 1

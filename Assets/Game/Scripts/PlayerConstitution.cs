@@ -22,6 +22,9 @@ public class PlayerConstitution : MonoBehaviour {
     
     public string DeadBodyPrefabName;
     
+    [SerializeField]
+    public float hitPoints;
+
     private GameObject lifeBarGO;
     
     private Rigidbody _rigidBody;
@@ -33,8 +36,8 @@ public class PlayerConstitution : MonoBehaviour {
     }
 
     void Start() {
-        hitPoints = defHitPoints;
         StartCoroutine(InitiateLifeBar());
+        hitPoints = defHitPoints;
     }
 
     private IEnumerator InitiateLifeBar() {
@@ -54,8 +57,6 @@ public class PlayerConstitution : MonoBehaviour {
 
         AddHitPoints(0);
     }
-    
-    public float hitPoints { get; private set; }
 
     public void DamageWith(PlayerWeaponDef weapon)
     {
@@ -99,6 +100,7 @@ public class PlayerConstitution : MonoBehaviour {
     
     private IEnumerator DieCorruoutine() {
         yield return new WaitForFixedUpdate();
+        yield return new WaitForFixedUpdate();
         
         gameObject.DestroyAPS();
         if(lifeBarGO != null) {
@@ -114,6 +116,7 @@ public class PlayerConstitution : MonoBehaviour {
             );
             
             Rigidbody deadBodyRB = deadBodyGO.GetComponentInChildren<Rigidbody>();
+            Debug.LogFormat("Body Velocity {0}", this._rigidBody.velocity);
             deadBodyRB.velocity = this._rigidBody.velocity;
             deadBodyRB.angularVelocity = this._rigidBody.angularVelocity;
         }

@@ -28,7 +28,7 @@ public class PlayerMain : MonoBehaviour {
     
     public void Push(Vector3 pushVector)
     {
-        playerRigidBody.velocity += pushVector;
+        playerRigidBody.AddForce(pushVector, ForceMode.Impulse);
     }
     #endregion
 }

@@ -159,12 +159,13 @@ public class PlayerControl : MonoBehaviour {
 
     void SetAttackOrMoveMode()
     {
-        attackMark = GetScreenPositonProjectedOnFloor(Input.mousePosition);
-        PlayerMain enemy = GetEnemyOnScreenPosition(Input.mousePosition);
-        if(enemy == null) {
+        PlayerMain player = GetEnemyOnScreenPosition(Input.mousePosition);
+        if(player == null || player.gameObject == gameObject) {
             controlState = ControlState.Moving;
+            attackMark = GetScreenPositonProjectedOnFloor(Input.mousePosition);
         } else {
             controlState = ControlState.Attacking;
+            attackMark = player.transform.position;
         }
     }
 
