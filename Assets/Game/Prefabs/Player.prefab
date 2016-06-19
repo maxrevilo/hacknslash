@@ -431,7 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a321965720c0d4efa93097b312c585e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useVelocityForDash: 1
   hitAreaSpawnZone: {fileID: 447674}
   meleeWeaponDef:
     attackDmg: 15
@@ -515,7 +514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToStopOnTap: 0.5
-  distanceToAttackOnTap: 5.5
+  distanceToAttackOnTap: 2.5
   axisVectorDeadZone: 0.1
   timeToEnterInHolding: 0.3
   distanceToConsiderDash: 0.45

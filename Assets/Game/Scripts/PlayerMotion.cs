@@ -44,10 +44,6 @@ public class PlayerMotion : MonoBehaviour
     }
 
     public void Stop() {
-        if(gameObject.name == "Player")
-        {
-            Debug.LogFormat("Stop");
-        }
         advancing = false;
     }
 

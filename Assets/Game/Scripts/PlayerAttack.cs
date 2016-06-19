@@ -13,8 +13,6 @@ public class PlayerAttack : MonoBehaviour {
     public delegate void ReleaseHeavyAttackEvent(PlayerMain playerMain, bool fullyCharged);
     public event ReleaseHeavyAttackEvent OnReleaseHeavyAttackEvent;
     
-    public bool useVelocityForDash = false;
-    
     public Transform hitAreaSpawnZone;
 
     public PlayerWeaponDef meleeWeaponDef;
@@ -24,14 +22,14 @@ public class PlayerAttack : MonoBehaviour {
     private PlayerMain playerMain;
     private PlayerMotion playerMotion;
 
-    private float meleeAttackCooldown;
-    private float meleeAttackRestitution;
+    private CountDown meleeAttackCooldown;
+    private CountDown meleeAttackRestitution;
 
-    private float dashCooldown;
-    private float dashRestitution;
+    private CountDown dashCooldown;
+    private CountDown dashRestitution;
 
-    private float chargedAttackCooldown;
-    private float chargedAttackRestitution;
+    private CountDown chargedAttackCooldown;
+    private CountDown chargedAttackRestitution;
 
     private Rigidbody playerRigidBody;
 
@@ -50,59 +48,49 @@ public class PlayerAttack : MonoBehaviour {
 
         playerLayer = gameObject.layer;
         dashingLayer = LayerMask.NameToLayer("Dashing");
-	}
+
+        meleeAttackCooldown = new CountDown();
+        meleeAttackRestitution = new CountDown();
+        chargedAttackCooldown = new CountDown();
+        chargedAttackRestitution = new CountDown();
+        dashCooldown = new CountDown();
+        dashRestitution = new CountDown();
+    }
 
 	void Start () {
-		meleeAttackCooldown = 0;
-        meleeAttackRestitution = 0;
-        chargedAttackCooldown = 0;
-        chargedAttackRestitution = 0;
-        dashCooldown = 0;
-        dashRestitution = 0;
-	}
-	
+		meleeAttackCooldown.Stop();
+        meleeAttackRestitution.Stop();
+        chargedAttackCooldown.Stop();
+        chargedAttackRestitution.Stop();
+        dashCooldown.Stop();
+        dashRestitution.Stop();
+    }
+
 	void FixedUpdate () {
-		//TODO: This shouldn't be integral but use timestamp diffs.
         float fixedDeltaTime = Time.fixedDeltaTime;
-        meleeAttackCooldown -= fixedDeltaTime;
-        meleeAttackRestitution -= fixedDeltaTime;
-        chargedAttackCooldown -= fixedDeltaTime;
-        chargedAttackRestitution -= fixedDeltaTime;
         
-        if (dashRestitution > 0) {
+        if (!dashRestitution.HasFinished()) {
             float dashDeltaTime = fixedDeltaTime;
-            bool isFinishingDash = dashRestitution - fixedDeltaTime <= 0;
-            if(isFinishingDash) {
-                dashRestitution = 0;
+            bool isFinishingDash = dashRestitution.TimeToFinish() <= 1.5f * fixedDeltaTime;
+            if (isFinishingDash) {
                 StartCoroutine(FinishDashing());
-                dashDeltaTime = dashRestitution;
+                dashDeltaTime = dashRestitution.TimeToFinish();
+                dashRestitution.Stop();
             }
 
             float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
-            if(useVelocityForDash) {
-                playerRigidBody.velocity = transform.forward * dashSpeed;
-            } else {
-                playerRigidBody.MovePosition(
-                    transform.position + dashSpeed * dashDeltaTime * transform.forward
-                );
-            }
-            dashRestitution -= fixedDeltaTime;
-            
-            if(isFinishingDash && useVelocityForDash) {
-                generateDashHitArea(dashSpeed * (dashDeltaTime + fixedDeltaTime));
-            } else {
-                generateDashHitArea(dashSpeed * dashDeltaTime);
-            }
+            playerRigidBody.velocity = transform.forward * dashSpeed;
+  
+            generateDashHitArea(dashSpeed * dashDeltaTime);
         }
-        dashCooldown -= fixedDeltaTime;
 	}
 
     public void Attack(Vector3 position) {
-        if (!isAtacking() && meleeAttackCooldown <= 0) {
+        if (!isAtacking() && meleeAttackCooldown.HasFinished()) {
             Debug.DrawLine(transform.position, position, Color.red, 1f);
             playerMotion.Stop();
-            meleeAttackCooldown = meleeWeaponDef.attackCooldown;
-            meleeAttackRestitution = meleeWeaponDef.attackRestitution;
+            meleeAttackCooldown.Restart(meleeWeaponDef.attackCooldown);
+            meleeAttackRestitution.Restart(meleeWeaponDef.attackRestitution);
             playerMotion.LookAt(position, true);
             StartCoroutine(ActivateAtackArea());
         }
@@ -123,9 +111,9 @@ public class PlayerAttack : MonoBehaviour {
 
     public bool isAtacking()
     {
-        return meleeAttackRestitution > 0
-            || dashRestitution > 0
-            || chargedAttackRestitution > 0;
+        return !meleeAttackRestitution.HasFinished()
+            || !dashRestitution.HasFinished()
+            || !chargedAttackRestitution.HasFinished();
     }
 
     public void Dash(Vector3 direction) {
@@ -139,27 +127,20 @@ public class PlayerAttack : MonoBehaviour {
     
     private IEnumerator ActivateDashMode() {
         yield return new WaitForFixedUpdate();
-        dashCooldown = dashWeaponDef.attackCooldown;
-        dashRestitution = dashWeaponDef.attackRestitution;
-        if(!useVelocityForDash) {
-            dashRestitution += Time.fixedDeltaTime/2;
-        }
+        dashCooldown.Restart(dashWeaponDef.attackCooldown);
+        dashRestitution.Restart(dashWeaponDef.attackRestitution);
         gameObject.layer = dashingLayer;
     }
     
     private IEnumerator FinishDashing() {
         yield return new WaitForFixedUpdate();
         gameObject.layer = playerLayer;
-        if(useVelocityForDash) {
-            // float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
-            // generateDashHitArea(dashSpeed * Time.fixedDeltaTime);
-            playerRigidBody.velocity = Vector3.zero;
-        }
+        playerRigidBody.velocity = Vector3.zero;
     }
 
     public void ChargeHeavyAttack()
     {
-        if(!isAtacking() && chargedAttackCooldown <= 0 && !isChargingHeavyAttack())
+        if(!isAtacking() && chargedAttackCooldown.HasFinished() && !isChargingHeavyAttack())
         {
             chargingStartedAt = Time.time;
             playerMotion.Stop();
@@ -175,8 +156,8 @@ public class PlayerAttack : MonoBehaviour {
         chargingStartedAt = 0;
         if (isCharged)
         {
-            chargedAttackCooldown = chargedWeaponDef.attackCooldown;
-            chargedAttackRestitution = chargedWeaponDef.attackRestitution;
+            chargedAttackCooldown.Restart(chargedWeaponDef.attackCooldown);
+            chargedAttackRestitution.Restart(chargedWeaponDef.attackRestitution);
 
             StartCoroutine(ActivateChargedAttackArea());
         }
@@ -221,4 +202,6 @@ public class PlayerAttack : MonoBehaviour {
 
     public bool isChargingHeavyAttack()
     {  return chargingStartedAt != 0; }
+
+
 }

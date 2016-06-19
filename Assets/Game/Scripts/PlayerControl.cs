@@ -105,7 +105,7 @@ public class PlayerControl : MonoBehaviour {
             case ControlState.Attacking: {
                 float sqrDistToAttackMark = Vector3.SqrMagnitude(transform.position - attackMark);
                 float sqrDistanceToAttackOnTap = distanceToAttackOnTap * distanceToAttackOnTap;
-                if(sqrDistToAttackMark <= distanceToAttackOnTap) {
+                if(sqrDistToAttackMark <= sqrDistanceToAttackOnTap) {
                     TriggerAttack(attackMark);
                     controlState = ControlState.Idle;
                 } else {
