@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerConstitution))]
-public class PlayerAttackedGraphics : MonoBehaviour {
+[RequireComponent(typeof(PlayerAttack))]
+public class PlayerAttackingGraphics : MonoBehaviour {
 
-    private PlayerConstitution playerConstitution;
+    private PlayerAttack playerAttack;
     
     private ParticleSystem[] chargingPS;
 
@@ -15,15 +15,16 @@ public class PlayerAttackedGraphics : MonoBehaviour {
     // private bool active = false;
     
 	void Awake () {
-        playerConstitution = GetComponent<PlayerConstitution>();
+        playerAttack = GetComponent<PlayerAttack>();
         if (_animation == null) throw new Exception("animation not set");
     }
+
 	void Start () {
-        playerConstitution.OnAttackedEvent += Attacked;
+        playerAttack.OnAttackingEvent += Attacking;
     }
 	
-    void Attacked(PlayerMain playerMain, PlayerWeaponDef weapon) {
-        _animation.SetTrigger("attacked");
+    void Attacking(PlayerMain playerMain, PlayerWeaponDef weapon) {
+        _animation.SetTrigger("attacking");
     }
 
     IEnumerator Play() {

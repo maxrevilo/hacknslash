@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11406680}
   - 114: {fileID: 11401732}
   - 114: {fileID: 11438414}
+  - 114: {fileID: 11406984}
   - 54: {fileID: 5458182}
   - 95: {fileID: 9554188}
   - 136: {fileID: 13698886}
@@ -327,6 +328,18 @@ MonoBehaviour:
     elevatingPushStrenght: 0
     chargeTime: 1.5
     dashDistance: 15
+--- !u!114 &11406984
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 114698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b10b048a633c049a65d95f58929319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 9554188}
 --- !u!114 &11426132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -350,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ecc1e7899ce94b128256d9f828c4706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation: {fileID: 9554188}
+  _animation: {fileID: 9554188}
 --- !u!114 &11454910
 MonoBehaviour:
   m_ObjectHideFlags: 1

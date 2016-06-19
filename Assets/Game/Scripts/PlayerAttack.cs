@@ -12,7 +12,10 @@ public class PlayerAttack : MonoBehaviour {
     
     public delegate void ReleaseHeavyAttackEvent(PlayerMain playerMain, bool fullyCharged);
     public event ReleaseHeavyAttackEvent OnReleaseHeavyAttackEvent;
-    
+
+    public delegate void AttackingEvent(PlayerMain playerMain, PlayerWeaponDef weapon);
+    public event AttackingEvent OnAttackingEvent;
+
     public Transform hitAreaSpawnZone;
 
     public PlayerWeaponDef meleeWeaponDef;
@@ -100,6 +103,7 @@ public class PlayerAttack : MonoBehaviour {
 
     private IEnumerator ActivateAtackArea()
     {
+        if (OnAttackingEvent != null) OnAttackingEvent(playerMain, meleeWeaponDef);
         /* TODO: This might not have the desired effect if the cooldown restarts before hitting 0
          * Several coroutines can be acumulated
         */

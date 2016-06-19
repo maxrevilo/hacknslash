@@ -11535,10 +11535,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11447054, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
-      propertyPath: defHitPoints
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 153971dc327800c42a82c7edd9877f66, type: 2}
   m_IsPrefabParent: 0

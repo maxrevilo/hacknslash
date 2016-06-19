@@ -63,6 +63,7 @@ GameObject:
   - 114: {fileID: 11451272}
   - 114: {fileID: 11497696}
   - 114: {fileID: 11493990}
+  - 114: {fileID: 11477702}
   - 54: {fileID: 5400628}
   - 136: {fileID: 13673134}
   - 95: {fileID: 9523198}
@@ -276,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnLifeBar: 1
-  defHitPoints: 60
+  defHitPoints: 50
   DeadBodyPrefabName: DeadEnemy
   hitPoints: 0
 --- !u!114 &11451272
@@ -295,7 +296,7 @@ MonoBehaviour:
     attackDmg: 8
     projectileType: 0
     hitAreaLifeSpan: 0.1
-    attackCooldown: 0.7
+    attackCooldown: 3
     attackRestitution: 1
     attackPreparation: 1
     directionalPushStrenght: 0.3
@@ -339,6 +340,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 1
+--- !u!114 &11477702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87b10b048a633c049a65d95f58929319, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animation: {fileID: 9523198}
 --- !u!114 &11488352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,7 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ecc1e7899ce94b128256d9f828c4706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation: {fileID: 9523198}
+  _animation: {fileID: 9523198}
 --- !u!114 &11497696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -374,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defAttackDistance: 3
-  defAttackDelay: 2
+  defAttackDelay: 0
   sightColliderPub: {fileID: 11488352}
 --- !u!135 &13532492
 SphereCollider:
