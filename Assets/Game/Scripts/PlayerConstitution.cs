@@ -116,7 +116,6 @@ public class PlayerConstitution : MonoBehaviour {
             );
             
             Rigidbody deadBodyRB = deadBodyGO.GetComponentInChildren<Rigidbody>();
-            Debug.LogFormat("Body Velocity {0}", this._rigidBody.velocity);
             deadBodyRB.velocity = this._rigidBody.velocity;
             deadBodyRB.angularVelocity = this._rigidBody.angularVelocity;
         }

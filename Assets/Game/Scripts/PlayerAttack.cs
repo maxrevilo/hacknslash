@@ -22,12 +22,11 @@ public class PlayerAttack : MonoBehaviour {
     private PlayerMain playerMain;
     private PlayerMotion playerMotion;
 
+    private CountDown meleeAttackPreparation;
     private CountDown meleeAttackCooldown;
     private CountDown meleeAttackRestitution;
-
     private CountDown dashCooldown;
     private CountDown dashRestitution;
-
     private CountDown chargedAttackCooldown;
     private CountDown chargedAttackRestitution;
 
@@ -49,6 +48,7 @@ public class PlayerAttack : MonoBehaviour {
         playerLayer = gameObject.layer;
         dashingLayer = LayerMask.NameToLayer("Dashing");
 
+        meleeAttackPreparation = new CountDown();
         meleeAttackCooldown = new CountDown();
         meleeAttackRestitution = new CountDown();
         chargedAttackCooldown = new CountDown();
@@ -58,7 +58,8 @@ public class PlayerAttack : MonoBehaviour {
     }
 
 	void Start () {
-		meleeAttackCooldown.Stop();
+        meleeAttackPreparation.Stop();
+        meleeAttackCooldown.Stop();
         meleeAttackRestitution.Stop();
         chargedAttackCooldown.Stop();
         chargedAttackRestitution.Stop();
@@ -89,6 +90,7 @@ public class PlayerAttack : MonoBehaviour {
         if (!isAtacking() && meleeAttackCooldown.HasFinished()) {
             Debug.DrawLine(transform.position, position, Color.red, 1f);
             playerMotion.Stop();
+            meleeAttackPreparation.Restart(meleeWeaponDef.attackPreparation);
             meleeAttackCooldown.Restart(meleeWeaponDef.attackCooldown);
             meleeAttackRestitution.Restart(meleeWeaponDef.attackRestitution);
             playerMotion.LookAt(position, true);
@@ -96,8 +98,14 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
-    private IEnumerator ActivateAtackArea() {
-        yield return new WaitForFixedUpdate();
+    private IEnumerator ActivateAtackArea()
+    {
+        /* TODO: This might not have the desired effect if the cooldown restarts before hitting 0
+         * Several coroutines can be acumulated
+        */
+        do { yield return new WaitForFixedUpdate(); }
+        while (!meleeAttackPreparation.HasFinished());
+
         GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
             "HitArea",
             hitAreaSpawnZone.position,

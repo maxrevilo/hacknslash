@@ -438,7 +438,8 @@ MonoBehaviour:
     hitAreaLifeSpan: 0.1
     attackCooldown: 0.1
     attackRestitution: 0.1
-    directionalPushStrenght: 0.5
+    attackPreparation: 0
+    directionalPushStrenght: 1
     radialPushStrenght: 0
     elevatingPushStrenght: 0
     chargeTime: 1.5
@@ -449,6 +450,7 @@ MonoBehaviour:
     hitAreaLifeSpan: 1
     attackCooldown: 5
     attackRestitution: 1
+    attackPreparation: 0
     directionalPushStrenght: 0
     radialPushStrenght: 10
     elevatingPushStrenght: 5
@@ -460,6 +462,7 @@ MonoBehaviour:
     hitAreaLifeSpan: 0.2
     attackCooldown: 0.25
     attackRestitution: 0.08
+    attackPreparation: 0
     directionalPushStrenght: 3
     radialPushStrenght: 3
     elevatingPushStrenght: 2
@@ -513,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fe64ca2da584278bc55734b31d8d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToStopOnTap: 0.5
+  distanceToStopOnTap: 0.1
   distanceToAttackOnTap: 2.5
   axisVectorDeadZone: 0.1
   timeToEnterInHolding: 0.3

@@ -290,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a321965720c0d4efa93097b312c585e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useVelocityForDash: 0
   hitAreaSpawnZone: {fileID: 462252}
   meleeWeaponDef:
     attackDmg: 30
@@ -298,6 +297,7 @@ MonoBehaviour:
     hitAreaLifeSpan: 0.5
     attackCooldown: 3
     attackRestitution: 3.5
+    attackPreparation: 2.5
     directionalPushStrenght: 10
     radialPushStrenght: 0
     elevatingPushStrenght: 5
@@ -309,6 +309,7 @@ MonoBehaviour:
     hitAreaLifeSpan: 0.1
     attackCooldown: 0.2
     attackRestitution: 0.2
+    attackPreparation: 0.5
     directionalPushStrenght: 1
     radialPushStrenght: 0
     elevatingPushStrenght: 0
@@ -320,6 +321,7 @@ MonoBehaviour:
     hitAreaLifeSpan: 0.1
     attackCooldown: 0.2
     attackRestitution: 0.2
+    attackPreparation: 0.5
     directionalPushStrenght: 1
     radialPushStrenght: 0
     elevatingPushStrenght: 0
