@@ -15,7 +15,7 @@ public class PlayerControl : MonoBehaviour {
     [SerializeField]
     private float distanceToStopOnTap = 0.5f;
     [SerializeField]
-    private float distanceToAttackOnTap = 5.5f;
+    private float distanceToAttackOnTap = 2.5f;
 
     [SerializeField]
     private float axisVectorDeadZone = 0.1f;
@@ -96,6 +96,7 @@ public class PlayerControl : MonoBehaviour {
 
                 if(sqrDistToAttackMark <= sqrdistanceToStopOnTap) {
                     controlState = ControlState.Idle;
+                    playerMotion.Stop();
                 } else {
                     playerMotion.LookAt(attackMark);
                     playerMotion.Advance();
@@ -108,6 +109,7 @@ public class PlayerControl : MonoBehaviour {
                 if(sqrDistToAttackMark <= sqrDistanceToAttackOnTap) {
                     TriggerAttack(attackMark);
                     controlState = ControlState.Idle;
+                    playerMotion.Stop();
                 } else {
                     playerMotion.LookAt(attackMark);
                     playerMotion.Advance();
