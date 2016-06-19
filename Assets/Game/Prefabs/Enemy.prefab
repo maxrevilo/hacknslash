@@ -297,7 +297,7 @@ MonoBehaviour:
     projectileType: 0
     hitAreaLifeSpan: 0.1
     attackCooldown: 3
-    attackRestitution: 1
+    attackRestitution: 1.5
     attackPreparation: 1
     directionalPushStrenght: 0.3
     radialPushStrenght: 0

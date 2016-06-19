@@ -458,7 +458,7 @@ MonoBehaviour:
     chargeTime: 1.5
     dashDistance: 0
   dashWeaponDef:
-    attackDmg: 10
+    attackDmg: 4
     projectileType: 1
     hitAreaLifeSpan: 0.2
     attackCooldown: 0.25

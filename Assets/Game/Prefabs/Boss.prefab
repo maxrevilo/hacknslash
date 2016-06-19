@@ -277,8 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8dc07ef4b32c4a8892f14720048a4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defAttackDistance: 3
-  defAttackDelay: 2
+  defAttackDistance: 4
+  defAttackDelay: 0
   sightColliderPub: {fileID: 11472342}
 --- !u!114 &11406680
 MonoBehaviour:
@@ -293,15 +293,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitAreaSpawnZone: {fileID: 462252}
   meleeWeaponDef:
-    attackDmg: 30
+    attackDmg: 50
     projectileType: 0
     hitAreaLifeSpan: 0.5
     attackCooldown: 3
-    attackRestitution: 3.5
-    attackPreparation: 2.5
-    directionalPushStrenght: 10
+    attackRestitution: 2.5
+    attackPreparation: 1
+    directionalPushStrenght: 40
     radialPushStrenght: 0
-    elevatingPushStrenght: 5
+    elevatingPushStrenght: 35
     chargeTime: 1.5
     dashDistance: 15
   chargedWeaponDef:
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnLifeBar: 1
-  defHitPoints: 600
+  defHitPoints: 1000
   DeadBodyPrefabName: DeadBoss
   hitPoints: 0
 --- !u!135 &13542084
