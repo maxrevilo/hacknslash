@@ -520,6 +520,7 @@ MonoBehaviour:
   timeToEnterInHolding: 0.3
   distanceToConsiderDash: 0.45
   tapRayRadius: 0.7
+  useJoystick: 0
 --- !u!114 &11482738
 MonoBehaviour:
   m_ObjectHideFlags: 1

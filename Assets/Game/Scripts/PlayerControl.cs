@@ -41,6 +41,9 @@ public class PlayerControl : MonoBehaviour {
     
     private int playersLayerMask;
 
+    [SerializeField]
+    private bool useJoystick = false;
+
     void Awake() {
 		// playerMain = GetComponent<PlayerMain>();
 		playerAttack = GetComponent<PlayerAttack>();
@@ -55,6 +58,12 @@ public class PlayerControl : MonoBehaviour {
 
     void Update()
     {
+        if(useJoystick)
+        {
+            CheckJoysticInput();
+            return;
+        }
+
         switch (CheckTouchType())
         {
             case TouchType.Tap:
@@ -70,7 +79,6 @@ public class PlayerControl : MonoBehaviour {
                 TriggerDash();
                 break;
             default:
-                CheckJoysticInput();
                 break;
         }
 

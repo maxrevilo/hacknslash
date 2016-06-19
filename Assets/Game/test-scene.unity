@@ -55,13 +55,13 @@ LightmapSettings:
   m_LightmapEditorSettings:
     serializedVersion: 3
     m_Resolution: 1
-    m_BakeResolution: 2
+    m_BakeResolution: 60
     m_TextureWidth: 64
     m_TextureHeight: 1024
     m_AOMaxDistance: 1
     m_Padding: 2
     m_CompAOExponent: 1
-    m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000,
+    m_LightmapParameters: {fileID: 15201, guid: 0000000000000000f000000000000000,
       type: 0}
     m_TextureCompression: 0
     m_FinalGather: 0
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1250944906}
   minSpeed: 0
-  speedFactor: 0.025
+  speedFactor: 0.005
 --- !u!1001 &167222719
 Prefab:
   m_ObjectHideFlags: 0

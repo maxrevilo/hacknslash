@@ -29,8 +29,10 @@ public class PlayerMotion : MonoBehaviour
     {
 
     }
-    void FixedUpdate() {
-        if (advancing) {
+    void FixedUpdate()
+    {
+        if (advancing)
+        {
             playerRigidBody.MovePosition(
                 transform.position + defSpeed * Time.fixedDeltaTime * transform.forward
             );
@@ -42,6 +44,10 @@ public class PlayerMotion : MonoBehaviour
     }
 
     public void Stop() {
+        if(gameObject.name == "Player")
+        {
+            Debug.LogFormat("Stop");
+        }
         advancing = false;
     }
 
