@@ -3,20 +3,15 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerAttack))]
+[RequireComponent(typeof(Animator))]
 public class PlayerAttackingGraphics : MonoBehaviour {
 
     private PlayerAttack playerAttack;
-    
-    private ParticleSystem[] chargingPS;
-
-    [SerializeField]
-    private Animator _animation;
-
-    // private bool active = false;
+    private Animator animator;
     
 	void Awake () {
         playerAttack = GetComponent<PlayerAttack>();
-        if (_animation == null) throw new Exception("animation not set");
+        animator = GetComponent<Animator>();
     }
 
 	void Start () {
@@ -24,14 +19,6 @@ public class PlayerAttackingGraphics : MonoBehaviour {
     }
 	
     void Attacking(PlayerMain playerMain, PlayerWeaponDef weapon) {
-        _animation.SetTrigger("attacking");
+        animator.SetTrigger("attacking");
     }
-
-    IEnumerator Play() {
-        _animation.enabled = false;
-        yield return new WaitForEndOfFrame();
-        _animation.enabled = true;
-    }
-    
-	void Update () {}
 }

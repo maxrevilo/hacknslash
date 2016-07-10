@@ -5,6 +5,9 @@
 [RequireComponent(typeof(PlayerAttack))]
 public class PlayerMotion : MonoBehaviour
 {
+    public delegate void MovingEvent(PlayerMain playerMain, bool moving);
+    public event MovingEvent OnMovingEvent;
+
     [SerializeField]
     private float defSpeed = 2;
     private bool advancing;
@@ -12,10 +15,11 @@ public class PlayerMotion : MonoBehaviour
     
     // private PlayerMain playerMain;
     private PlayerAttack playerAttack;
-    
+    private PlayerMain playerMain;
+
     void Awake()
     {
-        // playerMain = GetComponent<PlayerMain>();
+        playerMain = GetComponent<PlayerMain>();
         playerRigidBody = GetComponent<Rigidbody>();
         playerAttack = GetComponent<PlayerAttack>();
     }
@@ -31,20 +35,27 @@ public class PlayerMotion : MonoBehaviour
     }
     void FixedUpdate()
     {
+        /*
         if (advancing)
         {
             playerRigidBody.MovePosition(
                 transform.position + defSpeed * Time.fixedDeltaTime * transform.forward
             );
         }
+        */
     }
 
     public void Advance() {
-        if(!playerAttack.isAtacking()) advancing = true;
+        if (!playerAttack.isAtacking())
+        {
+            advancing = true;
+            if (OnMovingEvent != null) OnMovingEvent(playerMain, true);
+        }
     }
 
     public void Stop() {
         advancing = false;
+        if (OnMovingEvent != null) OnMovingEvent(playerMain, false);
     }
 
     public void LookAt(Vector3 position, bool force = false) {
