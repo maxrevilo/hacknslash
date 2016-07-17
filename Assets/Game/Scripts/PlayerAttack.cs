@@ -105,7 +105,7 @@ public class PlayerAttack : MonoBehaviour {
     {
         if (OnAttackingEvent != null) OnAttackingEvent(playerMain, meleeWeaponDef);
         /* TODO: This might not have the desired effect if the cooldown restarts before hitting 0
-         * Several coroutines can be acumulated
+         * Several coroutines can be acumulated. Besides, native corrutines sucks.
         */
         do { yield return new WaitForFixedUpdate(); }
         while (!meleeAttackPreparation.HasFinished());
@@ -132,13 +132,13 @@ public class PlayerAttack : MonoBehaviour {
         if (!isAtacking()) {
             Debug.DrawLine(transform.position, transform.position + direction * dashWeaponDef.dashDistance, Color.green, 1.5f);
             playerMotion.Stop();
-            playerMotion.LookTowards(direction, true);
+            playerMotion.LookTowards(direction, true, true);
             StartCoroutine(ActivateDashMode());
         }
     }
     
     private IEnumerator ActivateDashMode() {
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForEndOfFrame();
         dashCooldown.Restart(dashWeaponDef.attackCooldown);
         dashRestitution.Restart(dashWeaponDef.attackRestitution);
         gameObject.layer = dashingLayer;

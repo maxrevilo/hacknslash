@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-// [RequireComponent(typeof(PlayerMain))]
+[RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerAttack))]
 public class PlayerMotion : MonoBehaviour
@@ -8,14 +8,17 @@ public class PlayerMotion : MonoBehaviour
     public delegate void MovingEvent(PlayerMain playerMain, bool moving);
     public event MovingEvent OnMovingEvent;
 
+    // [SerializeField]
+    // private float defSpeed = 2;
+    // private bool advancing;
     [SerializeField]
-    private float defSpeed = 2;
-    private bool advancing;
+    private float defRotationSpeed = 15;
+    private Quaternion targetDirection;
+
     private Rigidbody playerRigidBody;
-    
-    // private PlayerMain playerMain;
-    private PlayerAttack playerAttack;
     private PlayerMain playerMain;
+    private PlayerAttack playerAttack;
+
 
     void Awake()
     {
@@ -24,17 +27,15 @@ public class PlayerMotion : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
     }
 
-    void Start()
-    {
+    void Start(){}
 
-    }
+    void Update(){}
 
-    void Update()
-    {
-
-    }
     void FixedUpdate()
     {
+        transform.rotation = Quaternion.Slerp(
+            transform.rotation, targetDirection, Time.deltaTime * defRotationSpeed
+        );
         /*
         if (advancing)
         {
@@ -43,18 +44,19 @@ public class PlayerMotion : MonoBehaviour
             );
         }
         */
+
     }
 
     public void Advance() {
         if (!playerAttack.isAtacking())
         {
-            advancing = true;
+            // advancing = true;
             if (OnMovingEvent != null) OnMovingEvent(playerMain, true);
         }
     }
 
     public void Stop() {
-        advancing = false;
+        // advancing = false;
         if (OnMovingEvent != null) OnMovingEvent(playerMain, false);
     }
 
@@ -65,14 +67,16 @@ public class PlayerMotion : MonoBehaviour
         }
     }
 
-    public void LookTowards(Vector3 direction, bool force = false)
+    public void LookTowards(Vector3 direction, bool force = false, bool immediate = false)
     {
         if (force || !playerAttack.isAtacking())
         {
             direction.y = 0;
-            playerRigidBody.MoveRotation(
-                Quaternion.LookRotation(direction, transform.up)
-            );
+            targetDirection = Quaternion.LookRotation(direction, transform.up);
+            if(immediate)
+            {
+                transform.rotation = targetDirection;
+            }
         }
     }
 }
