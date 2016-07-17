@@ -291,7 +291,7 @@ ParticleSystem:
         rgba: 4294967295
       minMaxState: 0
     startSize:
-      scalar: 0.3
+      scalar: 0.15
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -432,7 +432,7 @@ ParticleSystem:
       minMaxState: 0
     randomizeRotationDirection: 0
     gravityModifier: 1
-    maxNumParticles: 20
+    maxNumParticles: 999
     rotation3D: 0
   ShapeModule:
     serializedVersion: 2
@@ -493,11 +493,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
       minMaxState: 0
-    cnt0: 20
+    cnt0: 100
     cnt1: 30
     cnt2: 30
     cnt3: 30
-    cntmax0: 20
+    cntmax0: 100
     cntmax1: 30
     cntmax2: 30
     cntmax3: 30
