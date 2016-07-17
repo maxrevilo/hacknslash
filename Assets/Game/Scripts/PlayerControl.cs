@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMotion))]
 public class PlayerControl : MonoBehaviour {
 	
-    // private PlayerMain playerMain;
+    private PlayerMain playerMain;
     private PlayerAttack playerAttack;
     private PlayerMotion playerMotion;
 
@@ -44,13 +44,16 @@ public class PlayerControl : MonoBehaviour {
     [SerializeField]
     private bool useJoystick = false;
 
+    private RaycastHit[] enemiesHit;
+
     void Awake() {
-		// playerMain = GetComponent<PlayerMain>();
+		playerMain = GetComponent<PlayerMain>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerMotion = GetComponent<PlayerMotion>();
 		mainCamera = Camera.main;
         playersLayerMask = LayerMask.GetMask(new String[]{"Player"});
-	}
+        enemiesHit = new RaycastHit[3];
+    }
 
 	void Start () {
         
@@ -216,18 +219,24 @@ public class PlayerControl : MonoBehaviour {
     PlayerMain GetEnemyOnScreenPosition(Vector3 screenPosition) {
         Ray screenRay = GetRayFromScreenPosition(screenPosition);
 
-        RaycastHit hit;
-        if (!Physics.SphereCast(screenRay, tapRayRadius, out hit, Mathf.Infinity, playersLayerMask)) {
+        int hits = Physics.SphereCastNonAlloc(screenRay, tapRayRadius, enemiesHit, Mathf.Infinity, playersLayerMask);
+        if(hits < 1)
+        {
             return null;
         }
 
-        PlayerMain player = hit.collider.GetComponent<PlayerMain>();
-
-        if(player == null) {
-            return null;
+        PlayerMain hitEnemy = null;
+        for (int i = 0; i < hits; i++)
+        {
+            PlayerMain hitPlayer = enemiesHit[i].collider.GetComponent<PlayerMain>();
+            if(hitPlayer.team != playerMain.team)
+            {
+                hitEnemy = hitPlayer;
+                break;
+            }
         }
 
-        return player;
+        return hitEnemy;
     }
 
     Ray GetRayFromScreenPosition(Vector3 screenPosition) {
