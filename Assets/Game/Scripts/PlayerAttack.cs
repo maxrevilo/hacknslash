@@ -25,7 +25,6 @@ public class PlayerAttack : MonoBehaviour {
     private PlayerMain playerMain;
     private PlayerMotion playerMotion;
 
-    private CountDown meleeAttackPreparation;
     private CountDown meleeAttackCooldown;
     private CountDown meleeAttackRestitution;
     private CountDown dashCooldown;
@@ -51,7 +50,6 @@ public class PlayerAttack : MonoBehaviour {
         playerLayer = gameObject.layer;
         dashingLayer = LayerMask.NameToLayer("Dashing");
 
-        meleeAttackPreparation = new CountDown();
         meleeAttackCooldown = new CountDown();
         meleeAttackRestitution = new CountDown();
         chargedAttackCooldown = new CountDown();
@@ -61,7 +59,6 @@ public class PlayerAttack : MonoBehaviour {
     }
 
 	void Start () {
-        meleeAttackPreparation.Stop();
         meleeAttackCooldown.Stop();
         meleeAttackRestitution.Stop();
         chargedAttackCooldown.Stop();
@@ -93,23 +90,15 @@ public class PlayerAttack : MonoBehaviour {
         if (!isAtacking() && meleeAttackCooldown.HasFinished()) {
             Debug.DrawLine(transform.position, position, Color.red, 1f);
             playerMotion.Stop();
-            meleeAttackPreparation.Restart(meleeWeaponDef.attackPreparation);
             meleeAttackCooldown.Restart(meleeWeaponDef.attackCooldown);
             meleeAttackRestitution.Restart(meleeWeaponDef.attackRestitution);
             playerMotion.LookAt(position, true);
-            StartCoroutine(ActivateAtackArea());
+            if (OnAttackingEvent != null) OnAttackingEvent(playerMain, meleeWeaponDef);
         }
     }
 
-    private IEnumerator ActivateAtackArea()
+    public void ActivateAtackArea()
     {
-        if (OnAttackingEvent != null) OnAttackingEvent(playerMain, meleeWeaponDef);
-        /* TODO: This might not have the desired effect if the cooldown restarts before hitting 0
-         * Several coroutines can be acumulated. Besides, native corrutines sucks.
-        */
-        do { yield return new WaitForFixedUpdate(); }
-        while (!meleeAttackPreparation.HasFinished());
-
         GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
             "HitArea",
             hitAreaSpawnZone.position,

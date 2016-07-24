@@ -21,4 +21,9 @@ public class PlayerAttackingGraphics : MonoBehaviour {
     void Attacking(PlayerMain playerMain, PlayerWeaponDef weapon) {
         animator.SetTrigger("attacking");
     }
+
+    public void StartHitMoment()
+    {
+        playerAttack.ActivateAtackArea();
+    }
 }
