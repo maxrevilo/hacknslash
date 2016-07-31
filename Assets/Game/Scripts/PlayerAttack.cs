@@ -16,6 +16,9 @@ public class PlayerAttack : MonoBehaviour {
     public delegate void AttackingEvent(PlayerMain playerMain, PlayerWeaponDef weapon);
     public event AttackingEvent OnAttackingEvent;
 
+    public delegate void DashingEvent(PlayerMain playerMain, PlayerWeaponDef weapon);
+    public event DashingEvent OnDashingEvent;
+
     public Transform hitAreaSpawnZone;
 
     public PlayerWeaponDef meleeWeaponDef;
@@ -123,6 +126,7 @@ public class PlayerAttack : MonoBehaviour {
             playerMotion.Stop();
             playerMotion.LookTowards(direction, true, true);
             StartCoroutine(ActivateDashMode());
+            if (OnDashingEvent != null) OnDashingEvent(playerMain, meleeWeaponDef);
         }
     }
     

@@ -8,9 +8,9 @@ public class PlayerMotion : MonoBehaviour
     public delegate void MovingEvent(PlayerMain playerMain, bool moving);
     public event MovingEvent OnMovingEvent;
 
-    // [SerializeField]
-    // private float defSpeed = 2;
-    // private bool advancing;
+    [SerializeField]
+    private float defSpeed = 2;
+    private bool advancing;
     [SerializeField]
     private float defRotationSpeed = 15;
     private Quaternion targetDirection;
@@ -36,27 +36,24 @@ public class PlayerMotion : MonoBehaviour
         transform.rotation = Quaternion.Slerp(
             transform.rotation, targetDirection, Time.deltaTime * defRotationSpeed
         );
-        /*
         if (advancing)
         {
             playerRigidBody.MovePosition(
                 transform.position + defSpeed * Time.fixedDeltaTime * transform.forward
             );
         }
-        */
-
     }
 
     public void Advance() {
         if (!playerAttack.isAtacking())
         {
-            // advancing = true;
+            advancing = true;
             if (OnMovingEvent != null) OnMovingEvent(playerMain, true);
         }
     }
 
     public void Stop() {
-        // advancing = false;
+        advancing = false;
         if (OnMovingEvent != null) OnMovingEvent(playerMain, false);
     }
 
