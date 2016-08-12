@@ -11,11 +11,6 @@ public class PlayerControl : MonoBehaviour {
     private PlayerMotion playerMotion;
 
 	private Camera mainCamera;
-    
-    [SerializeField]
-    private float distanceToStopOnTap = 0.5f;
-    [SerializeField]
-    private float distanceToAttackOnTap = 2.5f;
 
     [SerializeField]
     private float axisVectorDeadZone = 0.1f;
@@ -23,18 +18,10 @@ public class PlayerControl : MonoBehaviour {
     private float timeToEnterInHolding = 0.3f;
     [SerializeField]
     private float distanceToConsiderDash = 0.3f;
-    [SerializeField]
-    private float tapRayRadius = 0.7f;
 
     private float pressBegin = -1;
     private Vector3 pressPosition;
     private Vector3 lastDashWorldVector;
-
-    private enum ControlState
-    { Idle, Moving, Attacking }
-
-    private ControlState controlState = ControlState.Idle;
-    private Vector3 attackMark;
 
     private enum TouchType
     { None, Tap, Holding, HoldRelase, Dash, HeldDash }
@@ -70,7 +57,7 @@ public class PlayerControl : MonoBehaviour {
         switch (CheckTouchType())
         {
             case TouchType.Tap:
-                SetAttackOrMoveMode();
+                SetAttackMode();
                 break;
             case TouchType.Holding:
                 ChargeHeavyAttack();
@@ -89,39 +76,6 @@ public class PlayerControl : MonoBehaviour {
     }
 
 	void FixedUpdate () {
-        switch (controlState)
-        {
-            case ControlState.Idle:
-                break;
-            case ControlState.Moving: {
-                float sqrDistToAttackMark = Vector3.SqrMagnitude(transform.position - attackMark);
-                float sqrdistanceToStopOnTap = distanceToStopOnTap * distanceToStopOnTap;
-
-                if(sqrDistToAttackMark <= sqrdistanceToStopOnTap) {
-                    controlState = ControlState.Idle;
-                    playerMotion.Stop();
-                } else {
-                    playerMotion.LookAt(attackMark);
-                    playerMotion.Advance();
-                }
-                break;
-            }
-            case ControlState.Attacking: {
-                float sqrDistToAttackMark = Vector3.SqrMagnitude(transform.position - attackMark);
-                float sqrDistanceToAttackOnTap = distanceToAttackOnTap * distanceToAttackOnTap;
-                if(sqrDistToAttackMark <= sqrDistanceToAttackOnTap) {
-                    TriggerAttack(attackMark);
-                    controlState = ControlState.Idle;
-                    playerMotion.Stop();
-                } else {
-                    playerMotion.LookAt(attackMark);
-                    playerMotion.Advance();
-                }
-                break;
-            }
-            default:
-                break;
-        }
     }
 
     TouchType CheckTouchType()
@@ -170,35 +124,26 @@ public class PlayerControl : MonoBehaviour {
         return result;
     }
 
-    void SetAttackOrMoveMode()
+    void SetAttackMode()
     {
-        PlayerMain player = GetEnemyOnScreenPosition(Input.mousePosition);
-        if(player == null || player.gameObject == gameObject) {
-            controlState = ControlState.Moving;
-            attackMark = GetScreenPositonProjectedOnFloor(Input.mousePosition);
-        } else {
-            controlState = ControlState.Attacking;
-            attackMark = player.transform.position;
-        }
+        Vector3 attackMark = GetScreenPositonProjectedOnFloor(Input.mousePosition);
+        TriggerAttack(attackMark);
+        playerMotion.Stop();
     }
 
     void TriggerAttack(Vector3 position) {
         playerAttack.Attack(position);
-            controlState = ControlState.Idle;
     }
 
     void TriggerDash() {
-        controlState = ControlState.Idle;
         playerAttack.Dash(lastDashWorldVector.normalized);
     }
 
     void ChargeHeavyAttack() {
-        controlState = ControlState.Idle;
         playerAttack.ChargeHeavyAttack();
     }
 
     void ReleaseHeavyAttack() {
-        controlState = ControlState.Idle;
         playerAttack.ReleaseHeavyAttack();
     }
     
@@ -214,29 +159,6 @@ public class PlayerControl : MonoBehaviour {
         else throw new Exception(String.Format(
             "Failed projection of the screen point {0}", screenPosition
         ));
-    }
-
-    PlayerMain GetEnemyOnScreenPosition(Vector3 screenPosition) {
-        Ray screenRay = GetRayFromScreenPosition(screenPosition);
-
-        int hits = Physics.SphereCastNonAlloc(screenRay, tapRayRadius, enemiesHit, Mathf.Infinity, playersLayerMask);
-        if(hits < 1)
-        {
-            return null;
-        }
-
-        PlayerMain hitEnemy = null;
-        for (int i = 0; i < hits; i++)
-        {
-            PlayerMain hitPlayer = enemiesHit[i].collider.GetComponent<PlayerMain>();
-            if(hitPlayer.team != playerMain.team)
-            {
-                hitEnemy = hitPlayer;
-                break;
-            }
-        }
-
-        return hitEnemy;
     }
 
     Ray GetRayFromScreenPosition(Vector3 screenPosition) {
@@ -265,7 +187,6 @@ public class PlayerControl : MonoBehaviour {
         {
             playerMotion.LookTowards(direction);
             playerMotion.Advance();
-            controlState = ControlState.Idle;
         }
         else
         {
