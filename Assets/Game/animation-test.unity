@@ -11310,7 +11310,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.35
+  m_Radius: 0.21908857
   m_Height: 1.5622551
   m_Direction: 1
   m_Center: {x: 0, y: 0.78, z: 0}
@@ -11392,12 +11392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22fe64ca2da584278bc55734b31d8d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToStopOnTap: 0.65
-  distanceToAttackOnTap: 2.5
   axisVectorDeadZone: 0.1
   timeToEnterInHolding: 0.3
   distanceToConsiderDash: 0.6
-  tapRayRadius: 0.7
   useJoystick: 0
 --- !u!114 &2079977630
 MonoBehaviour:
