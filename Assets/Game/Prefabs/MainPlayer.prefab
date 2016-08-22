@@ -7184,9 +7184,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnLifeBar: 0
-  defHitPoints: 150
+  defHitPoints: 1500
   DeadBodyPrefabName: 
   hitPoints: 0
+  ImpactTimeScaleDistortion: 0
+  ImpactCameraShake: 0.2
 --- !u!114 &11486934
 MonoBehaviour:
   m_ObjectHideFlags: 1

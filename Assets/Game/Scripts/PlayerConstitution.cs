@@ -1,5 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
+using MovementEffects;
 
 [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(Rigidbody))]
@@ -24,6 +27,11 @@ public class PlayerConstitution : MonoBehaviour {
     
     [SerializeField]
     public float hitPoints;
+
+    [SerializeField]
+    private bool ImpactTimeScaleDistortion = true;
+    [SerializeField]
+    private float ImpactCameraShake = 1f;
 
     private GameObject lifeBarGO;
     
@@ -61,7 +69,27 @@ public class PlayerConstitution : MonoBehaviour {
     public void DamageWith(PlayerWeaponDef weapon)
     {
         if(OnAttackedEvent != null) OnAttackedEvent(playerMain, weapon);
+
+        if(ImpactCameraShake > 0)
+        {
+            CameraShaker.Instance.ShakeOnce(ImpactCameraShake * 1.5f, 6f, 0.15f, 0.05f);
+        }
         this.AddHitPoints(-weapon.attackDmg);
+
+        Timing.RunCoroutine(_TimeSlowDown(), Segment.FixedUpdate);
+    }
+
+    private IEnumerator<float> _TimeSlowDown()
+    {
+        /*
+        if(ImpactTimeScaleDistortion && Time.timeScale > 0.7f)
+        {
+            Time.timeScale = 0.1f;
+            yield return Timing.WaitForSeconds(0.007f);
+            Time.timeScale = 1f;
+        }
+        */
+        return null;
     }
 
     public void AddHitPoints(float hitPointsDiff)
