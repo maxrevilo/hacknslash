@@ -258,6 +258,10 @@ Prefab:
       propertyPath: disableOnDie.Array.size
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDead.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 467658, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.00023149
@@ -515,6 +519,26 @@ Prefab:
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDead.Array.data[0]
+      value: 
+      objectReference: {fileID: 1303963909}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDead.Array.data[2]
+      value: 
+      objectReference: {fileID: 541785747}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDead.Array.data[1]
+      value: 
+      objectReference: {fileID: 541785748}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDead.Array.data[3]
+      value: 
+      objectReference: {fileID: 541785746}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDead.Array.data[4]
+      value: 
+      objectReference: {fileID: 1303963908}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
   m_IsPrefabParent: 0
