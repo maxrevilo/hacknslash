@@ -61,7 +61,7 @@ public class PlayerAttack : MonoBehaviour {
         dashRestitution = new CountDown();
     }
 
-	void Start () {
+    void Start () {
         meleeAttackCooldown.Stop();
         meleeAttackRestitution.Stop();
         chargedAttackCooldown.Stop();
@@ -163,14 +163,12 @@ public class PlayerAttack : MonoBehaviour {
         {
             chargedAttackCooldown.Restart(chargedWeaponDef.attackCooldown);
             chargedAttackRestitution.Restart(chargedWeaponDef.attackRestitution);
-
-            StartCoroutine(ActivateChargedAttackArea());
         }
         
         if(OnReleaseHeavyAttackEvent != null) OnReleaseHeavyAttackEvent(playerMain, isCharged);
     }
 
-    private IEnumerator ActivateChargedAttackArea()
+    internal IEnumerator ActivateChargedAttackArea()
     {
         yield return new WaitForFixedUpdate();
         GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
