@@ -12,7 +12,6 @@ public class ChargeAttackGraphics : MonoBehaviour {
     
     private ParticleSystem[] chargingPS;
 
-    // private bool active = false;
     private int chargingHash;
     private int releaseChargeHash;
     

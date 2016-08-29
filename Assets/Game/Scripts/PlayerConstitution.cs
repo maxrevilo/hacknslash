@@ -16,6 +16,8 @@ public class PlayerConstitution : MonoBehaviour {
     
     public delegate void DieEvent(PlayerMain playerMain, float lastHit);
     public event DieEvent OnDieEvent;
+
+    public MonoBehaviour[] disableOnDead;
     
     public bool spawnLifeBar = true;
     
@@ -24,6 +26,8 @@ public class PlayerConstitution : MonoBehaviour {
     public float defHitPoints = 100;
     
     public string DeadBodyPrefabName;
+
+    public bool destroyOnDead = true;
     
     [SerializeField]
     public float hitPoints;
@@ -125,17 +129,20 @@ public class PlayerConstitution : MonoBehaviour {
     {
         StartCoroutine(DieCorruoutine());
     }
-    
+
     private IEnumerator DieCorruoutine() {
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
         
-        gameObject.DestroyAPS();
+        if(destroyOnDead) {
+            gameObject.DestroyAPS();
+        }
+
         if(lifeBarGO != null) {
             lifeBarGO.DestroyAPS();
         }
 
-        if(DeadBodyPrefabName != null) {
+        if(DeadBodyPrefabName != null && DeadBodyPrefabName.Length > 0) {
             GameObject deadBodyGO = PoolingSystem.Instance.InstantiateAPS(
                 DeadBodyPrefabName,
                 transform.position,
@@ -146,6 +153,10 @@ public class PlayerConstitution : MonoBehaviour {
             Rigidbody deadBodyRB = deadBodyGO.GetComponentInChildren<Rigidbody>();
             deadBodyRB.velocity = this._rigidBody.velocity;
             deadBodyRB.angularVelocity = this._rigidBody.angularVelocity;
+        }
+
+        foreach(MonoBehaviour mb in disableOnDead) {
+            mb.enabled = false;
         }
     }
 }

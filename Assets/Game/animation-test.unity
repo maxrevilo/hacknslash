@@ -254,6 +254,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1318821053}
     m_Modifications:
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDie.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 467658, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.00023149
@@ -479,6 +483,38 @@ Prefab:
       propertyPath: chargedWeaponDef.chargeTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11443224, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: useJoystick
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: destroyOnDead
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDie.Array.data[0]
+      value: 
+      objectReference: {fileID: 1303963909}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDie.Array.data[1]
+      value: 
+      objectReference: {fileID: 1303963908}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDie.Array.data[2]
+      value: 
+      objectReference: {fileID: 541785748}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDie.Array.data[3]
+      value: 
+      objectReference: {fileID: 541785747}
+    - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: disableOnDie.Array.data[4]
+      value: 
+      objectReference: {fileID: 541785746}
+    - target: {fileID: 5433318, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
   m_IsPrefabParent: 0
@@ -697,6 +733,24 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
   m_PrefabInternal: {fileID: 176113815}
+--- !u!114 &541785746 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11443224, guid: 340cf11ee4c0a412bb38ae1c8a831a1e,
+    type: 2}
+  m_PrefabInternal: {fileID: 179648025}
+  m_Script: {fileID: 11500000, guid: 22fe64ca2da584278bc55734b31d8d80, type: 3}
+--- !u!114 &541785747 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11497686, guid: 340cf11ee4c0a412bb38ae1c8a831a1e,
+    type: 2}
+  m_PrefabInternal: {fileID: 179648025}
+  m_Script: {fileID: 11500000, guid: 51ea78da7016846de9c8d0564612edaa, type: 3}
+--- !u!114 &541785748 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11486934, guid: 340cf11ee4c0a412bb38ae1c8a831a1e,
+    type: 2}
+  m_PrefabInternal: {fileID: 179648025}
+  m_Script: {fileID: 11500000, guid: a321965720c0d4efa93097b312c585e5, type: 3}
 --- !u!4 &542100320 stripped
 Transform:
   m_PrefabParentObject: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
