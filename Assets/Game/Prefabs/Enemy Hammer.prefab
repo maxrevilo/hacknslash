@@ -1807,7 +1807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b1306ee003f6743ac5d5f9571ce929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exponent: 1.8
+  exponent: 1.7
   factor: 0.5
 --- !u!114 &11402526
 MonoBehaviour:
