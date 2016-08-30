@@ -3019,6 +3019,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &183468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 439412}
+  - 135: {fileID: 13510712}
+  - 114: {fileID: 11479712}
+  m_Layer: 8
+  m_Name: SoftCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &183616
 GameObject:
   m_ObjectHideFlags: 1
@@ -4057,7 +4074,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150966}
-  m_LocalRotation: {x: 0.2392471, y: -0.63898534, z: -0.15701084, w: 0.7140071}
+  m_LocalRotation: {x: 0.23924711, y: -0.6389854, z: -0.15701085, w: 0.71400714}
   m_LocalPosition: {x: -0.25409517, y: -0.017321484, z: -0.03781982}
   m_LocalScale: {x: 1.0000001, y: 1.0000002, z: 1}
   m_Children:
@@ -4848,6 +4865,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 408784}
   m_RootOrder: 0
+--- !u!4 &439412
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183468}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 467658}
+  m_RootOrder: 9
 --- !u!4 &439744
 Transform:
   m_ObjectHideFlags: 1
@@ -5833,6 +5862,7 @@ Transform:
   - {fileID: 477966}
   - {fileID: 466090}
   - {fileID: 485244}
+  - {fileID: 439412}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &468388
@@ -7062,7 +7092,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!95 &9511620
 Animator:
@@ -7188,12 +7218,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec13c8fd149f4cc0a67cf1e25d8c801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableOnDead:
+  - {fileID: 11470000}
+  - {fileID: 11486934}
+  - {fileID: 11497686}
+  - {fileID: 11443224}
+  - {fileID: 11473416}
   spawnLifeBar: 0
   defHitPoints: 100
   DeadBodyPrefabName: 
+  destroyOnDead: 0
   hitPoints: 0
   ImpactTimeScaleDistortion: 0
   ImpactCameraShake: 0.2
+--- !u!114 &11479712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69b1306ee003f6743ac5d5f9571ce929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exponent: 1.5
+  factor: 5
 --- !u!114 &11486934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7228,7 +7278,7 @@ MonoBehaviour:
     directionalPushStrenght: 0
     radialPushStrenght: 10
     elevatingPushStrenght: 5
-    chargeTime: 0.5
+    chargeTime: 1
     dashDistance: 0
   dashWeaponDef:
     attackDmg: 1
@@ -7255,6 +7305,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defSpeed: 6
   defRotationSpeed: 15
+--- !u!135 &13510712
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183468}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!136 &13640916
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -7264,7 +7326,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.21908857
+  m_Radius: 0.1
   m_Height: 1.5622551
   m_Direction: 1
   m_Center: {x: 0, y: 0.78, z: 0}
@@ -13070,7 +13132,7 @@ ParticleSystem:
   serializedVersion: 2
   lengthInSec: 0.1
   startDelay:
-    scalar: 1.5
+    scalar: 1
     maxCurve:
       serializedVersion: 2
       m_Curve:
@@ -13502,9 +13564,9 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
+          value: 0.0806452
+          inSlope: 0.5303201
+          outSlope: 0.5303201
           tangentMode: 0
         - time: 1
           value: 1
