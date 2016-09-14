@@ -7224,8 +7224,9 @@ MonoBehaviour:
   - {fileID: 11497686}
   - {fileID: 11443224}
   - {fileID: 11473416}
+  - {fileID: 11479712}
   spawnLifeBar: 0
-  defHitPoints: 100
+  defHitPoints: 500
   DeadBodyPrefabName: 
   destroyOnDead: 0
   hitPoints: 0
@@ -7242,8 +7243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b1306ee003f6743ac5d5f9571ce929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exponent: 1.5
-  factor: 5
+  exponent: 1.8
+  factor: 0.5
 --- !u!114 &11486934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7326,7 +7327,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
+  m_Radius: 0.2
   m_Height: 1.5622551
   m_Direction: 1
   m_Center: {x: 0, y: 0.78, z: 0}

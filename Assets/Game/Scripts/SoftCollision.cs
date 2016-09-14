@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using MovementEffects;
 
 [RequireComponent(typeof(Collider))]
 public class SoftCollision : MonoBehaviour {
@@ -24,11 +26,21 @@ public class SoftCollision : MonoBehaviour {
     {
         foreach(SoftCollision softCollision in softCollisions)
         {
+            if(!softCollision.isActiveAndEnabled)
+            {
+                Debug.LogFormat("Removing soft collision {0} by death.", softCollision.transform.parent.gameObject.name);
+                Timing.RunCoroutine(_RemoveCollisionAsync(softCollision), Segment.FixedUpdate);
+                continue;
+            }
+
             Debug.DrawLine(transform.position + new Vector3(0, 2, 0), softCollision.transform.position + new Vector3(0, 2, 0), Color.cyan);
 
             Transform otherTransform = softCollision.transform;
 
             Vector3 fromToVec = otherTransform.position - transform.position;
+
+            // We want to avoid pushing objects towards the air, so we will remove the vertical component.
+            fromToVec.y *= 0f;
 
             float invDistance = 1f / fromToVec.magnitude;
 
@@ -77,5 +89,11 @@ public class SoftCollision : MonoBehaviour {
     private void RemoveCollision(SoftCollision newSoftCollision)
     {
         softCollisions.Remove(newSoftCollision);
+    }
+
+    private IEnumerator<float> _RemoveCollisionAsync(SoftCollision softCollision)
+    {
+        yield return 0f;
+        RemoveCollision(softCollision);
     }
 }
