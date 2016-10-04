@@ -1650,8 +1650,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 132706}
-  m_LocalRotation: {x: 0, y: 0.9517637, z: 0, w: 0.30683216}
-  m_LocalPosition: {x: -3.07, y: 0, z: 4.55}
+  m_LocalRotation: {x: 0, y: 0.99955535, z: 0, w: 0.02982003}
+  m_LocalPosition: {x: -1.13, y: 0, z: 6.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 456328}
@@ -1858,7 +1858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitAreaSpawnZone: {fileID: 449392}
   meleeWeaponDef:
-    attackDmg: 8
+    attackDmg: 50
     projectileType: 0
     hitAreaLifeSpan: 0.1
     attackCooldown: 3
@@ -1906,7 +1906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disableOnDead: []
   spawnLifeBar: 1
-  defHitPoints: 50
+  defHitPoints: 14
   DeadBodyPrefabName: DeadEnemy
   destroyOnDead: 1
   hitPoints: 0
