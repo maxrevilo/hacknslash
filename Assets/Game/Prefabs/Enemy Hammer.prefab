@@ -1858,7 +1858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitAreaSpawnZone: {fileID: 449392}
   meleeWeaponDef:
-    attackDmg: 50
+    attackDmg: 5
     projectileType: 0
     hitAreaLifeSpan: 0.1
     attackCooldown: 3
@@ -1906,7 +1906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disableOnDead: []
   spawnLifeBar: 1
-  defHitPoints: 14
+  defHitPoints: 20
   DeadBodyPrefabName: DeadEnemy
   destroyOnDead: 1
   hitPoints: 0
@@ -1946,7 +1946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ea78da7016846de9c8d0564612edaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defSpeed: 0
+  defSpeed: 5
   defRotationSpeed: 15
 --- !u!114 &11482446
 MonoBehaviour:

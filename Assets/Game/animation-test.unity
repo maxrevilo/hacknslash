@@ -130,15 +130,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11466936, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: defHitPoints
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 11440158, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: meleeWeaponDef.attackDmg
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
@@ -192,7 +184,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11473416, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
       propertyPath: defHitPoints
-      value: 50
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486934, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: meleeWeaponDef.directionalPushStrenght
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486934, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: meleeWeaponDef.attackPreparation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11486934, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: meleeWeaponDef.radialPushStrenght
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5433318, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
+      propertyPath: m_Drag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 340cf11ee4c0a412bb38ae1c8a831a1e, type: 2}
@@ -332,7 +340,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-393506
+  m_Name: pb_Mesh12540
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -531,10 +539,6 @@ Prefab:
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_Name
       value: Enemy Hammer (6)
-      objectReference: {fileID: 0}
-    - target: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_IsActive
@@ -769,17 +773,9 @@ Prefab:
       propertyPath: m_Name
       value: Enemy Hammer (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
@@ -1020,13 +1016,9 @@ Prefab:
       propertyPath: m_Name
       value: Enemy Hammer (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
@@ -1074,13 +1066,9 @@ Prefab:
       propertyPath: m_Name
       value: Enemy Hammer (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
@@ -1215,6 +1203,10 @@ Prefab:
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_Name
       value: Enemy Hammer (0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11466936, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
+      propertyPath: defHitPoints
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
@@ -1962,13 +1954,9 @@ Prefab:
       propertyPath: m_Name
       value: Enemy Hammer (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 487404, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 132706, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 46cd210bbe476e342a1495d965465a52, type: 2}
