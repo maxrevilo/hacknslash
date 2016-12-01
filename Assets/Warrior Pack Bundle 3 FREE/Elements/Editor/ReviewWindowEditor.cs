@@ -3,20 +3,20 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace WarriorBundle3FREE{ //MODIFY
+namespace WarriorBundle1FREE{ //MODIFY
     [InitializeOnLoad]
     public class ReviewWindowEditor : EditorWindow{
         private static ReviewConfig currentConfig;
 		private static Texture2D reviewWindowImage;
 		private static string fileName = "RatingSetup";
-		private static string imagePath = "/Resources/Warrior-Pack-Bundle-3-FREE-Review.jpg"; //MODIFY
+		private static string imagePath = "/Resources/Warrior-Pack-Bundle-1-FREE-Review.jpg"; //MODIFY
         static ReviewWindowEditor(){
 			if (ReviewWindowEditor.Current == null)
                 return;
 			Count();
         }
 
-        [MenuItem("Window/Warrior Pack Bundle 3 FREE/Review")] //MODIFY
+        [MenuItem("Window/Warrior Pack Bundle 1 FREE/Review")] //MODIFY
         static void Init(){
             EditorWindow.GetWindowWithRect(typeof(ReviewWindowEditor), new Rect(0, 0, 256, 256), false, "Review Window");
         }
@@ -36,7 +36,7 @@ namespace WarriorBundle3FREE{ //MODIFY
 			GUILayout.Space(20);
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Rate now!")){
-				UnityEditorInternal.AssetStore.Open("content/47320"); //MODIFY
+				UnityEditorInternal.AssetStore.Open("content/36405"); //MODIFY
                 DisableRating();
             }
             if (GUILayout.Button("Later")){

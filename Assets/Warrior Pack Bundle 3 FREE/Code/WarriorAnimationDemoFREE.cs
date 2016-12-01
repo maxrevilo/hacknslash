@@ -94,8 +94,16 @@ public class WarriorAnimationDemoFREE : MonoBehaviour
 		//get movement input from controls
 		Vector3 motion = inputVec;
 
+        float motionFactor;
+        if(Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.z) == 1)
+        {
+            motionFactor = 0.7f;
+        } else
+        {
+            motionFactor = 1f;
+        }
 		//reduce input for diagonal movement
-		motion *= (Mathf.Abs(inputVec.x) == 1 && Mathf.Abs(inputVec.z) == 1)?.7f:1;
+		motion *= motionFactor;
 
 		RotateTowardMovementDirection();  
 		GetCameraRelativeMovement();  
