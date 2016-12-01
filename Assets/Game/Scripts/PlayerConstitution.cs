@@ -35,7 +35,7 @@ public class PlayerConstitution : MonoBehaviour {
     [SerializeField]
     private bool ImpactTimeScaleDistortion = true;
     [SerializeField]
-    private float ImpactCameraShake = 1f;
+    private float ImpactCameraShake = 1.5f;
 
     private GameObject lifeBarGO;
     
@@ -76,7 +76,7 @@ public class PlayerConstitution : MonoBehaviour {
 
         if(ImpactCameraShake > 0)
         {
-            CameraShaker.Instance.ShakeOnce(ImpactCameraShake * 1.5f, 6f, 0.15f, 0.05f);
+            CameraShaker.Instance.ShakeOnce(ImpactCameraShake, 6f, 0.15f, 0.05f);
         }
         this.AddHitPoints(-weapon.attackDmg);
 
