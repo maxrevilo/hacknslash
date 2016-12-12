@@ -144,8 +144,9 @@ public class PlayerStability: MonoBehaviour {
             Vector3 vectorToPlayer = Vector3.Normalize(playerMain.transform.position - hitArea.transform.position);
             Vector3 radialPushVector = vectorToPlayer * weapon.radialPushStrenght;
             Vector3 elevatingPushVector = Vector3.up * weapon.elevatingPushStrenght;
-            _rigidBody.AddForce(directionalPushVector + radialPushVector + elevatingPushVector, ForceMode.Impulse);
-            playerMain.transform.LookAt(hitArea.transform);
+            Vector3 finalImpulse = directionalPushVector + radialPushVector + elevatingPushVector; 
+            _rigidBody.AddForce(finalImpulse, ForceMode.Impulse);
+            playerMain.transform.rotation.SetLookRotation(finalImpulse, transform.up);
         }
         else if (stability <= defStability * KNOCKBACK_STABILITY)
         {
