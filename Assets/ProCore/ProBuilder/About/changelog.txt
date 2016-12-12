@@ -1,3 +1,106 @@
+# ProBuilder 2.6.6f0
+
+## Features
+
+- Unity 5.5 support.
+- Improve readability of Unity version -> ProBuilder package chart.
+- Improve performance of mesh rebuild functions.
+- Add API example showing how to highlight faces based on distance to a point.
+
+## Bug Fixes
+
+- Don't update mouse edge when not in geometry mode.
+- Fix face and edge previews only rendering a subset of elements on meshes with high vertex counts.
+- ProBuilder Editor doesn't need to be open to export meshes.
+- Fix weird triangulation on Door shape.
+  Fix some incorrect calls to pbUndo.RecordObjects that could cause Unity to lock up with large meshes.
+- Fix bug where "Export Mesh Asset" would always create an extra folder.
+
+## Changes
+
+- pb_Object.Refresh now accepts a bitmask to enable/disable different component refreshes.
+- Move Create ProBuilder Cube menu item to "GameObject/3D Object/ProBuilder Cube".
+
+# ProBuilder 2.6.5f0
+
+## Features
+
+- Add procedural mesh extrusion example.
+
+## Bug Fixes
+
+- Fix bug where face/vertex picking with hidden selection off and intersect rect would not work in deferred rendering path.
+- Fix bug when "Meshes are Assets" is enabled where exiting play mode would clear the mesh cache.
+- Fix bug when "Meshes are Assets" is enabled where entering play mode would invalidate the mesh cache.
+- Fix bug when "Meshes are Assets" is enabled where deleting a selection of pb_Objects would leave orphaned cached meshes.
+- Fix bug where UV2 channel of selected objects would be lost on scene save with "Meshes are Assets" enabled.
+- Fix bug where stripping ProBuilder scripts with "Meshes are Assets" enabled would also delete the cached mesh asset.
+- Fix incorrectly scaling slider control on retina display.
+
+# ProBuilder 2.6.4f1
+
+## Features
+
+- Unity 5.5 Beta compatibility.
+
+## Bug Fixes
+
+- Fix bug where generating UV2 would incorrectly merge incompatible vertices in the optimization function due to vertex references not being unique when returning from GeneratePerTriangleMesh.
+- Add icons for `Drag Selection Mode`.
+- Add `Toggle Drag Rect Mode` icons.
+- Fix selected vertex billboards not rendering in 5.5 beta.
+- Fix crash when setting pivot with multiple objects selected.
+- Fix setting pivot of a parent object moving children.
+- Don't disable the object outline when Probuilder is open, but do disable wireframe.
+- Fix prism shape height resulting in half-sized shapes.
+- Add `Triangulate Faces` icon.
+- Ensure icons are always imported with the correct settings.
+- Fix "Generate Scene UVs" toggle not being respected in `Generate UV2` action
+- Fix bug where drag selecting with shift in subtraction mode with complete rect selection would always deselect the entire selection.
+
+# ProBuilder 2.6.3f4
+
+## Features
+
+- New `Vertex Positions Editor` provides fine-grained control over vertex postions.
+- Add `Anchor` setting for Auto UVs to align faces before user transforms.
+- When drag selecting faces add option to select by intersection.  Toggle with menu item `Drag: Complete/Intersect`.
+- New icons for `Select by {Material, Color}`.
+- Significantly improve editor performance when drag selecting faces and vertices with `Select Hidden: Off`.
+- New alternate drag selection modes: `Add`, `Subtract`, and `Difference` affects how the `Shift` key modifies selection when drag selecting elements.
+
+## Bug Fixes
+
+- Fix bug where using Undo in face selection mode could potentially delete faces on prefabs.
+- Fix import settings on icons.
+- Fix bug where `Fill Hole` would not correctly align normals after operation, sometimes also reversing neighboring face normals.
+- Fix bug where `Fill Hole` would sometimes leave the filled faces with invalid edge caches (resulting in incorrect normals on extruding from the filled face).
+- Added miscellaneous missing actions to documentation.
+- Fix bug where drag selecting faces would sometimes leave the picker rect visible.
+- Disable Select By Material/Color when no elements are selected.
+
+## Changes
+
+- Use Unity's default UV2 unwrapping parameters since they seem to produce generally better results than the padded params currently in use.
+- New ProBuilder objects instantiate with `ShadowCastingMode.TwoSided` (configurable in Preferences/ProBuilder).
+
+# ProBuilder 2.6.2f0
+
+## Features
+
+- Add STL file export support.
+- Standard Vertex Color shader now compatible with Unity 5.5 beta changes.
+- Add API Example showing how to set custom default UV2 Unwrap Parameters.
+
+## Bug Fixes
+
+- Fix bug where exporting OBJ would sometimes insert "AllFiles" into the file path.
+- Fix drag selecting edges then bridging sometimes using the default material instead of a neighboring one.
+- Fix compile error when using Fog with Standard Vertex Color shader.
+- Fix console warnings in Unity 5.5.0b1
+- Fix bug where `Select Edge Loop` would select too many edges.
+- Don't show missing icon warnings unless in PB_DEBUG mode.
+
 # ProBuilder 2.6.1f0
 
 ## Features

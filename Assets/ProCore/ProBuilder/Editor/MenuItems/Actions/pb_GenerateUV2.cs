@@ -9,7 +9,6 @@ namespace ProBuilder2.Actions
 {
 	public class pb_GenerateUV2 : Editor
 	{
-
 		[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Actions/Generate UV2 - Selection", true, pb_Constant.MENU_ACTIONS + 20)]
 		public static bool VerifyGenerateUV2Selection()
 		{
@@ -22,7 +21,7 @@ namespace ProBuilder2.Actions
 			pb_Object[] sel = Selection.transforms.GetComponents<pb_Object>();
 
 			if( !Menu_GenerateUV2(sel) )
-				return;	/// user canceled
+				return;	// user canceled
 
 			if(sel.Length > 0)
 				pb_EditorUtility.ShowNotification("Generated UV2 for " + sel.Length + " Meshes");
@@ -45,7 +44,7 @@ namespace ProBuilder2.Actions
 		}
 
 		static bool Menu_GenerateUV2(pb_Object[] selected)
-		{			
+		{
 			for(int i = 0; i < selected.Length; i++)
 			{
 				if(selected.Length > 3)
