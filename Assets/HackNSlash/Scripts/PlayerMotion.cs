@@ -36,21 +36,18 @@ public class PlayerMotion : MonoBehaviour
 
     void FixedUpdate()
     {
-        switch(playerStability.state)
+        if (playerStability.IsStable())
         {
-            case PlayerStability.PlayerStabilityState.Stable:
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation, targetDirection, Time.deltaTime * defRotationSpeed
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation, targetDirection, Time.deltaTime * defRotationSpeed
+            );
+            if (advancing)
+            {
+                playerRigidBody.MovePosition(
+                    transform.position + defSpeed * Time.fixedDeltaTime * transform.forward
                 );
-                if (advancing)
-                {
-                    playerRigidBody.MovePosition(
-                        transform.position + defSpeed * Time.fixedDeltaTime * transform.forward
-                    );
-                }
-                break;
+            }
         }
-        
     }
 
     public void Advance() {

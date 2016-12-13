@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 
-class CountDown
+[System.Serializable]
+public struct CountDown
 {
-    private float finishTime = 0;
+    private float finishTime;
 
     public float TimeToFinish() { return finishTime - Time.fixedTime; }
 

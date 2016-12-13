@@ -5,13 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerMotion))]
+[RequireComponent(typeof(PlayerStability))]
 public class EnemyAI : MonoBehaviour {
 	public float defAttackDistance = 3f; 
 	
 	[SerializeField]
 	private float defAttackDelay = 1f;
 	
-	private float attackDelay = 0;
+	private CountDown attackDelay;
 
 	private BattleGameScene battleGameScene;
 
@@ -20,6 +21,7 @@ public class EnemyAI : MonoBehaviour {
     private PlayerMain playerMain;
     private PlayerAttack playerAttack;
     private PlayerMotion playerMotion;
+	private PlayerStability playerStability;
 
 	[SerializeField]
 	private CollisionPub sightColliderPub;
@@ -31,8 +33,16 @@ public class EnemyAI : MonoBehaviour {
 		playerMain = GetComponent<PlayerMain>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerMotion = GetComponent<PlayerMotion>();
+		playerStability = GetComponent<PlayerStability>();
 
 		enemiesInSight = new ArrayList();
+
+		sightColliderPub.OnTriggerEnterEvent += OnSight;
+		sightColliderPub.OnTriggerExitEvent += OutOfSight;
+
+		playerStability.OnStunLockedEvent += Interrupted;
+		playerStability.OnKnockedBackEvent += Interrupted;
+		playerStability.OnThrownEvent += Interrupted;
 	}
 
 	void Start () {
@@ -40,9 +50,13 @@ public class EnemyAI : MonoBehaviour {
 		if(battleGameScene == null) throw new Exception("battleGameScene not found");
 
 		if(sightColliderPub == null) throw new Exception("sightColliderPub not found");
-		sightColliderPub.OnTriggerEnterEvent += OnSight;
-		sightColliderPub.OnTriggerExitEvent += OutOfSight;
+
+		attackDelay.Stop();
 	}
+
+	void Interrupted() {
+        attackDelay.Restart(defAttackDelay);
+    }
 
 	void OnSight(Collider other) {
 		PlayerMain player = other.GetComponent<PlayerMain>();
@@ -79,7 +93,7 @@ public class EnemyAI : MonoBehaviour {
 
 	void LockTarget(PlayerMain player) {
 		target = player;
-		attackDelay = defAttackDelay;
+		attackDelay.Restart(defAttackDelay);
 	}
 
 	void Disengage() {
@@ -98,17 +112,15 @@ public class EnemyAI : MonoBehaviour {
 		if(target != null) {
 			playerMotion.LookAt(target.transform.position);
 
-			attackDelay -= Time.fixedDeltaTime;
-
 			float distance = Vector3.Distance(target.transform.position, transform.position);
 			if(distance >= defAttackDistance) {
 				playerMotion.Advance();
 			} else {
 				playerMotion.Stop();
 				
-				if(attackDelay <= 0) {
+				if(attackDelay.HasFinished()) {
 					playerAttack.Attack(target.transform.position);
-					attackDelay = defAttackDelay;
+					attackDelay.Restart(defAttackDelay);
 				}
 			}
 		} else {

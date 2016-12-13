@@ -5,6 +5,7 @@ using System.Collections;
 [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerMotion))]
+[RequireComponent(typeof(PlayerStability))]
 public class PlayerAttack : MonoBehaviour {
 
     public delegate void ChargingHeavyAttackEvent(PlayerMain playerMain);
@@ -27,6 +28,7 @@ public class PlayerAttack : MonoBehaviour {
 
     private PlayerMain playerMain;
     private PlayerMotion playerMotion;
+    private PlayerStability playerStability;
 
     private CountDown meleeAttackCooldown;
     private CountDown meleeAttackRestitution;
@@ -47,18 +49,16 @@ public class PlayerAttack : MonoBehaviour {
         playerMain = GetComponent<PlayerMain>();
         playerRigidBody = GetComponent<Rigidbody>();
         playerMotion = GetComponent<PlayerMotion>();
+        playerStability = GetComponent<PlayerStability>();
 
 		if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
 
         playerLayer = gameObject.layer;
         dashingLayer = LayerMask.NameToLayer("Dashing");
 
-        meleeAttackCooldown = new CountDown();
-        meleeAttackRestitution = new CountDown();
-        chargedAttackCooldown = new CountDown();
-        chargedAttackRestitution = new CountDown();
-        dashCooldown = new CountDown();
-        dashRestitution = new CountDown();
+        playerStability.OnStunLockedEvent += Interrupted;
+		playerStability.OnKnockedBackEvent += Interrupted;
+		playerStability.OnThrownEvent += Interrupted;
     }
 
     void Start () {
@@ -89,10 +89,14 @@ public class PlayerAttack : MonoBehaviour {
         }
 	}
 
+    void Interrupted() {
+        // Noting to interrupt, the animation is in charge of that part of the logic (which is bad).
+    }
+
     public void Attack(Vector3 position) {
-        if (!isAtacking() && meleeAttackCooldown.HasFinished()) {
+        playerMotion.Stop();
+        if (isAbleToAttack() && meleeAttackCooldown.HasFinished()) {
             Debug.DrawLine(transform.position, position, Color.red, 1f);
-            playerMotion.Stop();
             meleeAttackCooldown.Restart(meleeWeaponDef.attackCooldown);
             meleeAttackRestitution.Restart(meleeWeaponDef.attackRestitution);
             playerMotion.LookAt(position, true);
@@ -120,10 +124,15 @@ public class PlayerAttack : MonoBehaviour {
             || !chargedAttackRestitution.HasFinished();
     }
 
+    public bool isAbleToAttack()
+    {
+        return playerStability.IsStable() && !isAtacking();
+    }
+
     public void Dash(Vector3 direction) {
-        if (!isAtacking()) {
+        playerMotion.Stop();
+        if (isAbleToAttack()) {
             Debug.DrawLine(transform.position, transform.position + direction * dashWeaponDef.dashDistance, Color.green, 1.5f);
-            playerMotion.Stop();
             playerMotion.LookTowards(direction, true, true);
             StartCoroutine(ActivateDashMode());
             if (OnDashingEvent != null) OnDashingEvent(playerMain, meleeWeaponDef);
@@ -145,10 +154,10 @@ public class PlayerAttack : MonoBehaviour {
 
     public void ChargeHeavyAttack()
     {
-        if(!isAtacking() && chargedAttackCooldown.HasFinished() && !isChargingHeavyAttack())
+        playerMotion.Stop();
+        if(isAbleToAttack() && chargedAttackCooldown.HasFinished() && !isChargingHeavyAttack())
         {
             chargingStartedAt = Time.time;
-            playerMotion.Stop();
             
             if(OnChargingHeavyAttackEvent != null) OnChargingHeavyAttackEvent(playerMain);
         }

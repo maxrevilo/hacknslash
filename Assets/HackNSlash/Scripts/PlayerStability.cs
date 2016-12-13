@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(PlayerConstitution))]
@@ -56,10 +57,18 @@ public class PlayerStability: MonoBehaviour {
     /// Stability Hit Points.
     /// </summary>
     public float defStability = 60;
+
     /// <summary>
     /// Time after the last hit to recover full stability, if the player is hit this timer will be reset.
     /// </summary>
     public float defTimeToRecover = 2f;
+
+    /// <summary>
+    /// How long the player will last stun locked
+    /// </summary>
+    public float defStunLockDuration = 1f;
+
+    public float defTimeToBackUp = 4f;
 
     /// <summary>
     /// Min percentage of stability that prevents the player from being stun-locked.
@@ -74,8 +83,10 @@ public class PlayerStability: MonoBehaviour {
     /// </summary>
     public const float THROWN_STABILITY = 0f;
 
-    public float stability;
-    public float recoverTimer;
+    private float stability;
+    private CountDown recoveryCounter;
+    private CountDown stunLockCounter;
+    private CountDown backUpCounter;
     private PlayerMain playerMain;
     private PlayerConstitution playerConstitution;
     private Rigidbody _rigidBody;
@@ -85,40 +96,64 @@ public class PlayerStability: MonoBehaviour {
         playerMain = GetComponent<PlayerMain>();
         playerConstitution = GetComponent<PlayerConstitution>();
         _rigidBody = GetComponent<Rigidbody>();
+
+        playerConstitution.OnAttackedEvent += Hit;
     }
 
     // Use this for initialization
     void Start () {
         stability = defStability;
-        recoverTimer = 0f;
         state = PlayerStabilityState.Stable;
 
-        playerConstitution.OnAttackedEvent += Hit;
+        recoveryCounter.Stop();
+        stunLockCounter.Stop();
+        backUpCounter.Stop();
     }
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-        recoverTimer -= Time.fixedDeltaTime;
-        if (recoverTimer <= 0f)
+        switch (state)
         {
-            recoverTimer = 0f;
+            case PlayerStabilityState.Stable:
+                break;
+            case PlayerStabilityState.StunLocked:
+                if(stunLockCounter.HasFinished()) {
+                    state = PlayerStabilityState.Stable;
+                }
+                break;
+            case PlayerStabilityState.KnockedBack:
+            case PlayerStabilityState.Thrown:
+                if(backUpCounter.HasFinished()) {
+                    state = PlayerStabilityState.Stable;
+                    stability = defStability;
+                    if (OnBackUpEvent != null) OnBackUpEvent();
+                }
+                break;
+        }
+        
+        if (recoveryCounter.HasFinished())
+        {
             stability = defStability;
-
+            /*
             switch (state)
             {
                 case PlayerStabilityState.Stable:
                     break;
                 case PlayerStabilityState.StunLocked:
-                    state = PlayerStabilityState.Stable;
-                    break;
+                    // This should not happen since defStunLockDuration < defTimeToRecover
+                    throw new Exception("Invalid state");
                 case PlayerStabilityState.KnockedBack:
                 case PlayerStabilityState.Thrown:
                     state = PlayerStabilityState.Stable;
-                    if (OnBackUpEvent != null) OnBackUpEvent();
                     break;
             }
+            */
         }
 	}
+
+    public bool IsStable() {
+        return state == PlayerStabilityState.Stable;
+    }
 
     public void Hit(HitArea hitArea)
     {
@@ -126,64 +161,74 @@ public class PlayerStability: MonoBehaviour {
 
         stability = Mathf.Max(stability - weapon.attackDmg, 0f);
 
-        //TODO: This is really hard to read
-        if (stability <= defStability * THROWN_STABILITY)
-        {
-            switch(state)
-            {
-                case PlayerStabilityState.Stable:
-                case PlayerStabilityState.StunLocked:
-                case PlayerStabilityState.KnockedBack:
-                    state = PlayerStabilityState.Thrown;
-                    recoverTimer = defTimeToRecover;
-                    if (OnThrownEvent != null) OnThrownEvent();
-                    break;
-            }
+        if (stability <= defStability * THROWN_STABILITY) ThrowPlayer(hitArea);
+        else if (stability <= defStability * KNOCKBACK_STABILITY) KnockBackPlayer(hitArea);
+        else if (stability <= defStability * STUNLOCK_STABILITY) StunLockPlayer(hitArea);
+        else StunPlayer(hitArea);
+    }
 
-            Vector3 directionalPushVector = hitArea.transform.forward * weapon.directionalPushStrenght;
-            Vector3 vectorToPlayer = Vector3.Normalize(playerMain.transform.position - hitArea.transform.position);
-            Vector3 radialPushVector = vectorToPlayer * weapon.radialPushStrenght;
-            Vector3 elevatingPushVector = Vector3.up * weapon.elevatingPushStrenght;
-            Vector3 finalImpulse = directionalPushVector + radialPushVector + elevatingPushVector; 
-            _rigidBody.AddForce(finalImpulse, ForceMode.Impulse);
-            playerMain.transform.rotation.SetLookRotation(finalImpulse, transform.up);
+    private void ThrowPlayer(HitArea hitArea) {
+        PlayerWeaponDef weapon = hitArea.playerWeaponDef;
+
+        switch(state)
+        {
+            case PlayerStabilityState.Stable:
+            case PlayerStabilityState.StunLocked:
+            case PlayerStabilityState.KnockedBack:
+                state = PlayerStabilityState.Thrown;
+                backUpCounter.Restart(defTimeToBackUp);
+                recoveryCounter.Restart(defTimeToRecover);
+                if (OnThrownEvent != null) OnThrownEvent();
+                break;
         }
-        else if (stability <= defStability * KNOCKBACK_STABILITY)
+
+        Vector3 directionalPushVector = hitArea.transform.forward * weapon.directionalPushStrenght;
+        Vector3 vectorToPlayer = Vector3.Normalize(playerMain.transform.position - hitArea.transform.position);
+        Vector3 radialPushVector = vectorToPlayer * weapon.radialPushStrenght;
+        Vector3 elevatingPushVector = Vector3.up * weapon.elevatingPushStrenght;
+        Vector3 finalImpulse = directionalPushVector + radialPushVector + elevatingPushVector; 
+        _rigidBody.AddForce(finalImpulse, ForceMode.Impulse);
+    }
+
+    private void KnockBackPlayer(HitArea hitArea) {
+        switch (state)
         {
-            switch (state)
-            {
-                case PlayerStabilityState.Stable:
-                case PlayerStabilityState.StunLocked:
-                    state = PlayerStabilityState.KnockedBack;
-                    recoverTimer = defTimeToRecover;
-                    if (OnKnockedBackEvent != null) OnKnockedBackEvent();
-                    break;
-                case PlayerStabilityState.KnockedBack:
-                    recoverTimer = defTimeToRecover;
-                    break;
-            }
+            case PlayerStabilityState.Stable:
+            case PlayerStabilityState.StunLocked:
+                state = PlayerStabilityState.KnockedBack;
+                recoveryCounter.Restart(defTimeToRecover);
+                backUpCounter.Restart(defTimeToBackUp);
+                if (OnKnockedBackEvent != null) OnKnockedBackEvent();
+                break;
+            case PlayerStabilityState.KnockedBack:
+                recoveryCounter.Restart(defTimeToRecover);
+                break;
         }
-        else if (stability <= defStability * STUNLOCK_STABILITY)
+    }
+
+    private void StunLockPlayer(HitArea hitArea) {
+        switch (state)
         {
-            switch (state)
-            {
-                case PlayerStabilityState.Stable:
-                case PlayerStabilityState.StunLocked:
-                    state = PlayerStabilityState.StunLocked;
-                    recoverTimer = defTimeToRecover;
-                    if (OnStunLockedEvent != null) OnStunLockedEvent();
-                    break;
-            }
-        } else
+            case PlayerStabilityState.Stable:
+            case PlayerStabilityState.StunLocked:
+                state = PlayerStabilityState.StunLocked;
+                recoveryCounter.Restart(defTimeToRecover);
+                stunLockCounter.Restart(defStunLockDuration);
+
+                if (OnStunLockedEvent != null) OnStunLockedEvent();
+
+                break;
+        }
+    }
+
+    private void StunPlayer(HitArea hitArea) {
+        switch (state)
         {
-            switch (state)
-            {
-                case PlayerStabilityState.Stable:
-                    state = PlayerStabilityState.Stable;
-                    recoverTimer = defTimeToRecover;
-                    if (OnStunnedEvent != null) OnStunnedEvent();
-                    break;
-            }
+            case PlayerStabilityState.Stable:
+                state = PlayerStabilityState.Stable;
+                recoveryCounter.Restart(defTimeToRecover);
+                if (OnStunnedEvent != null) OnStunnedEvent();
+                break;
         }
     }
 }
