@@ -29,6 +29,7 @@ public class PlayerAttack : MonoBehaviour {
     private PlayerMain playerMain;
     private PlayerMotion playerMotion;
     private PlayerStability playerStability;
+    private SoftCollision softCollider;
 
     private CountDown meleeAttackCooldown;
     private CountDown meleeAttackRestitution;
@@ -50,8 +51,9 @@ public class PlayerAttack : MonoBehaviour {
         playerRigidBody = GetComponent<Rigidbody>();
         playerMotion = GetComponent<PlayerMotion>();
         playerStability = GetComponent<PlayerStability>();
+        softCollider = GetComponentInChildren<SoftCollision>();
 
-		if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
+        if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
 
         playerLayer = gameObject.layer;
         dashingLayer = LayerMask.NameToLayer("Dashing");
@@ -148,12 +150,14 @@ public class PlayerAttack : MonoBehaviour {
         dashCooldown.Restart(dashWeaponDef.attackCooldown);
         dashRestitution.Restart(dashWeaponDef.attackRestitution);
         gameObject.layer = dashingLayer;
+        softCollider.enabled = false;
     }
     
     private IEnumerator FinishDashing() {
         yield return new WaitForFixedUpdate();
         gameObject.layer = playerLayer;
         playerRigidBody.velocity = Vector3.zero;
+        softCollider.enabled = true;
     }
 
     public void ChargeHeavyAttack()
