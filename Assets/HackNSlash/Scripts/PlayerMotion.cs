@@ -51,7 +51,7 @@ public class PlayerMotion : MonoBehaviour
     }
 
     public void Advance() {
-        if (!playerAttack.isAtacking())
+        if (!playerAttack.IsAtacking())
         {
             advancing = true;
             if (OnMovingEvent != null) OnMovingEvent(playerMain, true);
@@ -64,7 +64,7 @@ public class PlayerMotion : MonoBehaviour
     }
 
     public void LookAt(Vector3 position, bool force = false) {
-        if (force || !playerAttack.isAtacking())
+        if (force || !playerAttack.IsAtacking())
         {
             LookTowards(position - transform.position, force);
         }
@@ -72,7 +72,7 @@ public class PlayerMotion : MonoBehaviour
 
     public void LookTowards(Vector3 direction, bool force = false, bool immediate = false)
     {
-        if (force || !playerAttack.isAtacking())
+        if (force || !playerAttack.IsAtacking())
         {
             direction.y = 0;
             targetDirection = Quaternion.LookRotation(direction, transform.up);

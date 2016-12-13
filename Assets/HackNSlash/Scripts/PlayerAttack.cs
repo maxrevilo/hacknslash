@@ -36,10 +36,10 @@ public class PlayerAttack : MonoBehaviour {
     private CountDown dashRestitution;
     private CountDown chargedAttackCooldown;
     private CountDown chargedAttackRestitution;
+    private CountDown chargedAttackChargeCountDown;
+    private bool isChargingAttack;
 
     private Rigidbody playerRigidBody;
-
-    private float chargingStartedAt = 0;
     
 	private int dashingLayer;
     private int playerLayer;
@@ -68,6 +68,8 @@ public class PlayerAttack : MonoBehaviour {
         chargedAttackRestitution.Stop();
         dashCooldown.Stop();
         dashRestitution.Stop();
+        chargedAttackChargeCountDown.Stop();
+        isChargingAttack = false;
     }
 
 	void FixedUpdate () {
@@ -85,17 +87,19 @@ public class PlayerAttack : MonoBehaviour {
             float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
             playerRigidBody.velocity = transform.forward * dashSpeed;
   
-            generateDashHitArea(dashSpeed * dashDeltaTime);
+            GenerateDashHitArea(dashSpeed * dashDeltaTime);
         }
 	}
 
     void Interrupted() {
-        // Noting to interrupt, the animation is in charge of that part of the logic (which is bad).
+        FinishHeavyAttackCharge(false);
+
+        // Noting more to interrupt, the animation is in charge of that part of the logic (which is bad).
     }
 
     public void Attack(Vector3 position) {
         playerMotion.Stop();
-        if (isAbleToAttack() && meleeAttackCooldown.HasFinished()) {
+        if (IsAbleToAttack() && meleeAttackCooldown.HasFinished()) {
             Debug.DrawLine(transform.position, position, Color.red, 1f);
             meleeAttackCooldown.Restart(meleeWeaponDef.attackCooldown);
             meleeAttackRestitution.Restart(meleeWeaponDef.attackRestitution);
@@ -117,21 +121,21 @@ public class PlayerAttack : MonoBehaviour {
         hitArea.playerWeaponDef = meleeWeaponDef;
     }
 
-    public bool isAtacking()
+    public bool IsAtacking()
     {
         return !meleeAttackRestitution.HasFinished()
             || !dashRestitution.HasFinished()
             || !chargedAttackRestitution.HasFinished();
     }
 
-    public bool isAbleToAttack()
+    public bool IsAbleToAttack()
     {
-        return playerStability.IsStable() && !isAtacking();
+        return playerStability.IsStable() && !IsAtacking();
     }
 
     public void Dash(Vector3 direction) {
         playerMotion.Stop();
-        if (isAbleToAttack()) {
+        if (IsAbleToAttack()) {
             Debug.DrawLine(transform.position, transform.position + direction * dashWeaponDef.dashDistance, Color.green, 1.5f);
             playerMotion.LookTowards(direction, true, true);
             StartCoroutine(ActivateDashMode());
@@ -155,26 +159,31 @@ public class PlayerAttack : MonoBehaviour {
     public void ChargeHeavyAttack()
     {
         playerMotion.Stop();
-        if(isAbleToAttack() && chargedAttackCooldown.HasFinished() && !isChargingHeavyAttack())
+        if(IsAbleToAttack() && chargedAttackCooldown.HasFinished() && !isChargingAttack)
         {
-            chargingStartedAt = Time.time;
-            
-            if(OnChargingHeavyAttackEvent != null) OnChargingHeavyAttackEvent(playerMain);
+            chargedAttackChargeCountDown.Restart(chargedWeaponDef.chargeTime);
+            isChargingAttack = true;
+
+            if (OnChargingHeavyAttackEvent != null) OnChargingHeavyAttackEvent(playerMain);
         }
     }
 
     public void ReleaseHeavyAttack()
     {
-        float chargeTime = Time.time - chargingStartedAt;
-        bool isCharged = chargingStartedAt != 0 && chargeTime >= chargedWeaponDef.chargeTime;
-        chargingStartedAt = 0;
-        if (isCharged)
+        bool isCharged = isChargingAttack && chargedAttackChargeCountDown.HasFinished();
+        FinishHeavyAttackCharge(isCharged);
+    }
+
+    private void FinishHeavyAttackCharge(bool successful)
+    {
+        chargedAttackChargeCountDown.Stop();
+        isChargingAttack = false;
+        if (successful)
         {
             chargedAttackCooldown.Restart(chargedWeaponDef.attackCooldown);
             chargedAttackRestitution.Restart(chargedWeaponDef.attackRestitution);
         }
-        
-        if(OnReleaseHeavyAttackEvent != null) OnReleaseHeavyAttackEvent(playerMain, isCharged);
+        if (OnReleaseHeavyAttackEvent != null) OnReleaseHeavyAttackEvent(playerMain, successful);
     }
 
     internal IEnumerator ActivateChargedAttackArea()
@@ -191,7 +200,7 @@ public class PlayerAttack : MonoBehaviour {
         hitArea.playerWeaponDef = chargedWeaponDef;
     }
     
-    private void generateDashHitArea(float distance)
+    private void GenerateDashHitArea(float distance)
     {
         GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
             "HitAreaDash",
@@ -211,9 +220,4 @@ public class PlayerAttack : MonoBehaviour {
         position += hitArea.transform.forward * distance * 0.5f;
         hitArea.transform.position = position;
     }
-
-    public bool isChargingHeavyAttack()
-    {  return chargingStartedAt != 0; }
-
-
 }
