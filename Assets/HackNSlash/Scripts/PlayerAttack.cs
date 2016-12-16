@@ -132,7 +132,8 @@ public class PlayerAttack : MonoBehaviour {
 
     public bool IsAbleToAttack()
     {
-        return playerStability.IsStable() && !IsAtacking();
+        //return playerStability.IsStable() && !IsAtacking();
+        return !IsAtacking();
     }
 
     public void Dash(Vector3 direction) {

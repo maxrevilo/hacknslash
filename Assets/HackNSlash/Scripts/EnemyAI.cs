@@ -46,7 +46,7 @@ public class EnemyAI : MonoBehaviour {
 	}
 
 	void Start () {
-		battleGameScene = (BattleGameScene) GetComponentInParent(typeof(BattleGameScene));
+		battleGameScene = GetComponentInParent<BattleGameScene>();
 		if(battleGameScene == null) throw new Exception("battleGameScene not found");
 
 		if(sightColliderPub == null) throw new Exception("sightColliderPub not found");

@@ -28,7 +28,7 @@ public class SoftCollision : MonoBehaviour {
         {
             if(!softCollision.isActiveAndEnabled)
             {
-                Debug.LogFormat("Removing soft collision {0} by death.", softCollision.transform.parent.gameObject.name);
+                //Debug.LogFormat("Removing soft collision {0} by death.", softCollision.transform.parent.gameObject.name);
                 Timing.RunCoroutine(_RemoveCollisionAsync(softCollision), Segment.FixedUpdate);
                 continue;
             }
