@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-public class LifeBar : MonoBehaviour {
+public class LifeBar : Resetable
+{
     [SerializeField]
     private Vector3 worldDisplacement = new Vector3(0, 2f, 0);
 
@@ -14,15 +15,41 @@ public class LifeBar : MonoBehaviour {
     [SerializeField]
     private RectTransform lifeFill;
 
-    public PlayerConstitution playerConstitution;
-    
+    private PlayerConstitution _playerConstitution;
+    public PlayerConstitution playerConstitution
+    {
+        get { return _playerConstitution; }
+        set {
+            if (_playerConstitution != null)
+            {
+                _playerConstitution.OnLifeChangeEventEvent -= LifeChangeEvent;
+                _playerConstitution.OnDieEvent -= DieEvent;
+            }
+            _playerConstitution = value;
+            if(value != null)
+            {
+                _playerConstitution.OnLifeChangeEventEvent += LifeChangeEvent;
+                _playerConstitution.OnDieEvent += DieEvent;
+                this.lifeFraction = _playerConstitution.hitPoints / _playerConstitution.defHitPoints;
+            }
+        }
+    }
+
     [SerializeField]
     private float lifeBarChangeSpeed = 0.1f;
 
-    private float lifeFraction = 1;
+    private float lifeFraction;
 
-    void Start () {
-        if(lifeBarContainer == null) {
+    protected override void _Reset()
+    {
+        lifeFraction = 1f;
+        gameObject.SetActive(true);
+        canvas.gameObject.SetActive(true);
+    }
+
+    protected override void Start () {
+        base.Start();
+        if (lifeBarContainer == null) {
             throw new Exception("lifeBarCanvas not set");
         }
         if(lifeFill == null) {
@@ -31,9 +58,6 @@ public class LifeBar : MonoBehaviour {
         if(playerConstitution == null) {
             throw new Exception("playerConstitution not set");
         }
-        
-        playerConstitution.OnLifeChangeEventEvent += LifeChangeEvent;
-        playerConstitution.OnDieEvent += DieEvent;
     }
     
     void LifeChangeEvent(PlayerMain playerMain, float current, float previous) {
@@ -44,11 +68,16 @@ public class LifeBar : MonoBehaviour {
     
     void DieEvent(PlayerMain playerMain, float lastHit) {
         canvas.gameObject.SetActive(false);
+        playerConstitution = null;
     }
 
-	void Update () {
-        UpdatePosition();
-        UpdateLifeFillScale();
+    protected override void Update () {
+        base.Update();
+        if (playerConstitution != null)
+        {
+            UpdatePosition();
+            UpdateLifeFillScale();
+        }
     }
 
     void UpdatePosition() {

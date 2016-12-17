@@ -11,7 +11,7 @@ using System;
 /// - Definition, State and calculations of stability.
 /// - Event triggering and physics effects of loss of stability (for animation effects see PlayerAttackedGraphics).
 /// </summary>
-public class PlayerStability: MonoBehaviour {
+public class PlayerStability: Resetable {
 
     public delegate void StunnedEvent();
     /// <summary>
@@ -51,7 +51,7 @@ public class PlayerStability: MonoBehaviour {
     /// <summary>
     /// Current stability state of the player.
     /// </summary>
-    public PlayerStabilityState state;
+    public PlayerStabilityState state { get; private set; }
 
     /// <summary>
     /// Stability Hit Points.
@@ -91,8 +91,9 @@ public class PlayerStability: MonoBehaviour {
     private PlayerConstitution playerConstitution;
     private Rigidbody _rigidBody;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerMain = GetComponent<PlayerMain>();
         playerConstitution = GetComponent<PlayerConstitution>();
         _rigidBody = GetComponent<Rigidbody>();
@@ -101,7 +102,12 @@ public class PlayerStability: MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    protected override void Start () {
+        base.Start();
+    }
+
+    protected override void _Reset()
+    {
         stability = defStability;
         state = PlayerStabilityState.Stable;
 
@@ -109,9 +115,10 @@ public class PlayerStability: MonoBehaviour {
         stunLockCounter.Stop();
         backUpCounter.Stop();
     }
-	
-	// Update is called once per frame
-	void FixedUpdate() {
+
+    // Update is called once per frame
+    protected override void FixedUpdate() {
+        base.FixedUpdate();
         switch (state)
         {
             case PlayerStabilityState.Stable:

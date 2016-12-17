@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerStability))]
-public class PlayerMotion : MonoBehaviour
+public class PlayerMotion : Resetable
 {
     public delegate void MovingEvent(PlayerMain playerMain, bool moving);
     public event MovingEvent OnMovingEvent;
@@ -22,20 +23,32 @@ public class PlayerMotion : MonoBehaviour
     private PlayerStability playerStability;
 
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerMain = GetComponent<PlayerMain>();
         playerRigidBody = GetComponent<Rigidbody>();
         playerAttack = GetComponent<PlayerAttack>();
         playerStability = GetComponent<PlayerStability>();
     }
 
-    void Start(){}
+    protected override void Start(){
+        base.Start();
+    }
 
-    void Update(){}
-
-    void FixedUpdate()
+    protected override void _Reset()
     {
+        advancing = false;
+        targetDirection = Quaternion.identity;
+    }
+
+    protected override void Update(){
+        base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
         if (playerStability.IsStable())
         {
             transform.rotation = Quaternion.Slerp(

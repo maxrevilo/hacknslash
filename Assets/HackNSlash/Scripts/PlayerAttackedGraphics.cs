@@ -11,7 +11,7 @@ using UnityEngine;
 /// - Listening of death event from PlayerHealth and play of animation.
 /// - Listening of loss of stability events from PlayerStability
 /// </summary>
-public class PlayerAttackedGraphics : MonoBehaviour {
+public class PlayerAttackedGraphics : Resetable {
     private PlayerConstitution playerConstitution;
     private PlayerStability playerStability;
     private Rigidbody _rigidBody;
@@ -29,10 +29,13 @@ public class PlayerAttackedGraphics : MonoBehaviour {
     private CountDown timerToplayBackUp;
     private bool isOutOfSelfControl;
 
+    private GameObject damageEffectGO;
+
     public float backUpClipLength = 0.86f;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerConstitution = GetComponent<PlayerConstitution>();
         playerStability = GetComponent<PlayerStability>();
         animator = GetComponent<Animator>();
@@ -47,6 +50,16 @@ public class PlayerAttackedGraphics : MonoBehaviour {
         stunLockedSpeedHash = Animator.StringToHash("stun_locked_speed");
         backUpSpeedHash = Animator.StringToHash("back_up_speed");
 
+        damageEffectGO = GameObject.Find("DamageEffect");
+        if(damageEffectGO == null)
+        {
+            Debug.LogError("DamageEffect not found.");
+        }
+    }
+
+    protected override void Start()
+    {
+        base.Start();
         playerConstitution.OnDieEvent += Dying;
         playerStability.OnStunnedEvent += Stunned;
         playerStability.OnStunLockedEvent += StunLocked;
@@ -54,14 +67,24 @@ public class PlayerAttackedGraphics : MonoBehaviour {
         playerStability.OnThrownEvent += Thrown;
     }
 
-    void Start()
+    protected override void _Reset()
     {
         timerToplayBackUp.Stop();
         isOutOfSelfControl = false;
+        animator.applyRootMotion = true;
+
+        ParticleSystem[] pss = damageEffectGO.GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem ps in pss)
+        {
+            Debug.Log(ps);
+            ParticleSystem.EmissionModule emissionModule = ps.emission;
+            emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
+        }
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if(isOutOfSelfControl) {
             Vector3 direction = -_rigidBody.velocity + transform.forward * 0.1f;
             direction.y *= 0f;

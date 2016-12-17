@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(Animator))]
-public class PlayerAttackingGraphics : MonoBehaviour {
+public class PlayerAttackingGraphics : Resetable {
 
     private PlayerAttack playerAttack;
     private Animator animator;
@@ -14,7 +14,8 @@ public class PlayerAttackingGraphics : MonoBehaviour {
 
     public bool attackingTrigger = false;
 
-    void Awake () {
+    protected override void Awake () {
+        base.Awake();
         playerAttack = GetComponent<PlayerAttack>();
         animator = GetComponent<Animator>();
 
@@ -22,11 +23,16 @@ public class PlayerAttackingGraphics : MonoBehaviour {
         dashingHash = Animator.StringToHash("dashing");
     }
 
-	void Start () {
+    protected override void Start () {
+        base.Start();
         playerAttack.OnAttackingEvent += Attacking;
         playerAttack.OnDashingEvent += Dashing;
     }
-	
+
+    protected override void _Reset()
+    {
+    }
+
     void Attacking(PlayerMain playerMain, PlayerWeaponDef weapon) {
         animator.SetTrigger(attackingHash);
         if(gameObject.name.Equals("PlayerChan")) {

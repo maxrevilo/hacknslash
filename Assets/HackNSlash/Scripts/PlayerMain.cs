@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMain : MonoBehaviour {
+public class PlayerMain : Resetable
+{
     private Rigidbody playerRigidBody;
-    
-    void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         playerRigidBody = GetComponent<Rigidbody>();
     }
 
-    void Start() {
+    protected override void Start() {
+        base.Start();
+    }
+
+    protected override void _Reset()
+    {
     }
 
     // Update is called once per frame
-    void Update() {
+    protected override void Update() {
+        base.Update();
     }
 
     #region Teams

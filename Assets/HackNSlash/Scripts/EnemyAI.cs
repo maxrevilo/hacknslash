@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerMotion))]
 [RequireComponent(typeof(PlayerStability))]
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : Resetable {
 	public float defAttackDistance = 3f; 
 	
 	[SerializeField]
@@ -27,6 +27,8 @@ public class EnemyAI : MonoBehaviour {
 	private CollisionPub sightColliderPub;
 
 	private ArrayList enemiesInSight;
+
+    private bool attacking;
 
 	void Awake() {
 		target = null;
@@ -50,11 +52,18 @@ public class EnemyAI : MonoBehaviour {
 		if(battleGameScene == null) throw new Exception("battleGameScene not found");
 
 		if(sightColliderPub == null) throw new Exception("sightColliderPub not found");
-
-		attackDelay.Stop();
 	}
 
-	void Interrupted() {
+
+    protected override void _Reset()
+    {
+        enemiesInSight.Clear();
+        attackDelay.Stop();
+        attacking = false;
+        target = null;
+    }
+
+    void Interrupted() {
         attackDelay.Restart(defAttackDelay);
     }
 

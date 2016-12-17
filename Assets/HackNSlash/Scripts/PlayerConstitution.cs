@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
 using MovementEffects;
+using System;
 
 [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerConstitution : MonoBehaviour {
+public class PlayerConstitution : Resetable
+{
     
     public delegate void LifeChangeEvent(PlayerMain playerMain, float current, float previous);
     public event LifeChangeEvent OnLifeChangeEventEvent;
@@ -41,20 +43,24 @@ public class PlayerConstitution : MonoBehaviour {
     
     private Rigidbody _rigidBody;
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerMain = GetComponent<PlayerMain>();
         _rigidBody = GetComponent<Rigidbody>();
     }
 
-    void Start() {
-        StartCoroutine(InitiateLifeBar());
-        hitPoints = defHitPoints;
+    protected override void Start() {
+        base.Start();
     }
 
-    private IEnumerator InitiateLifeBar() {
-        yield return new WaitForFixedUpdate();
-        
+    protected override void _Reset()
+    {
+        hitPoints = defHitPoints;
+        InitiateLifeBar();
+    }
+
+    private void InitiateLifeBar() {
         if(spawnLifeBar) {
             lifeBarGO = PoolingSystem.Instance.InstantiateAPS(
                 "LifeBar",
@@ -62,7 +68,8 @@ public class PlayerConstitution : MonoBehaviour {
                 Quaternion.identity,
                 transform.parent.gameObject
             );
-            
+            lifeBarGO.SendMessage("ResetComponent", SendMessageOptions.DontRequireReceiver);
+
             LifeBar lifeBar = lifeBarGO.GetComponent<LifeBar>();
             lifeBar.playerConstitution = this;
         }
@@ -130,13 +137,10 @@ public class PlayerConstitution : MonoBehaviour {
 
     public void Die()
     {
-        StartCoroutine(DieCorruoutine());
+        _Die();
     }
 
-    private IEnumerator DieCorruoutine() {
-        yield return new WaitForFixedUpdate();
-        yield return new WaitForFixedUpdate();
-        
+    private void _Die() {
         if(destroyOnDead) {
             gameObject.DestroyAPS();
         }
@@ -152,7 +156,8 @@ public class PlayerConstitution : MonoBehaviour {
                 transform.rotation,
                 transform.parent.gameObject
             );
-            
+            deadBodyGO.BroadcastMessage("ResetComponent", SendMessageOptions.DontRequireReceiver);
+
             Rigidbody deadBodyRB = deadBodyGO.GetComponentInChildren<Rigidbody>();
             deadBodyRB.velocity = this._rigidBody.velocity;
             deadBodyRB.angularVelocity = this._rigidBody.angularVelocity;

@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using MovementEffects;
+using System;
 
 [RequireComponent(typeof(Collider))]
-public class SoftCollision : MonoBehaviour {
+public class SoftCollision : Resetable {
 
     [SerializeField]
     private float exponent = 1.7f;
@@ -15,15 +16,21 @@ public class SoftCollision : MonoBehaviour {
 
     private ArrayList softCollisions;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         softCollisions = new ArrayList(5);
         rigidBody = this.transform.parent.GetComponent<Rigidbody>();
     }
 
-
-    void FixedUpdate()
+    protected override void _Reset()
     {
+        softCollisions.Clear();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
         foreach(SoftCollision softCollision in softCollisions)
         {
             if(!softCollision.isActiveAndEnabled)

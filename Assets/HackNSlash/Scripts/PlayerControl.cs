@@ -4,7 +4,7 @@ using UnityEngine;
 // [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerMotion))]
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : Resetable {
 	
     private PlayerMain playerMain;
     private PlayerAttack playerAttack;
@@ -19,7 +19,7 @@ public class PlayerControl : MonoBehaviour {
     [SerializeField]
     private float distanceToConsiderDash = 0.3f;
 
-    private float pressBegin = -1;
+    private float pressBegin;
     private Vector3 pressPosition;
     private Vector3 lastDashWorldVector;
 
@@ -33,22 +33,29 @@ public class PlayerControl : MonoBehaviour {
 
     private RaycastHit[] enemiesHit;
 
-    void Awake() {
-		playerMain = GetComponent<PlayerMain>();
+    protected override void Awake() {
+        base.Awake();
+        playerMain = GetComponent<PlayerMain>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerMotion = GetComponent<PlayerMotion>();
-		mainCamera = Camera.main;
-        playersLayerMask = LayerMask.GetMask(new String[]{"Player"});
-        enemiesHit = new RaycastHit[3];
     }
 
-	void Start () {
-        
+    protected override void Start () {
+        base.Start();
     }
 
-    void Update()
+    protected override void _Reset()
     {
-        if(useJoystick)
+        mainCamera = Camera.main;
+        playersLayerMask = LayerMask.GetMask(new String[] { "Player" });
+        enemiesHit = new RaycastHit[3];
+        pressBegin = -1;
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (useJoystick)
         {
             CheckJoysticInput();
             return;
@@ -75,7 +82,8 @@ public class PlayerControl : MonoBehaviour {
         
     }
 
-	void FixedUpdate () {
+    protected override void FixedUpdate () {
+        base.FixedUpdate();
     }
 
     TouchType CheckTouchType()

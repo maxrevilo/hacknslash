@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
-
+using System.Collections.Generic;
+using MovementEffects;
 
 class InfiniteBrawlScene : BattleGameScene
 {
@@ -33,25 +34,25 @@ class InfiniteBrawlScene : BattleGameScene
         wave = 1;
         currentEnemyPower = initialEnemyPower;
         prevEnemyPower = 0;
+        Timing.RunCoroutine(nextWave(3f));
     }
 
     protected override void Update()
     {
         base.Update();
-        if(firstUpdate)
-        {
-            firstUpdate = false;
-            nextWave();
-        }
     }
 
-    protected void nextWave()
+    protected IEnumerator<float> nextWave(float wait = 5f)
     {
-        Debug.LogFormat(waveTamplate, wave);
-        foreach(GameObject go in currentEnemies)
+        foreach (GameObject go in currentEnemies)
         {
-            //go.DestroyAPS();
+            go.DestroyAPS();
         }
+
+        Debug.LogFormat(waveTamplate, wave);
+
+        yield return Timing.WaitForSeconds(wait);
+
         wave++;
         int nextEnemyPower = currentEnemyPower + prevEnemyPower;
         prevEnemyPower = currentEnemyPower;
@@ -84,6 +85,9 @@ class InfiniteBrawlScene : BattleGameScene
                 rotation,
                 enemiesContainer != null? enemiesContainer: gameObject
             );
+            if(enemy.name[0] != 'A') enemy.name = "A " + i;
+           // Timing.RunCoroutine(ResetEnemy(enemy), Segment.FixedUpdat
+            enemy.BroadcastMessage("ResetComponent", SendMessageOptions.DontRequireReceiver);
 
             PlayerConstitution enemyConstitution = enemy.GetComponent<PlayerConstitution>();
             enemyConstitution.OnDieEvent += OnEnemyDied;
@@ -101,7 +105,7 @@ class InfiniteBrawlScene : BattleGameScene
         playerMain.GetComponent<PlayerConstitution>().OnDieEvent -= OnEnemyDied;
         if (enemiesAlive == 0)
         {
-            nextWave();
+            Timing.RunCoroutine(nextWave());
         }
     }
 }

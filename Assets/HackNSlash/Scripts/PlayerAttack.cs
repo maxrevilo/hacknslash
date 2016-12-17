@@ -6,7 +6,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerMotion))]
 [RequireComponent(typeof(PlayerStability))]
-public class PlayerAttack : MonoBehaviour {
+public class PlayerAttack : Resetable {
 
     public delegate void ChargingHeavyAttackEvent(PlayerMain playerMain);
     public event ChargingHeavyAttackEvent OnChargingHeavyAttackEvent;
@@ -46,7 +46,8 @@ public class PlayerAttack : MonoBehaviour {
     private int playerLayer;
     
 
-	void Awake() {
+	protected override void Awake() {
+        base.Awake();
         playerMain = GetComponent<PlayerMain>();
         playerRigidBody = GetComponent<Rigidbody>();
         playerMotion = GetComponent<PlayerMotion>();
@@ -55,15 +56,19 @@ public class PlayerAttack : MonoBehaviour {
 
         if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
 
-        playerLayer = gameObject.layer;
         dashingLayer = LayerMask.NameToLayer("Dashing");
-
-        playerStability.OnStunLockedEvent += Interrupted;
-		playerStability.OnKnockedBackEvent += Interrupted;
-		playerStability.OnThrownEvent += Interrupted;
     }
 
-    void Start () {
+    protected override void Start () {
+        base.Start();
+        playerStability.OnStunLockedEvent += Interrupted;
+        playerStability.OnKnockedBackEvent += Interrupted;
+        playerStability.OnThrownEvent += Interrupted;
+    }
+
+    protected override void _Reset()
+    {
+        playerLayer = gameObject.layer;
         meleeAttackCooldown.Stop();
         meleeAttackRestitution.Stop();
         chargedAttackCooldown.Stop();
@@ -74,7 +79,8 @@ public class PlayerAttack : MonoBehaviour {
         isChargingAttack = false;
     }
 
-	void FixedUpdate () {
+    protected override void FixedUpdate () {
+        base.FixedUpdate();
         float fixedDeltaTime = Time.fixedDeltaTime;
         
         if (!dashRestitution.HasFinished()) {
