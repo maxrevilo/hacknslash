@@ -43,6 +43,8 @@ public class PlayerConstitution : Resetable
     
     private Rigidbody _rigidBody;
 
+    private HitArea lastHit;
+
     protected override void Awake()
     {
         base.Awake();
@@ -80,6 +82,7 @@ public class PlayerConstitution : Resetable
     public void DamageBy(HitArea hitArea)
     // TODO: Might be better to use a "Hit" object instead of the HitArea MonoBehaivor
     {
+        lastHit = hitArea;
         PlayerWeaponDef weapon = hitArea.playerWeaponDef;
 
         if (OnAttackedEvent != null) OnAttackedEvent(hitArea);
@@ -161,6 +164,10 @@ public class PlayerConstitution : Resetable
             Rigidbody deadBodyRB = deadBodyGO.GetComponentInChildren<Rigidbody>();
             deadBodyRB.velocity = this._rigidBody.velocity;
             deadBodyRB.angularVelocity = this._rigidBody.angularVelocity;
+            if (lastHit != null)
+            {
+                deadBodyRB.velocity += lastHit.CalculateHitImpulse(playerMain) * .5f;
+            }
         }
 
         foreach(MonoBehaviour mb in disableOnDead) {

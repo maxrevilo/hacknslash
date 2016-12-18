@@ -1022,7 +1022,6 @@ Transform:
   - {fileID: 482966}
   - {fileID: 475002}
   - {fileID: 488984}
-  - {fileID: 4420096549174954}
   m_Father: {fileID: 442698}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1234,6 +1233,7 @@ Transform:
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 413020}
+  - {fileID: 4420096549174954}
   m_Father: {fileID: 487404}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7331,12 +7331,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028853023933286}
-  m_LocalRotation: {x: -0.045200706, y: 0.7052012, z: 0.050920397, w: 0.7057303}
-  m_LocalPosition: {x: -1.591, y: 0.071, z: -0.183}
-  m_LocalScale: {x: 1.4285715, y: 1.4285718, z: 1.4285719}
+  m_LocalRotation: {x: 0.70896083, y: -0.70448387, z: -0.011053527, w: -0.030901784}
+  m_LocalPosition: {x: -0.32861662, y: -0.27755463, z: 2.6871784}
+  m_LocalScale: {x: 1.4285715, y: 1.4285713, z: 1.4285711}
   m_Children: []
-  m_Father: {fileID: 413020}
-  m_RootOrder: 3
+  m_Father: {fileID: 442698}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -7.794, y: 89.925, z: 0.47000003}
 --- !u!114 &114055965258024266
 MonoBehaviour:
@@ -7386,7 +7386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f54c40b3477ac44390e06dc001715ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defStability: 50
+  defStability: 25
   defTimeToRecover: 2
   defStunLockDuration: 1
   defTimeToBackUp: 4
@@ -7512,7 +7512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disableOnDead: []
   spawnLifeBar: 1
-  defHitPoints: 10
+  defHitPoints: 50
   DeadBodyPrefabName: DeadEnemy
   destroyOnDead: 1
   hitPoints: 0
@@ -7526,8 +7526,8 @@ Projector:
   m_GameObject: {fileID: 1028853023933286}
   m_Enabled: 1
   serializedVersion: 2
-  m_NearClipPlane: 1
-  m_FarClipPlane: 50
+  m_NearClipPlane: 1.5
+  m_FarClipPlane: 4
   m_FieldOfView: 36.8
   m_AspectRatio: 1
   m_Orthographic: 0

@@ -2577,6 +2577,15 @@ Prefab:
       propertyPath: m_Name
       value: MainPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 1392292180432442, guid: bab3b362af3e91d439485601bd9f58f1, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114096829877138550, guid: bab3b362af3e91d439485601bd9f58f1,
+        type: 2}
+      propertyPath: defHitPoints
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bab3b362af3e91d439485601bd9f58f1, type: 2}
   m_IsPrefabParent: 0

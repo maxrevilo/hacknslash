@@ -92,7 +92,7 @@ public class PlayerAttackedGraphics : Resetable {
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 Quaternion.LookRotation(direction, transform.up),
-                Time.deltaTime * 30f
+                Time.deltaTime * 5f
             );
             if(isOutOfSelfControl && timerToplayBackUp.HasFinished()) {
                 BackUp();

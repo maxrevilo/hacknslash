@@ -2585,9 +2585,9 @@ MonoBehaviour:
     attackCooldown: 0.4
     attackRestitution: 0.1
     attackPreparation: 0
-    directionalPushStrenght: 1
-    radialPushStrenght: 0.2
-    elevatingPushStrenght: 0.1
+    directionalPushStrenght: 3
+    radialPushStrenght: 1
+    elevatingPushStrenght: 0.5
     chargeTime: 0
     dashDistance: 4
 --- !u!114 &114389684647442196

@@ -189,12 +189,7 @@ public class PlayerStability: Resetable {
                 break;
         }
 
-        Vector3 directionalPushVector = hitArea.transform.forward * weapon.directionalPushStrenght;
-        Vector3 vectorToPlayer = Vector3.Normalize(playerMain.transform.position - hitArea.transform.position);
-        Vector3 radialPushVector = vectorToPlayer * weapon.radialPushStrenght;
-        Vector3 elevatingPushVector = Vector3.up * weapon.elevatingPushStrenght;
-        Vector3 finalImpulse = directionalPushVector + radialPushVector + elevatingPushVector; 
-        _rigidBody.AddForce(finalImpulse, ForceMode.Impulse);
+        _rigidBody.AddForce(hitArea.CalculateHitImpulse(playerMain), ForceMode.Impulse);
     }
 
     private void KnockBackPlayer(HitArea hitArea) {

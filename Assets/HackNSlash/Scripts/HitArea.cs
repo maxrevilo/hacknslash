@@ -44,6 +44,17 @@ public class HitArea : MonoBehaviour
         }
     }
 
+    public Vector3 CalculateHitImpulse(PlayerMain player)
+    {
+        Vector3 directionalPushVector = this.transform.forward * playerWeaponDef.directionalPushStrenght;
+        Vector3 vectorToPlayer = Vector3.Normalize(player.transform.position - this.transform.position);
+        Vector3 radialPushVector = vectorToPlayer * playerWeaponDef.radialPushStrenght;
+        Vector3 elevatingPushVector = Vector3.up * playerWeaponDef.elevatingPushStrenght;
+        Vector3 finalImpulse = directionalPushVector + radialPushVector + elevatingPushVector;
+
+        return finalImpulse;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == spawner.gameObject) return;

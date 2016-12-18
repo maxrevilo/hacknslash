@@ -30,7 +30,8 @@ public class EnemyAI : Resetable {
 
     private bool attacking;
 
-	void Awake() {
+    protected override void Awake() {
+        base.Awake();
 		target = null;
 		playerMain = GetComponent<PlayerMain>();
 		playerAttack = GetComponent<PlayerAttack>();
@@ -47,7 +48,8 @@ public class EnemyAI : Resetable {
 		playerStability.OnThrownEvent += Interrupted;
 	}
 
-	void Start () {
+	protected override void Start () {
+        base.Start();
 		battleGameScene = GetComponentInParent<BattleGameScene>();
 		if(battleGameScene == null) throw new Exception("battleGameScene not found");
 
@@ -111,13 +113,15 @@ public class EnemyAI : Resetable {
 
 	bool isAlly(PlayerMain player) { return player.team == playerMain.team;}
 
-	void Update () {
+    protected override void Update () {
+        base.Update();
 		if(target != null) {
 			Debug.DrawLine(transform.position, target.transform.position, Color.red);
 		}
 	}
 
-	void FixedUpdate () {
+    protected override void FixedUpdate () {
+        base.FixedUpdate();
 		if(target != null) {
 			playerMotion.LookAt(target.transform.position);
 
