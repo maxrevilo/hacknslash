@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - component: {fileID: 400000}
   - component: {fileID: 9590292}
-  - component: {fileID: 11472492}
   m_Layer: 0
   m_Name: Spearman Warrior
   m_TagString: Untagged
@@ -1662,21 +1661,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11472492
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f7ef17c21ec457409514db055acb92a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  weaponModel: {fileID: 127860}
-  secondaryWeaponModel: {fileID: 0}
-  warrior: 10
 --- !u!137 &13772492
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
