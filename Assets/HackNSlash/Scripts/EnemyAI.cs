@@ -28,8 +28,6 @@ public class EnemyAI : Resetable {
 
 	private ArrayList enemiesInSight;
 
-    private bool attacking;
-
     protected override void Awake() {
         base.Awake();
 		target = null;
@@ -61,7 +59,6 @@ public class EnemyAI : Resetable {
     {
         enemiesInSight.Clear();
         attackDelay.Stop();
-        attacking = false;
         target = null;
     }
 

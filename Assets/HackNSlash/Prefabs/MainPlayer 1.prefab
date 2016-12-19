@@ -2522,8 +2522,9 @@ MonoBehaviour:
   - {fileID: 114566001858193114}
   - {fileID: 114271271475051740}
   - {fileID: 114840346282755120}
+  - {fileID: 114389684647442196}
   spawnLifeBar: 0
-  defHitPoints: 5000
+  defHitPoints: 100
   DeadBodyPrefabName: 
   destroyOnDead: 0
   hitPoints: 0

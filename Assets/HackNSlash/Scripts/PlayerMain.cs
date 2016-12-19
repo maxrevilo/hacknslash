@@ -3,12 +3,9 @@
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMain : Resetable
 {
-    private Rigidbody playerRigidBody;
-
     protected override void Awake()
     {
         base.Awake();
-        playerRigidBody = GetComponent<Rigidbody>();
     }
 
     protected override void Start() {

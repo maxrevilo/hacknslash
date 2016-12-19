@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
 
-// [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(PlayerMotion))]
 public class PlayerControl : Resetable {
 	
-    private PlayerMain playerMain;
+    //private PlayerMain playerMain;
     private PlayerAttack playerAttack;
     private PlayerMotion playerMotion;
 
@@ -25,17 +24,12 @@ public class PlayerControl : Resetable {
 
     private enum TouchType
     { None, Tap, Holding, HoldRelase, Dash, HeldDash }
-    
-    private int playersLayerMask;
 
     [SerializeField]
     private bool useJoystick = false;
 
-    private RaycastHit[] enemiesHit;
-
     protected override void Awake() {
         base.Awake();
-        playerMain = GetComponent<PlayerMain>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerMotion = GetComponent<PlayerMotion>();
     }
@@ -47,8 +41,6 @@ public class PlayerControl : Resetable {
     protected override void _Reset()
     {
         mainCamera = Camera.main;
-        playersLayerMask = LayerMask.GetMask(new String[] { "Player" });
-        enemiesHit = new RaycastHit[3];
         pressBegin = -1;
     }
 

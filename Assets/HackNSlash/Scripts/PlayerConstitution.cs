@@ -34,8 +34,8 @@ public class PlayerConstitution : Resetable
     [SerializeField]
     public float hitPoints;
 
-    [SerializeField]
-    private bool ImpactTimeScaleDistortion = true;
+    //[SerializeField]
+    //private bool ImpactTimeScaleDistortion = true;
     [SerializeField]
     private float ImpactCameraShake = 1.5f;
 

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using MovementEffects;
 
@@ -18,8 +17,6 @@ class InfiniteBrawlScene : BattleGameScene
 
     private GameObject[] currentEnemies;
     private int enemiesAlive;
-
-    bool firstUpdate = true;
 
     protected override void Awake()
     {
@@ -64,7 +61,6 @@ class InfiniteBrawlScene : BattleGameScene
     protected GameObject[] SpawnEnemyWave(int count)
     {
         GameObject[] result = new GameObject[count];
-        UnityEngine.Random rnd = new UnityEngine.Random();
 
         for(int i = 0; i < count; i++)
         {

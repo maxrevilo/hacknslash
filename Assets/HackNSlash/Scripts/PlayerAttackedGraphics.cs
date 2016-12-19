@@ -24,7 +24,7 @@ public class PlayerAttackedGraphics : Resetable {
     private int deadHash;
     private int backUpHash;
     private int stunLockedSpeedHash;
-    private int backUpSpeedHash;
+    //private int backUpSpeedHash;
 
     private CountDown timerToplayBackUp;
     private bool isOutOfSelfControl;
@@ -48,7 +48,7 @@ public class PlayerAttackedGraphics : Resetable {
         deadHash = Animator.StringToHash("dead");
         backUpHash = Animator.StringToHash("back_up");
         stunLockedSpeedHash = Animator.StringToHash("stun_locked_speed");
-        backUpSpeedHash = Animator.StringToHash("back_up_speed");
+        //backUpSpeedHash = Animator.StringToHash("back_up_speed");
 
         damageEffectGO = GameObject.Find("DamageEffect");
         if(damageEffectGO == null)
