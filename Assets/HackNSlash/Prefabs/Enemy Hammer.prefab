@@ -7516,7 +7516,6 @@ MonoBehaviour:
   DeadBodyPrefabName: DeadEnemy
   destroyOnDead: 1
   hitPoints: 0
-  ImpactTimeScaleDistortion: 1
   ImpactCameraShake: 1
 --- !u!119 &119003756118500804
 Projector:

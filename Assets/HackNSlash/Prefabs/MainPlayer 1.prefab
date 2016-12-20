@@ -1449,7 +1449,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1652443738420954}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.02, y: -0.261, z: -0.84}
+  m_LocalPosition: {x: -4.44, y: -0.261, z: 3.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4180470517253974}
@@ -2528,7 +2528,6 @@ MonoBehaviour:
   DeadBodyPrefabName: 
   destroyOnDead: 0
   hitPoints: 0
-  ImpactTimeScaleDistortion: 0
   ImpactCameraShake: 0.2
 --- !u!114 &114259037452720370
 MonoBehaviour:
@@ -2580,7 +2579,7 @@ MonoBehaviour:
     chargeTime: 1
     dashDistance: 0
   dashWeaponDef:
-    attackDmg: 1
+    attackDmg: 2
     projectileType: 1
     hitAreaLifeSpan: 0.2
     attackCooldown: 0.4
@@ -2602,7 +2601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f54c40b3477ac44390e06dc001715ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defStability: 100
+  defStability: 50
   defTimeToRecover: 2
   defStunLockDuration: 0.86
   defTimeToBackUp: 1

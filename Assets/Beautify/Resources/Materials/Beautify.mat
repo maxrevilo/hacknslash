@@ -1,0 +1,343 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Beautify
+  m_Shader: {fileID: 4800000, guid: 1cb716be5dc9d4230ada327d9468ff41, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Clouds
+      second:
+        m_Texture: {fileID: 8900000, guid: 57d7795e4a1514dbdaa88ddd9c3afa1f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Cube
+      second:
+        m_Texture: {fileID: 8900000, guid: 09bd43600fd5c4ca5927a2edf13b63df, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailAlbedoMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailMask
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailNormalMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Downsampled
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _EmissionMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _FogOfWar
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MetallicGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Noise2Tex
+      second:
+        m_Texture: {fileID: 2800000, guid: 4e4a0e2a9212f4a1b8ce9108443f3b03, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _NoiseTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 9733f0d7aec8848f08cae3c95b44d3ae, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OcclusionMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OverlayTex
+      second:
+        m_Texture: {fileID: 2800000, guid: dec70c1ae0ce346849f747716f782eb8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ParallaxMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Stars
+      second:
+        m_Texture: {fileID: 8900000, guid: 09bd43600fd5c4ca5927a2edf13b63df, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Brightness
+      second: 1.1
+    - first:
+        name: _BumpScale
+      second: 1
+    - first:
+        name: _Contrast
+      second: 1.38
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _DepthThreshold
+      second: 0.0005
+    - first:
+        name: _DetailNormalMapScale
+      second: 1
+    - first:
+        name: _Dirt
+      second: 0.7
+    - first:
+        name: _DstBlend
+      second: 0
+    - first:
+        name: _Exposure
+      second: 1.37
+    - first:
+        name: _FogAlpha
+      second: 1
+    - first:
+        name: _FogBaseHeight
+      second: 0
+    - first:
+        name: _FogDensity
+      second: 1
+    - first:
+        name: _FogDistance
+      second: 0
+    - first:
+        name: _FogDistanceFallOff
+      second: 0.001
+    - first:
+        name: _FogFallOff
+      second: 0.908
+    - first:
+        name: _FogHeight
+      second: 1
+    - first:
+        name: _FogHeightFallOff
+      second: 0.36
+    - first:
+        name: _FogIntensity
+      second: 1
+    - first:
+        name: _FogNoise
+      second: 0.34
+    - first:
+        name: _FogPointLightRadius0
+      second: 5
+    - first:
+        name: _FogPointLightRadius1
+      second: 5
+    - first:
+        name: _FogPointLightRadius2
+      second: 5
+    - first:
+        name: _FogPointLightRadius3
+      second: 5
+    - first:
+        name: _FogPointLightRadius4
+      second: 5
+    - first:
+        name: _FogPointLightRadius5
+      second: 5
+    - first:
+        name: _FogScale
+      second: 1
+    - first:
+        name: _FogSkyAlpha
+      second: 0.8
+    - first:
+        name: _FogSkyHaze
+      second: 50
+    - first:
+        name: _FogSkyNoise
+      second: 0
+    - first:
+        name: _FogSkySpeed
+      second: 0.3
+    - first:
+        name: _FogSpeed
+      second: 0
+    - first:
+        name: _FogStepping
+      second: 0.0833333
+    - first:
+        name: _FogSteppingNear
+      second: 1
+    - first:
+        name: _FogTurbulence
+      second: 0
+    - first:
+        name: _Glossiness
+      second: 0.5
+    - first:
+        name: _Intensity
+      second: 1
+    - first:
+        name: _Metallic
+      second: 0
+    - first:
+        name: _Mode
+      second: 0
+    - first:
+        name: _OcclusionStrength
+      second: 1
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _Saturate
+      second: 0.08
+    - first:
+        name: _Sharpen
+      second: 2.5
+    - first:
+        name: _SrcBlend
+      second: 1
+    - first:
+        name: _UVSec
+      second: 0
+    - first:
+        name: _ZWrite
+      second: 1
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _ColorBoost
+      second: {r: 1.1, g: 1.1, b: 0.08, a: 1}
+    - first:
+        name: _Dither
+      second: {r: 5, g: 0, b: 0.022, a: 1}
+    - first:
+        name: _EmissionColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FXColor
+      second: {r: 1, g: 1, b: 1, a: 0}
+    - first:
+        name: _FogColor
+      second: {r: 0.8161765, g: 0.7321583, b: 0.7321583, a: 1}
+    - first:
+        name: _FogDistance
+      second: {r: 0, g: 1, b: 1000, a: 1}
+    - first:
+        name: _FogOfWarCenter
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogOfWarSize
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _FogPointLightColor0
+      second: {r: 1, g: 1, b: 0, a: 1}
+    - first:
+        name: _FogPointLightColor1
+      second: {r: 1, g: 1, b: 0, a: 1}
+    - first:
+        name: _FogPointLightColor2
+      second: {r: 1, g: 1, b: 0, a: 1}
+    - first:
+        name: _FogPointLightColor3
+      second: {r: 1, g: 1, b: 0, a: 1}
+    - first:
+        name: _FogPointLightColor4
+      second: {r: 1, g: 1, b: 0, a: 1}
+    - first:
+        name: _FogPointLightColor5
+      second: {r: 1, g: 1, b: 0, a: 1}
+    - first:
+        name: _FogPointLightPosition0
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogPointLightPosition1
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogPointLightPosition2
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogPointLightPosition3
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogPointLightPosition4
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogPointLightPosition5
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogSkyColor
+      second: {r: 0.9, g: 0.9, b: 0.9, a: 1}
+    - first:
+        name: _FogVoidData
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogVoidPosition
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _FogWindDir
+      second: {r: 1, g: 0, b: 0, a: 1}
+    - first:
+        name: _Frame
+      second: {r: 1, g: 1, b: 1, a: 0}
+    - first:
+        name: _Outline
+      second: {r: 0, g: 0, b: 0, a: 0.8}
+    - first:
+        name: _Sharpen
+      second: {r: 2.5, g: 0.035, b: 0.5, a: 1}
+    - first:
+        name: _Vignetting
+      second: {r: 0.3, g: 0.3, b: 0.3, a: 0.05}

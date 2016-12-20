@@ -122,11 +122,15 @@ public class PlayerAttack : Resetable {
             "HitArea",
             hitAreaSpawnZone.position,
             hitAreaSpawnZone.rotation,
-            transform.parent.gameObject
+            hitAreaSpawnZone.transform.gameObject
         );
+
         HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
         hitArea.spawner = playerMain;
         hitArea.playerWeaponDef = meleeWeaponDef;
+
+        hitArea.ResetComponent();
+        hitAreaGO.transform.SetParent(transform.parent);
     }
 
     public bool IsAtacking()
@@ -138,8 +142,7 @@ public class PlayerAttack : Resetable {
 
     public bool IsAbleToAttack()
     {
-        //return playerStability.IsStable() && !IsAtacking();
-        return !IsAtacking();
+        return playerStability.IsStable() && !IsAtacking();
     }
 
     public void Dash(Vector3 direction) {

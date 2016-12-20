@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class HitArea : MonoBehaviour
+public class HitArea : Resetable
 {
     // public delegate void HitEvent();
     // public static event HitEvent OnHitEvent;
@@ -10,32 +10,40 @@ public class HitArea : MonoBehaviour
     public PlayerMain spawner { get; set; }
     public PlayerWeaponDef playerWeaponDef { get; set; }
 
+    public Vector3 originalScale;
     private HashSet<PlayerMain> playersReached;
 
     private float timeOfLife;
 
-    void Reset()
+    protected override void Awake()
     {
-        timeOfLife = 0;
-        playersReached.Clear();
-    }
-
-    void Awake()
-    {
+        base.Awake();
         playersReached = new HashSet<PlayerMain>();
+        originalScale = transform.localScale;
     }
 
-    void Start ()
+    protected override void Start ()
     {
+        base.Start();
         if (playerWeaponDef == null) throw new Exception("playerWeaponDef not set");
     }
 
-	void Update ()
+    protected override void _Reset()
     {
+        timeOfLife = 0;
+        playersReached.Clear();
+        transform.localScale = originalScale;
     }
 
-    void FixedUpdate()
+    protected override void Update ()
     {
+        base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
         timeOfLife += Time.fixedDeltaTime;
 
         if(timeOfLife >= playerWeaponDef.hitAreaLifeSpan)
@@ -95,6 +103,6 @@ public class HitArea : MonoBehaviour
     void Destroy()
     {
         gameObject.DestroyAPS();
-        Reset();
+        ResetComponent();
     }
 }

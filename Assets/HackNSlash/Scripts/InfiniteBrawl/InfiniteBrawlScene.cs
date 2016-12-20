@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using MovementEffects;
+using System;
+using System.Collections;
 
 class InfiniteBrawlScene : BattleGameScene
 {
+    [Serializable]
+    public struct EnemyDef
+    {
+        public string name;
+        public int power;
+    }
 
-    public string waveTamplate = "Wave {0}";
-    public string enemyNameOnPool = "Enemy Hammer";
+    public string waveTamplate = "Wave {0} (Pw:{1})";
+    public EnemyDef[] enemiesDefs;
     public Bounds bounds;
     public int initialEnemyPower = 1;
     public GameObject enemiesContainer;
@@ -18,10 +26,13 @@ class InfiniteBrawlScene : BattleGameScene
     private GameObject[] currentEnemies;
     private int enemiesAlive;
 
+    private int enemiesCreated = 0;
+
     protected override void Awake()
     {
         base.Awake();
         currentEnemies = new GameObject[0];
+        Array.Sort<EnemyDef>(enemiesDefs, (a, b) => b.power - a.power);
     }
 
 
@@ -46,52 +57,63 @@ class InfiniteBrawlScene : BattleGameScene
             go.DestroyAPS();
         }
 
-        Debug.LogFormat(waveTamplate, wave);
+        int nextEnemyPower = currentEnemyPower + prevEnemyPower;
+        prevEnemyPower = currentEnemyPower;
+        currentEnemyPower = nextEnemyPower;
+
+        Debug.LogFormat(waveTamplate, wave, currentEnemyPower);
 
         yield return Timing.WaitForSeconds(wait);
 
         wave++;
-        int nextEnemyPower = currentEnemyPower + prevEnemyPower;
-        prevEnemyPower = currentEnemyPower;
-        currentEnemyPower = nextEnemyPower;
+        
         currentEnemies = SpawnEnemyWave(currentEnemyPower);
+        
         enemiesAlive = currentEnemies.Length;
     }
 
-    protected GameObject[] SpawnEnemyWave(int count)
+    protected GameObject[] SpawnEnemyWave(int power)
     {
-        GameObject[] result = new GameObject[count];
-
-        for(int i = 0; i < count; i++)
+        ArrayList enemies = new ArrayList(10);
+        
+        while(power > 0)
         {
-            Vector3 position = bounds.center + new Vector3(UnityEngine.Random.Range(-1f, 1f) * bounds.extents.x, 0, UnityEngine.Random.Range(-1f, 1f) * bounds.extents.z);
+            EnemyDef enemyDef = new EnemyDef();
+            foreach(EnemyDef ed in enemiesDefs)
+            {
+                if(ed.power <= power)
+                {
+                    power -= ed.power;
+                    enemyDef = ed;
+                    break;
+                }
+            }
+            if (enemyDef.name == null) break;
 
+            Vector3 position = bounds.center + new Vector3(
+                UnityEngine.Random.Range(-1f, 1f) * bounds.extents.x,
+                0,
+                UnityEngine.Random.Range(-1f, 1f) * bounds.extents.z
+            );
             Quaternion rotation = Quaternion.LookRotation(mainPlayer.transform.position - position, Vector3.up);
 
-            /*Debug.LogFormat("{0} on {1} facing {2} under {3}",
-                enemyNameOnPool,
-                position,
-                rotation,
-                enemiesContainer != null ? enemiesContainer : gameObject
-            );*/
-
             GameObject enemy = PoolingSystem.Instance.InstantiateAPS(
-                enemyNameOnPool,
+                enemyDef.name,
                 position,
                 rotation,
                 enemiesContainer != null? enemiesContainer: gameObject
             );
-            if(enemy.name[0] != 'A') enemy.name = "A " + i;
-           // Timing.RunCoroutine(ResetEnemy(enemy), Segment.FixedUpdat
+            if(enemy.name[0] != 'A') enemy.name = "A " + enemiesCreated++;
+            //Debug.LogFormat("Spawn enemy {0} with power {1} ({2} left)", enemy.name, enemyDef.power, power);
             enemy.BroadcastMessage("ResetComponent", SendMessageOptions.DontRequireReceiver);
 
             PlayerConstitution enemyConstitution = enemy.GetComponent<PlayerConstitution>();
             enemyConstitution.OnDieEvent += OnEnemyDied;
 
-            result[i] = enemy;
+            enemies.Add(enemy);
         }
 
-        return result;
+        return (GameObject[]) enemies.ToArray(typeof(GameObject));
     }
 
     protected void OnEnemyDied(PlayerMain playerMain, float lastHit)

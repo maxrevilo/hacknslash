@@ -59,11 +59,13 @@ public class PlayerConstitution : Resetable
     protected override void _Reset()
     {
         hitPoints = defHitPoints;
-        InitiateLifeBar();
+        Timing.RunCoroutine(_InitiateLifeBar(), Segment.FixedUpdate);
     }
 
-    private void InitiateLifeBar() {
-        if(spawnLifeBar) {
+    private IEnumerator<float> _InitiateLifeBar() {
+        yield return 0f;
+
+        if (spawnLifeBar) {
             lifeBarGO = PoolingSystem.Instance.InstantiateAPS(
                 "LifeBar",
                 Vector3.zero,
