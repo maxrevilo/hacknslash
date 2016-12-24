@@ -13,6 +13,8 @@ public class HitArea : Resetable
     public Vector3 originalScale;
     private HashSet<PlayerMain> playersReached;
 
+    ComboManager comboManager;
+
     private float timeOfLife;
 
     protected override void Awake()
@@ -26,6 +28,7 @@ public class HitArea : Resetable
     {
         base.Start();
         if (playerWeaponDef == null) throw new Exception("playerWeaponDef not set");
+        comboManager = GetComponentInParent<ComboManager>();
     }
 
     protected override void _Reset()
@@ -96,6 +99,7 @@ public class HitArea : Resetable
             {
                 PlayerConstitution playerHitConstitution = other.GetComponent<PlayerConstitution>();
                 playerHitConstitution.DamageBy(this);
+                comboManager.RegisterHit(this);
             }
         }
     }

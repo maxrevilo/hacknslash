@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using MovementEffects;
 using System;
@@ -13,7 +14,12 @@ class InfiniteBrawlScene : BattleGameScene
         public int power;
     }
 
-    public string waveTamplate = "Wave {0} (Pw:{1})";
+    public string waveTamplate = "Wave {0}";
+    public string powerTamplate = "Power {0}";
+    public Text enemiesLeftText;
+    public CanvasRenderer waveCanvas;
+    public Text waveNumber;
+    public Text wavePower;
     public EnemyDef[] enemiesDefs;
     public Bounds bounds;
     public int initialEnemyPower = 1;
@@ -33,6 +39,10 @@ class InfiniteBrawlScene : BattleGameScene
         base.Awake();
         currentEnemies = new GameObject[0];
         Array.Sort<EnemyDef>(enemiesDefs, (a, b) => b.power - a.power);
+        if (enemiesLeftText == null) throw new Exception("enemiesLeftText not set");
+        if (waveCanvas == null) throw new Exception("waveCanvas not set");
+        if (waveNumber == null) throw new Exception("waveNumber not set");
+        if (wavePower == null) throw new Exception("wavePower not set");
     }
 
 
@@ -61,15 +71,22 @@ class InfiniteBrawlScene : BattleGameScene
         prevEnemyPower = currentEnemyPower;
         currentEnemyPower = nextEnemyPower;
 
+        waveCanvas.gameObject.SetActive(true);
+        waveNumber.text = String.Format(waveTamplate, wave);
+        wavePower.text = String.Format(powerTamplate, currentEnemyPower);
+
         Debug.LogFormat(waveTamplate, wave, currentEnemyPower);
 
         yield return Timing.WaitForSeconds(wait);
+
+        waveCanvas.gameObject.SetActive(false);
 
         wave++;
         
         currentEnemies = SpawnEnemyWave(currentEnemyPower);
         
         enemiesAlive = currentEnemies.Length;
+        enemiesLeftText.text = enemiesAlive.ToString();
     }
 
     protected GameObject[] SpawnEnemyWave(int power)
@@ -119,7 +136,7 @@ class InfiniteBrawlScene : BattleGameScene
     protected void OnEnemyDied(PlayerMain playerMain, float lastHit)
     {
         enemiesAlive--;
-        Debug.LogFormat("Enemies Left {0}", enemiesAlive);
+        enemiesLeftText.text = enemiesAlive.ToString();
         playerMain.GetComponent<PlayerConstitution>().OnDieEvent -= OnEnemyDied;
         if (enemiesAlive == 0)
         {
