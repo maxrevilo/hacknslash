@@ -99,7 +99,7 @@ public class HitArea : Resetable
             {
                 PlayerConstitution playerHitConstitution = other.GetComponent<PlayerConstitution>();
                 playerHitConstitution.DamageBy(this);
-                comboManager.RegisterHit(this);
+                if(comboManager != null) comboManager.RegisterHit(this);
             }
         }
     }
