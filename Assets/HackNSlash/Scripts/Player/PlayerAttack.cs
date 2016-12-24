@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using MovementEffects;
 
 [RequireComponent(typeof(PlayerMain))]
 [RequireComponent(typeof(Rigidbody))]
@@ -44,6 +46,8 @@ public class PlayerAttack : Resetable {
     
 	private int dashingLayer;
     private int playerLayer;
+    private HitArea dashHitArea;
+    private bool isDashing;
     
 
 	protected override void Awake() {
@@ -69,35 +73,53 @@ public class PlayerAttack : Resetable {
     protected override void _Reset()
     {
         playerLayer = gameObject.layer;
+
         meleeAttackCooldown.Stop();
         meleeAttackRestitution.Stop();
+
         chargedAttackCooldown.Stop();
         chargedAttackRestitution.Stop();
-        dashCooldown.Stop();
-        dashRestitution.Stop();
         chargedAttackChargeCountDown.Stop();
         isChargingAttack = false;
+        isDashing = false;
+
+        dashCooldown.Stop();
+        dashRestitution.Stop();
+        DestroyDashHitArea();
+
     }
 
-    protected override void FixedUpdate () {
+    protected override void FixedUpdate()
+    {
         base.FixedUpdate();
-        float fixedDeltaTime = Time.fixedDeltaTime;
-        
-        if (!dashRestitution.HasFinished()) {
-            float dashDeltaTime = fixedDeltaTime;
-            bool isFinishingDash = dashRestitution.TimeToFinish() <= 1.5f * fixedDeltaTime;
-            if (isFinishingDash) {
-                StartCoroutine(FinishDashing());
-                dashDeltaTime = dashRestitution.TimeToFinish();
-                dashRestitution.Stop();
-            }
 
-            float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
-            playerRigidBody.velocity = transform.forward * dashSpeed;
-  
-            GenerateDashHitArea(dashSpeed * dashDeltaTime);
+        #region Dash
+        float fixedDeltaTime = Time.fixedDeltaTime;
+
+        if (isDashing)
+        {
+            if (dashRestitution.HasFinished())
+            {
+                Timing.RunCoroutine(FinishDashing(), Segment.FixedUpdate);
+            } else {
+                float dashDeltaTime = fixedDeltaTime;
+                bool isFinishingDash = dashRestitution.TimeToFinish() <= fixedDeltaTime;
+                if (isFinishingDash)
+                {
+                    dashDeltaTime = dashRestitution.TimeToFinish();
+                    dashRestitution.Stop();
+                }
+
+                float frac = dashDeltaTime / fixedDeltaTime;
+
+                float dashSpeed = dashWeaponDef.dashDistance / dashWeaponDef.attackRestitution;
+                playerRigidBody.velocity = transform.forward * dashSpeed * frac;
+
+                UpdateDashHitArea(dashSpeed * dashDeltaTime);
+            }        
+            #endregion Dash
         }
-	}
+    }
 
     void Interrupted() {
         FinishHeavyAttackCharge(false);
@@ -105,6 +127,19 @@ public class PlayerAttack : Resetable {
         // Noting more to interrupt, the animation is in charge of that part of the logic (which is bad).
     }
 
+    public bool IsAtacking()
+    {
+        return !meleeAttackRestitution.HasFinished()
+            || !dashRestitution.HasFinished()
+            || !chargedAttackRestitution.HasFinished();
+    }
+
+    public bool IsAbleToAttack()
+    {
+        return playerStability.IsStable() && !IsAtacking();
+    }
+
+    #region BasicAttack
     public void Attack(Vector3 position) {
         playerMotion.Stop();
         if (IsAbleToAttack() && meleeAttackCooldown.HasFinished()) {
@@ -132,44 +167,70 @@ public class PlayerAttack : Resetable {
         hitArea.ResetComponent();
         hitAreaGO.transform.SetParent(transform.parent);
     }
+    #endregion BasicAttack
 
-    public bool IsAtacking()
-    {
-        return !meleeAttackRestitution.HasFinished()
-            || !dashRestitution.HasFinished()
-            || !chargedAttackRestitution.HasFinished();
-    }
-
-    public bool IsAbleToAttack()
-    {
-        return playerStability.IsStable() && !IsAtacking();
-    }
-
+    #region Dash
     public void Dash(Vector3 direction) {
         playerMotion.Stop();
         if (IsAbleToAttack()) {
-            Debug.DrawLine(transform.position, transform.position + direction * dashWeaponDef.dashDistance, Color.green, 1.5f);
+            Debug.DrawLine(transform.position, transform.position + direction * dashWeaponDef.dashDistance, Color.green, 3f);
             playerMotion.LookTowards(direction, true, true);
-            StartCoroutine(ActivateDashMode());
+
+            dashCooldown.Restart(dashWeaponDef.attackCooldown);
+            dashRestitution.Restart(dashWeaponDef.attackRestitution);
+
+            gameObject.layer = dashingLayer;
+            softCollider.enabled = false;
+            isDashing = true;
+
+            DestroyDashHitArea();
+            GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
+                "HitAreaDash",
+                transform.position,
+                transform.rotation,
+                transform.parent.gameObject
+            );
+            dashHitArea = hitAreaGO.GetComponent<HitArea>();
+            dashHitArea.spawner = playerMain;
+            dashHitArea.playerWeaponDef = dashWeaponDef;
+            dashHitArea.ResetComponent();
+
             if (OnDashingEvent != null) OnDashingEvent(playerMain, meleeWeaponDef);
         }
     }
-    
-    private IEnumerator ActivateDashMode() {
-        yield return new WaitForEndOfFrame();
-        dashCooldown.Restart(dashWeaponDef.attackCooldown);
-        dashRestitution.Restart(dashWeaponDef.attackRestitution);
-        gameObject.layer = dashingLayer;
-        softCollider.enabled = false;
-    }
-    
-    private IEnumerator FinishDashing() {
-        yield return new WaitForFixedUpdate();
-        gameObject.layer = playerLayer;
-        playerRigidBody.velocity = Vector3.zero;
-        softCollider.enabled = true;
+
+    private void UpdateDashHitArea(float distance)
+    {
+        dashHitArea.transform.rotation = transform.rotation;
+        dashHitArea.transform.position = transform.position + dashHitArea.transform.forward * distance * 0.5f;
+
+        Vector3 scale = dashHitArea.transform.localScale;
+        scale.z = distance;
+        dashHitArea.transform.localScale = scale;
     }
 
+    private bool DestroyDashHitArea()
+    {
+        if (dashHitArea != null)
+        {
+            dashHitArea.gameObject.DestroyAPS();
+            dashHitArea = null;
+            return true;
+        }
+        else return false;
+    }
+
+    private IEnumerator<float> FinishDashing() {
+        gameObject.layer = playerLayer;
+        isDashing = false;
+        playerRigidBody.velocity = Vector3.zero;
+        softCollider.enabled = true;
+        DestroyDashHitArea();
+        yield return 0f;
+    }
+    #endregion Dash
+
+    #region HeavyAttack
     public void ChargeHeavyAttack()
     {
         playerMotion.Stop();
@@ -213,25 +274,6 @@ public class PlayerAttack : Resetable {
         hitArea.spawner = playerMain;
         hitArea.playerWeaponDef = chargedWeaponDef;
     }
-    
-    private void GenerateDashHitArea(float distance)
-    {
-        GameObject hitAreaGO = PoolingSystem.Instance.InstantiateAPS(
-            "HitAreaDash",
-            transform.position,
-            transform.rotation,
-            transform.parent.gameObject
-        );
-        HitArea hitArea = hitAreaGO.GetComponent<HitArea>();
-        hitArea.spawner = playerMain;
-        hitArea.playerWeaponDef = dashWeaponDef;
-        
-        Vector3 scale = hitArea.transform.localScale;
-        scale.z = distance;
-        hitArea.transform.localScale = scale;
+    #endregion HeavyAttack
 
-        Vector3 position = hitArea.transform.position;
-        position += hitArea.transform.forward * distance * 0.5f;
-        hitArea.transform.position = position;
-    }
 }

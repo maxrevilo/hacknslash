@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.75735295, g: 0.005568777, b: 0.005568777, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -697,7 +697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8161765, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1671,7 +1671,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 12
+  m_Text: 0
 --- !u!222 &779170170
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1925,9 +1925,10 @@ MonoBehaviour:
   comboNumberTxt: {fileID: 1128825196}
   timeToTurnOffAfterFinish: 2
   timeToShrinkAfterNewHit: 0.4
-  sizeIncreaseOnNewHit: 1.5
-  newHitColor: {r: 1, g: 0.25, b: 0.25, a: 1}
-  comboFinishedColor: {r: 0.39705884, g: 0, b: 0, a: 1}
+  sizeIncreaseOnNewHit: 1.1
+  originalColor: {r: 1, g: 0, b: 0, a: 1}
+  newHitColor: {r: 1, g: 0.37241375, b: 0, a: 1}
+  comboFinishedColor: {r: 0.74264705, g: 0, b: 0, a: 1}
 --- !u!1 &1009406839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,7 +2711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.866, g: 0.059754007, b: 0.059754007, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2730,7 +2731,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 125
+  m_Text: 0
 --- !u!222 &1128825197
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3290,7 +3291,7 @@ MonoBehaviour:
   - prefab: {fileID: 138748, guid: 4a2e5c1cc39447d4391cd4dfdb4105ee, type: 2}
     amount: 2
   - prefab: {fileID: 105416, guid: 72abd0c0925cfe94682d6248146fe1d5, type: 2}
-    amount: 10
+    amount: 2
   - prefab: {fileID: 100308, guid: c4c08ec2fac28d641b567ac531bb48e0, type: 2}
     amount: 1
   - prefab: {fileID: 159386, guid: 53b447055c0ad334bab85431dd94e1c7, type: 2}
@@ -3324,7 +3325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24d45e8951a993e47ab2f44c8e5bcc79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToLooseCombo: 3
+  timeToLooseCombo: 2
 --- !u!1 &1459392991
 GameObject:
   m_ObjectHideFlags: 0
@@ -3610,7 +3611,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 95.5, y: -30}
-  m_SizeDelta: {x: 170, y: 2}
+  m_SizeDelta: {x: 93.79, y: 2}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1747709189
 MonoBehaviour:
@@ -3624,7 +3625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3737,6 +3738,21 @@ Prefab:
     - target: {fileID: 4220923474654494, guid: bab3b362af3e91d439485601bd9f58f1, type: 2}
       propertyPath: m_LocalRotation.w
       value: -0.69679826
+      objectReference: {fileID: 0}
+    - target: {fileID: 114271271475051740, guid: bab3b362af3e91d439485601bd9f58f1,
+        type: 2}
+      propertyPath: dashWeaponDef.hitAreaLifeSpan
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 114271271475051740, guid: bab3b362af3e91d439485601bd9f58f1,
+        type: 2}
+      propertyPath: dashWeaponDef.dashDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114271271475051740, guid: bab3b362af3e91d439485601bd9f58f1,
+        type: 2}
+      propertyPath: dashWeaponDef.attackDmg
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bab3b362af3e91d439485601bd9f58f1, type: 2}
