@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using DarkWinter.Util.DataStructures;
 using UnityEngine;
 
@@ -8,20 +7,27 @@ namespace HackNSlash.Player.AIActions
     public class DetectEnemies : LAction
     {
         private ArrayList enemiesInSight;
-
         private BattleGameScene battleGameScene;
         private CollisionPub sightColliderPub;
         private PlayerMain playerMain;
         private EnemyAI ai;
 
-        public DetectEnemies(EnemyAI ai, BattleGameScene battleGameScene,
-            CollisionPub sightColliderPub
-            )
+        public DetectEnemies()
+        {
+            isBlocking = true;
+            lanes = (uint) BipedPlayerLanes.Main;
+            enemiesInSight = new ArrayList();
+        }
+
+        public DetectEnemies Initialize(EnemyAI ai, BattleGameScene battleGameScene,
+            CollisionPub sightColliderPub)
         {
             this.battleGameScene = battleGameScene;
             this.sightColliderPub = sightColliderPub;
             this.ai = ai;
             this.playerMain = ai.GetComponent<PlayerMain>();
+
+            return this;
         }
 
         public override void OnStart()
@@ -32,7 +38,7 @@ namespace HackNSlash.Player.AIActions
             sightColliderPub.OnTriggerExitEvent += OutOfSight;
         }
 
-        public override void OnEnd()
+        protected override void _OnEnd()
         {
 
             sightColliderPub.OnTriggerEnterEvent -= OnSight;
@@ -41,6 +47,7 @@ namespace HackNSlash.Player.AIActions
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
         }
 
         bool isAlly(PlayerMain player) { return player.team == playerMain.team; }
@@ -59,9 +66,11 @@ namespace HackNSlash.Player.AIActions
             {
                 enemiesInSight.Add(player);
 
-                // TODO: T1. This should be a procedure to look on the
-                // enemiesInSight list for the best target to lock on
-                LockTarget(player);
+                if(!isBlocked) {
+                    // TODO: T1. This should be a procedure to look on the
+                    // enemiesInSight list for the best target to lock on
+                    LockTarget(player);
+                }
             }
         }
 
@@ -81,8 +90,19 @@ namespace HackNSlash.Player.AIActions
         }
 
         void LockTarget(PlayerMain player)
-        {
-            InsertInFrontOfMe(new EngageEnemy(ai, player, sightColliderPub));
+        {   
+            InsertInFrontOfMe(
+                EngageEnemy.Create().Initialize(ai, player, sightColliderPub)
+            );
+        }
+
+        protected static ObjectsPool<DetectEnemies> pool;
+        public static DetectEnemies Create() {
+            if(pool == null) {
+                pool = new ObjectsPool<DetectEnemies>(()=>new DetectEnemies(), 1);
+            }
+            DetectEnemies instance = pool.retreive();
+            return instance;
         }
     }
 }

@@ -1,45 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DarkWinter.Util.DataStructures
 {
     public class ActionList
     {
+
+        public ActionList() {
+            actions = new LinkedList<LAction>();
+        }
+
         public virtual void Update(float deltaTime)
         {
+            foreach (LAction action in actions) action.EarlyUpdate();
+
             uint blockedLanes = 0;
             LinkedListNode<LAction> node = actions.First;
             while(node != null)
             {
+                LinkedListNode<LAction> nextNode = node.Next;
                 LAction action = node.Value;
 
-                if ((blockedLanes & action.lanes) != 0)
+                if ((blockedLanes & action.lanes) != 0) {
+                    node = nextNode;
                     continue;
+                }
 
                 action.Update(deltaTime);
-                if (action.isBlocking)
-                    lanes |= action.lanes;
+                if (action.isBlocking) {
+                    blockedLanes |= action.lanes;
+                }
 
                 if (action.isFinished)
                 {
-                    action.OnEnd();
                     Remove(action);
                 }
 
-                node = node.Next;
+                node = nextNode;
             }
+
+            foreach (LAction action in actions) action.LateUpdate();
         }
 
         public void PushFront(LAction action)
         {
             actions.AddFirst(action);
             action.ownerList = this;
+            action.OnStart();
         }
 
         public void PushBack(LAction action)
         {
             actions.AddLast(action);
             action.ownerList = this;
+            action.OnStart();
         }
 
         public bool Remove(LAction action)
@@ -47,14 +60,20 @@ namespace DarkWinter.Util.DataStructures
             bool removed = actions.Remove(action);
             if (removed)
             {
-                action.ownerList = null;
+                action.OnEnd();
             }
             return removed;
         }
 
         public void Clear()
         {
-            actions.Clear();
+            LinkedListNode<LAction> node = actions.First;
+            while(node != null)
+            {
+                LinkedListNode<LAction> nextNode = node.Next;
+                Remove(node.Value);
+                node = nextNode;
+            }
         }
 
         public LAction First
@@ -84,10 +103,13 @@ namespace DarkWinter.Util.DataStructures
             if (node != null)
             {
                 actions.AddBefore(node, value);
+                value.ownerList = this;
                 return true;
             }
             else return false;
         }
+
+        public LinkedList<LAction> list { get { return actions; } }
 
         /*public float TimeLeft
         {
@@ -105,7 +127,7 @@ namespace DarkWinter.Util.DataStructures
         }*/
         
         private LinkedList<LAction> actions;
-        private uint lanes;
+        // private uint lanes;
         // private float duration;
         // private float timeElapsed;
         // private float percentDone;

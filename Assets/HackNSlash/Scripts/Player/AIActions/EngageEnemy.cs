@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using DarkWinter.Util.DataStructures;
+﻿using DarkWinter.Util.DataStructures;
 using UnityEngine;
 
 namespace HackNSlash.Player.AIActions
@@ -12,12 +10,20 @@ namespace HackNSlash.Player.AIActions
         private EnemyAI ai;
         private PlayerMain target;
 
-        public EngageEnemy(EnemyAI ai, PlayerMain target, CollisionPub sightColliderPub)
+        public EngageEnemy()
+        {
+            isBlocking = true;
+            lanes = (uint) BipedPlayerLanes.Main;
+        }
+
+        public EngageEnemy Initialize(EnemyAI ai, PlayerMain target, CollisionPub sightColliderPub)
         {
             this.sightColliderPub = sightColliderPub;
             this.ai = ai;
             playerMotion = ai.GetComponent<PlayerMotion>();
             this.target = target;
+
+            return this;
         }
 
         public override void OnStart()
@@ -26,7 +32,7 @@ namespace HackNSlash.Player.AIActions
             sightColliderPub.OnTriggerExitEvent += OutOfSight;
         }
 
-        public override void OnEnd()
+        protected override void _OnEnd()
         {
             sightColliderPub.OnTriggerEnterEvent -= OnSight;
             sightColliderPub.OnTriggerExitEvent -= OutOfSight;
@@ -34,15 +40,19 @@ namespace HackNSlash.Player.AIActions
 
         public override void Update(float deltaTime)
         {
+            base.Update(deltaTime);
+
             playerMotion.LookAt(target.transform.position);
             float distance = Vector3.Distance(target.transform.position, playerMotion.transform.position);
-            if (distance >= ai.defAttackDistance)
+            if (distance >= ai.defAttackDistance * 0.9f)
             {
                 playerMotion.Advance();
             }
             else
             {
-                playerMotion.Stop();
+                InsertInFrontOfMe(
+                    AttackEnemy.Create().Initialize(ai, target)
+                );
             }
         }
 
@@ -63,6 +73,15 @@ namespace HackNSlash.Player.AIActions
         void Disengage()
         {
             isFinished = true;
+        }
+
+        protected static ObjectsPool<EngageEnemy> pool;
+        public static EngageEnemy Create() {
+            if(pool == null) {
+                pool = new ObjectsPool<EngageEnemy>(()=>new EngageEnemy(), 1);
+            }
+            EngageEnemy instance = pool.retreive();
+            return instance;
         }
     }
 }
