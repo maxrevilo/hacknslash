@@ -44,15 +44,13 @@ namespace DarkWinter.Util.DataStructures
         public void PushFront(LAction action)
         {
             actions.AddFirst(action);
-            action.ownerList = this;
-            action.OnStart();
+            RegisterActionAsAdded(action);
         }
 
         public void PushBack(LAction action)
         {
             actions.AddLast(action);
-            action.ownerList = this;
-            action.OnStart();
+            RegisterActionAsAdded(action);
         }
 
         public bool Remove(LAction action)
@@ -103,13 +101,19 @@ namespace DarkWinter.Util.DataStructures
             if (node != null)
             {
                 actions.AddBefore(node, value);
-                value.ownerList = this;
+                RegisterActionAsAdded(value);
                 return true;
             }
             else return false;
         }
 
         public LinkedList<LAction> list { get { return actions; } }
+
+        private void RegisterActionAsAdded(LAction action)
+        {
+            action.ownerList = this;
+            action.OnStart();
+        }
 
         /*public float TimeLeft
         {

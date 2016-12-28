@@ -8,7 +8,14 @@
             isBlocked = false;
         }
 
-        public abstract void OnStart();
+        public void OnStart()
+        {
+            isFinished = false;
+            elapsed = 0;
+            _OnStart();
+        }
+
+        public abstract void _OnStart();
 
         public void OnEnd() {
             if(OnDisposed != null) OnDisposed(this);

@@ -30,7 +30,7 @@ namespace HackNSlash.Player.AIActions
             return this;
         }
 
-        public override void OnStart()
+        public override void _OnStart()
         {
             enemiesInSight.Clear();
 

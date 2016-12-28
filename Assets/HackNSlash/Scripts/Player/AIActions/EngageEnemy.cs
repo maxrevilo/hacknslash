@@ -26,7 +26,7 @@ namespace HackNSlash.Player.AIActions
             return this;
         }
 
-        public override void OnStart()
+        public override void _OnStart()
         {
             sightColliderPub.OnTriggerEnterEvent += OnSight;
             sightColliderPub.OnTriggerExitEvent += OutOfSight;
@@ -44,7 +44,7 @@ namespace HackNSlash.Player.AIActions
 
             playerMotion.LookAt(target.transform.position);
             float distance = Vector3.Distance(target.transform.position, playerMotion.transform.position);
-            if (distance >= ai.defAttackDistance * 0.9f)
+            if (distance >= ai.defAttackDistance * 0.7f)
             {
                 playerMotion.Advance();
             }

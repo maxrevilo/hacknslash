@@ -7438,7 +7438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defAttackDistance: 2.5
   debug: 0
-  defAttackDelay: 1.5
+  defAttackDelay: 2
   sightColliderPub: {fileID: 114520100312562418}
 --- !u!114 &114761814330826606
 MonoBehaviour:

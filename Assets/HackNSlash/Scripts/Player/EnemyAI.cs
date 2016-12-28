@@ -14,7 +14,7 @@ public class EnemyAI : Resetable {
     private BattleGameScene battleGameScene;
 
     [SerializeField]
-	private float defAttackDelay = 1f;
+	public float defAttackDelay = 1f;
 
 	[SerializeField]
 	private CollisionPub sightColliderPub;

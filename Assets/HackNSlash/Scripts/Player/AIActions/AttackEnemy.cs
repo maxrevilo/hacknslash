@@ -6,6 +6,7 @@ namespace HackNSlash.Player.AIActions
     public class AttackEnemy : LAction
     {
         private PlayerAttack playerAttack;
+        private PlayerMotion playerMotion;
         private EnemyAI ai;
         private PlayerMain target;
         private PlayerConstitution targetConstitution;
@@ -21,6 +22,7 @@ namespace HackNSlash.Player.AIActions
         public AttackEnemy Initialize(EnemyAI ai, PlayerMain target) {
             this.ai = ai;
             playerAttack = ai.GetComponent<PlayerAttack>();
+            playerMotion = ai.GetComponent<PlayerMotion>();
             this.target = target;
             targetConstitution = target.GetComponent<PlayerConstitution>();
             timeToAttack.Stop();
@@ -28,10 +30,10 @@ namespace HackNSlash.Player.AIActions
             return this;
         }
 
-        public override void OnStart()
+        public override void _OnStart()
         {
             targetConstitution.OnDieEvent += TargetDied;
-            timeToAttack.Restart(ai.defAttackDistance);
+            timeToAttack.Restart(ai.defAttackDelay);
         }
 
         protected override void _OnEnd()
@@ -47,11 +49,14 @@ namespace HackNSlash.Player.AIActions
             if (distance >= ai.defAttackDistance)
             {
                 Disengage();
-            }
-            else if(timeToAttack.HasFinished())
+            } else
             {
-                playerAttack.Attack(target.transform.position);
-                timeToAttack.Restart(ai.defAttackDistance);
+                playerMotion.Stop();
+                if (timeToAttack.HasFinished())
+                {
+                    playerAttack.Attack(target.transform.position);
+                    timeToAttack.Restart(ai.defAttackDelay);
+                }
             }
         }
 
