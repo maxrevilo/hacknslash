@@ -9,11 +9,13 @@ namespace HackNSlash.Player.AIActions
         private EnemyAI ai;
         private PlayerMain target;
         private PlayerConstitution targetConstitution;
+        private CountDown timeToAttack;
 
         public AttackEnemy()
         {
             isBlocking = true;
             lanes = (uint) BipedPlayerLanes.Main;
+            timeToAttack = new CountDown();
         }
 
         public AttackEnemy Initialize(EnemyAI ai, PlayerMain target) {
@@ -21,6 +23,7 @@ namespace HackNSlash.Player.AIActions
             playerAttack = ai.GetComponent<PlayerAttack>();
             this.target = target;
             targetConstitution = target.GetComponent<PlayerConstitution>();
+            timeToAttack.Stop();
 
             return this;
         }
@@ -28,6 +31,7 @@ namespace HackNSlash.Player.AIActions
         public override void OnStart()
         {
             targetConstitution.OnDieEvent += TargetDied;
+            timeToAttack.Restart(ai.defAttackDistance);
         }
 
         protected override void _OnEnd()
@@ -44,9 +48,10 @@ namespace HackNSlash.Player.AIActions
             {
                 Disengage();
             }
-            else
+            else if(timeToAttack.HasFinished())
             {
                 playerAttack.Attack(target.transform.position);
+                timeToAttack.Restart(ai.defAttackDistance);
             }
         }
 
