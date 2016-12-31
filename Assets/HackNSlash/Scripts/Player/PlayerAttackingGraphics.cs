@@ -31,6 +31,7 @@ public class PlayerAttackingGraphics : Resetable {
 
     protected override void _Reset()
     {
+        animator.Rebind();
     }
 
     void Attacking(PlayerMain playerMain, PlayerWeaponDef weapon) {

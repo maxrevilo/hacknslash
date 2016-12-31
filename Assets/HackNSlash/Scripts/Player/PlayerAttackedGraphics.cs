@@ -69,6 +69,8 @@ public class PlayerAttackedGraphics : Resetable {
 
     protected override void _Reset()
     {
+        animator.Rebind();
+
         timerToplayBackUp.Stop();
         isOutOfSelfControl = false;
         animator.applyRootMotion = true;
@@ -76,7 +78,6 @@ public class PlayerAttackedGraphics : Resetable {
         ParticleSystem[] pss = damageEffectGO.GetComponentsInChildren<ParticleSystem>();
         foreach(ParticleSystem ps in pss)
         {
-            Debug.Log(ps);
             ParticleSystem.EmissionModule emissionModule = ps.emission;
             emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(0, 0);
         }
