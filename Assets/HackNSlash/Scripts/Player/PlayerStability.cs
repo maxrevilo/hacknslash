@@ -101,6 +101,10 @@ public class PlayerStability: Resetable {
         playerConstitution.OnAttackedEvent += Hit;
     }
 
+    protected override void OnDestroy() {
+        playerConstitution.OnAttackedEvent -= Hit;
+    }
+
     // Use this for initialization
     protected override void Start () {
         base.Start();

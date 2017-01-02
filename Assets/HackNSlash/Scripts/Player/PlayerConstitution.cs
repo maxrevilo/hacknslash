@@ -52,6 +52,12 @@ public class PlayerConstitution : Resetable
         _rigidBody = GetComponent<Rigidbody>();
     }
 
+    protected override void OnDestroy() {
+        if(lifeBarGO != null) {
+            lifeBarGO.DestroyAPS();
+        }
+    }
+
     protected override void Start() {
         base.Start();
     }
@@ -148,10 +154,6 @@ public class PlayerConstitution : Resetable
     private void _Die() {
         if(destroyOnDead) {
             gameObject.DestroyAPS();
-        }
-
-        if(lifeBarGO != null) {
-            lifeBarGO.DestroyAPS();
         }
 
         if(DeadBodyPrefabName != null && DeadBodyPrefabName.Length > 0) {

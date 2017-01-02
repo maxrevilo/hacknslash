@@ -22,6 +22,11 @@ public abstract class Resetable : MonoBehaviour {
 
     }
 
+    protected virtual void OnDestroy()
+    {
+
+    }
+
     /// <summary>
     /// Resets the component to its intented initial state, usefull for calling after
     /// retreiving from object pools.

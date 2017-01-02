@@ -32,6 +32,8 @@ public class PlayerMotion : Resetable
         playerStability = GetComponent<PlayerStability>();
     }
 
+    protected override void OnDestroy() {}
+
     protected override void Start(){
         base.Start();
     }

@@ -40,6 +40,10 @@ public class LifeBar : Resetable
 
     private float lifeFraction;
 
+    protected override void OnDestroy() {
+        playerConstitution = null;
+    }
+
     protected override void _Reset()
     {
         lifeFraction = 1f;

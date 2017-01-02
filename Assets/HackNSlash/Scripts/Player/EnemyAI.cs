@@ -26,6 +26,10 @@ public class EnemyAI : Resetable {
         actions = new ActionList();
     }
 
+    protected override void OnDestroy() {
+        actions.Clear();
+    }
+
 	protected override void Start () {
         battleGameScene = GetComponentInParent<BattleGameScene>();
 		if(sightColliderPub == null) throw new Exception("sightColliderPub not found");

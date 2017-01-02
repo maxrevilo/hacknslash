@@ -14,11 +14,15 @@ public class PlayerWalkingGCtrl : Resetable
         base.Awake();
         playerMotion = GetComponent<PlayerMotion>();
         animator = GetComponent<Animator>();
+        playerMotion.OnMovingEvent += MovingEvent;
+    }
+
+    protected override void OnDestroy() {
+        playerMotion.OnMovingEvent -= MovingEvent;
     }
 
     protected override void Start () {
         base.Start();
-        playerMotion.OnMovingEvent += MovingEvent;
     }
 	
     void MovingEvent(PlayerMain playerMain, bool moving) {

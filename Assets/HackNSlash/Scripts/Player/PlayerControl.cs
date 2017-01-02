@@ -30,7 +30,24 @@ public class PlayerControl : Resetable {
         LeanTouch.OnFingerDown += OnFingerDown;
         LeanTouch.OnFingerSet += OnFingerSet;
         LeanTouch.OnFingerUp += OnFingerUp;
+    }
 
+    protected override void OnDestroy() {
+        LeanTouch.OnFingerDown -= OnFingerDown;
+        LeanTouch.OnFingerSet -= OnFingerSet;
+        LeanTouch.OnFingerUp -= OnFingerUp;
+    }
+
+    protected override void Start () {
+        base.Start();
+    }
+
+    protected override void _Reset()
+    {
+        mainCamera = Camera.main;
+        heldCountDown.Stop();
+        capturingGesture = false;
+        heldDetected = false;
     }
 
     void OnFingerDown(LeanFinger finger)
@@ -66,7 +83,7 @@ public class PlayerControl : Resetable {
         }
     }
 
-    void OnFingerUp(LeanFinger finger)
+    private void OnFingerUp(LeanFinger finger)
     {
         if(heldDetected)
         {
@@ -80,38 +97,26 @@ public class PlayerControl : Resetable {
         heldCountDown.Stop();
     }
 
-    void DashDetected(Vector2 initialScreenPosition, Vector2 finalScreenPosition)
+    private void DashDetected(Vector2 initialScreenPosition, Vector2 finalScreenPosition)
     {
         TriggerDash(initialScreenPosition, finalScreenPosition);
     }
 
-    void TapDetected()
+    private void TapDetected()
     {
         SetAttackMode();
     }
 
-    void TapOnHoldDetected()
+    private void TapOnHoldDetected()
     {
         ChargeHeavyAttack();
     }
 
-    void HeldTapReleaseDetected()
+    private void HeldTapReleaseDetected()
     {
         ReleaseHeavyAttack();
     }
 
-
-    protected override void Start () {
-        base.Start();
-    }
-
-    protected override void _Reset()
-    {
-        mainCamera = Camera.main;
-        heldCountDown.Stop();
-        capturingGesture = false;
-        heldDetected = false;
-    }
     
     void SetAttackMode()
     {

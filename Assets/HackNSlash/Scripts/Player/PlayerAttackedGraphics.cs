@@ -55,16 +55,25 @@ public class PlayerAttackedGraphics : Resetable {
         {
             Debug.LogError("DamageEffect not found.");
         }
-    }
 
-    protected override void Start()
-    {
-        base.Start();
         playerConstitution.OnDieEvent += Dying;
         playerStability.OnStunnedEvent += Stunned;
         playerStability.OnStunLockedEvent += StunLocked;
         playerStability.OnKnockedBackEvent += KnockedBack;
         playerStability.OnThrownEvent += Thrown;
+    }
+
+    protected override void OnDestroy() {
+        playerConstitution.OnDieEvent -= Dying;
+        playerStability.OnStunnedEvent -= Stunned;
+        playerStability.OnStunLockedEvent -= StunLocked;
+        playerStability.OnKnockedBackEvent -= KnockedBack;
+        playerStability.OnThrownEvent -= Thrown;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
     }
 
     protected override void _Reset()

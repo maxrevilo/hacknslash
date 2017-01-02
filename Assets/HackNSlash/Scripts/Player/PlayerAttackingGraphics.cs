@@ -21,12 +21,19 @@ public class PlayerAttackingGraphics : Resetable {
 
         attackingHash = Animator.StringToHash("attacking");
         dashingHash = Animator.StringToHash("dashing");
+
+
+        playerAttack.OnAttackingEvent += Attacking;
+        playerAttack.OnDashingEvent += Dashing;
+    }
+
+    protected override void OnDestroy() {
+        playerAttack.OnAttackingEvent -= Attacking;
+        playerAttack.OnDashingEvent -= Dashing;
     }
 
     protected override void Start () {
         base.Start();
-        playerAttack.OnAttackingEvent += Attacking;
-        playerAttack.OnDashingEvent += Dashing;
     }
 
     protected override void _Reset()

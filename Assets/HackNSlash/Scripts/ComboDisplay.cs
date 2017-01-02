@@ -40,6 +40,11 @@ public class ComboDisplay : MonoBehaviour {
         UINodes = GetComponentsInChildren<Graphic>();
     }
 
+    protected void OnDestroy() {
+        comboManager.OnComboIncreasedEvent -= comboUpdated;
+        comboManager.OnComboFinishedEvent -= comboFinished;
+    }
+
     void Start()
     {
         comboNumberTxt.text = "0";

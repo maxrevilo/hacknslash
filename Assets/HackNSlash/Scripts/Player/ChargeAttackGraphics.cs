@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(Animator))]
-public class ChargeAttackGraphics : MonoBehaviour {
+public class ChargeAttackGraphics : Resetable {
 
     private PlayerAttack playerAttack;
     private Animator animator;
@@ -15,21 +15,30 @@ public class ChargeAttackGraphics : MonoBehaviour {
     private int chargingHash;
     private int releaseChargeHash;
     
-	void Awake () {
+	protected override void Awake () {
+        base.Awake();
         playerAttack = GetComponent<PlayerAttack>();
         animator = GetComponent<Animator>();
         if (graphics == null) throw new Exception("graphics not set");
         if (releaseGraphics == null) throw new Exception("releaseGraphics not set");
         
         chargingPS = graphics.GetComponentsInChildren<ParticleSystem>();
-        foreach (ParticleSystem ps in chargingPS) ps.Stop();
 
         chargingHash = Animator.StringToHash("charging");
         releaseChargeHash = Animator.StringToHash("release_charge");
-    }
-	void Start () {
+
         playerAttack.OnChargingHeavyAttackEvent += ChargeHeavyAttack;
         playerAttack.OnReleaseHeavyAttackEvent += ReleaseHeavyAttackEvent;
+    }
+
+    protected override void OnDestroy() {
+        playerAttack.OnChargingHeavyAttackEvent -= ChargeHeavyAttack;
+        playerAttack.OnReleaseHeavyAttackEvent -= ReleaseHeavyAttackEvent;
+    }
+
+    protected override void _Reset()
+    {
+        foreach (ParticleSystem ps in chargingPS) ps.Stop();
     }
 	
     void ChargeHeavyAttack(PlayerMain playerMain) {
@@ -52,6 +61,4 @@ public class ChargeAttackGraphics : MonoBehaviour {
         StartCoroutine(playerAttack.ActivateChargedAttackArea());
         releaseGraphics.SetActive(true);
     }
-    
-	void Update () {}
 }

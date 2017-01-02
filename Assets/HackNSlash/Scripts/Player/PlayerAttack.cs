@@ -61,13 +61,20 @@ public class PlayerAttack : Resetable {
         if (hitAreaSpawnZone == null) throw new Exception("hitAreaSpawnZone not set");
 
         dashingLayer = LayerMask.NameToLayer("Dashing");
+
+        playerStability.OnStunLockedEvent += Interrupted;
+        playerStability.OnKnockedBackEvent += Interrupted;
+        playerStability.OnThrownEvent += Interrupted;
     }
 
     protected override void Start () {
         base.Start();
-        playerStability.OnStunLockedEvent += Interrupted;
-        playerStability.OnKnockedBackEvent += Interrupted;
-        playerStability.OnThrownEvent += Interrupted;
+    }
+
+    protected override void OnDestroy() {
+        playerStability.OnStunLockedEvent -= Interrupted;
+        playerStability.OnKnockedBackEvent -= Interrupted;
+        playerStability.OnThrownEvent -= Interrupted;
     }
 
     protected override void _Reset()
@@ -86,7 +93,6 @@ public class PlayerAttack : Resetable {
         dashCooldown.Stop();
         dashRestitution.Stop();
         DestroyDashHitArea();
-
     }
 
     protected override void FixedUpdate()
