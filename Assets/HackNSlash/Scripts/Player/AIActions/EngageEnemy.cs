@@ -26,7 +26,7 @@ namespace HackNSlash.Player.AIActions
             return this;
         }
 
-        public override void _OnStart()
+        protected override void _OnStart()
         {
             sightColliderPub.OnTriggerEnterEvent += OnSight;
             sightColliderPub.OnTriggerExitEvent += OutOfSight;

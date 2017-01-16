@@ -15,7 +15,7 @@
             _OnStart();
         }
 
-        public abstract void _OnStart();
+        protected abstract void _OnStart();
 
         public void OnEnd() {
             if(OnDisposed != null) OnDisposed(this);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using DarkWinter.Util.DataStructures;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace HackNSlash.Player.AIActions
     public class DetectEnemies : LAction
     {
         private ArrayList enemiesInSight;
-        private BattleGameScene battleGameScene;
+        //private BattleGameScene battleGameScene;
         private CollisionPub sightColliderPub;
         private PlayerMain playerMain;
         private EnemyAI ai;
@@ -22,7 +23,7 @@ namespace HackNSlash.Player.AIActions
         public DetectEnemies Initialize(EnemyAI ai, BattleGameScene battleGameScene,
             CollisionPub sightColliderPub)
         {
-            this.battleGameScene = battleGameScene;
+            //this.battleGameScene = battleGameScene;
             this.sightColliderPub = sightColliderPub;
             this.ai = ai;
             this.playerMain = ai.GetComponent<PlayerMain>();
@@ -30,9 +31,10 @@ namespace HackNSlash.Player.AIActions
             return this;
         }
 
-        public override void _OnStart()
+        protected override void _OnStart()
         {
             enemiesInSight.Clear();
+            Debug.Log("_OnStart");
 
             sightColliderPub.OnTriggerEnterEvent += OnSight;
             sightColliderPub.OnTriggerExitEvent += OutOfSight;
@@ -40,6 +42,7 @@ namespace HackNSlash.Player.AIActions
 
         protected override void _OnEnd()
         {
+            Debug.Log("_OnEnd");
 
             sightColliderPub.OnTriggerEnterEvent -= OnSight;
             sightColliderPub.OnTriggerExitEvent -= OutOfSight;
@@ -48,6 +51,12 @@ namespace HackNSlash.Player.AIActions
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
+
+            if(enemiesInSight.Count > 0)
+            {
+                Debug.LogFormat("LockTarget {0}", enemiesInSight[0]);
+                LockTarget((PlayerMain) enemiesInSight[0]);
+            }
         }
 
         bool isAlly(PlayerMain player) { return player.team == playerMain.team; }
@@ -64,13 +73,7 @@ namespace HackNSlash.Player.AIActions
             }
             else
             {
-                enemiesInSight.Add(player);
-
-                if(!isBlocked) {
-                    // TODO: T1. This should be a procedure to look on the
-                    // enemiesInSight list for the best target to lock on
-                    LockTarget(player);
-                }
+                AddEnemy(player);
             }
         }
 
@@ -85,8 +88,40 @@ namespace HackNSlash.Player.AIActions
             }
             else
             {
-                enemiesInSight.Remove(player);
+                RemoveEnemy(player);
             }
+        }
+
+        protected void AddEnemy(PlayerMain enemy)
+        {
+            PlayerConstitution constitution = enemy.GetComponent<PlayerConstitution>();
+            if (constitution == null) {
+                throw new Exception(String.Format(
+                    "{0} expected to have PlayerConstitution", enemy
+                ));
+            }
+            constitution.OnDieEvent += OnEmenyDie;
+
+            enemiesInSight.Add(enemy);
+        }
+
+        protected void RemoveEnemy(PlayerMain enemy)
+        {
+            PlayerConstitution constitution = enemy.GetComponent<PlayerConstitution>();
+            if (constitution == null)
+            {
+                throw new Exception(String.Format(
+                    "{0} expected to have PlayerConstitution", enemy
+                ));
+            }
+            constitution.OnDieEvent -= OnEmenyDie;
+
+            enemiesInSight.Remove(enemy);
+        }
+
+        protected void OnEmenyDie(PlayerMain playerMain, float lastHit)
+        {
+            RemoveEnemy(playerMain);
         }
 
         void LockTarget(PlayerMain player)

@@ -14,15 +14,25 @@ class InfiniteBrawlScene : BattleGameScene
         public int power;
     }
 
+    [SerializeField]
     public string waveTamplate = "Wave {0}";
+    [SerializeField]
     public string powerTamplate = "Power {0}";
+    [SerializeField]
     public Text enemiesLeftText;
+    [SerializeField]
     public CanvasRenderer waveCanvas;
+    [SerializeField]
     public Text waveNumber;
+    [SerializeField]
     public Text wavePower;
+    [SerializeField]
     public EnemyDef[] enemiesDefs;
+    [SerializeField]
     public Bounds bounds;
+    [SerializeField]
     public int initialEnemyPower = 1;
+    [SerializeField]
     public GameObject enemiesContainer;
 
     private int wave;

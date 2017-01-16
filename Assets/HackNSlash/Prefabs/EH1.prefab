@@ -7401,6 +7401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 952d74f15fd9fd24d9eb8bd9c8828f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdRecordOfCollisions: 0
 --- !u!114 &114597345281582122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7437,7 +7438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defAttackDistance: 2.5
-  debug: 0
+  debug: 1
   defAttackDelay: 2
   sightColliderPub: {fileID: 114520100312562418}
 --- !u!114 &114761814330826606

@@ -23,7 +23,7 @@ public class BattleGameScene : MonoBehaviour {
     }
 
     protected virtual void Awake() {
-		Application.targetFrameRate = 120;
+        Debug.LogWarning("Deprecated: Do not inherit from BattleGameScene");
 		players = GetComponentsInChildren<PlayerMain>(true);
         mainPlayer = Array.Find<PlayerMain>(players, p => p.CompareTag("Player"));
         if (mainPlayer == null) throw new Exception("Main player not found");

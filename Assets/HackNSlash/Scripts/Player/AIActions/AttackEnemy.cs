@@ -30,7 +30,7 @@ namespace HackNSlash.Player.AIActions
             return this;
         }
 
-        public override void _OnStart()
+        protected override void _OnStart()
         {
             targetConstitution.OnDieEvent += TargetDied;
             timeToAttack.Restart(ai.defAttackDelay);

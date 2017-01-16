@@ -18,7 +18,7 @@ public class ComboDisplay : MonoBehaviour {
     public Color newHitColor = Color.green;
     public Color comboFinishedColor = Color.white;
 
-    int originalTextSize;
+    //int originalTextSize;
     float timeToShrink;
     float timeToTurnOff;
 
@@ -35,7 +35,7 @@ public class ComboDisplay : MonoBehaviour {
         comboManager.OnComboIncreasedEvent += comboUpdated;
         comboManager.OnComboFinishedEvent += comboFinished;
 
-        originalTextSize = comboNumberTxt.fontSize;
+        //originalTextSize = comboNumberTxt.fontSize;
 
         UINodes = GetComponentsInChildren<Graphic>();
     }
