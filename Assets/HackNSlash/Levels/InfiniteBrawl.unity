@@ -4812,6 +4812,10 @@ Prefab:
       propertyPath: m_ReflectionProbeUsage
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1775997864036936, guid: bab3b362af3e91d439485601bd9f58f1, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bab3b362af3e91d439485601bd9f58f1, type: 2}
   m_IsPrefabParent: 0
