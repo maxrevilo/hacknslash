@@ -1602,6 +1602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 952d74f15fd9fd24d9eb8bd9c8828f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdRecordOfCollisions: 0
 --- !u!114 &114414049693035274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1710,6 +1711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defAttackDistance: 2.5
+  debug: 0
   defAttackDelay: 0
   sightColliderPub: {fileID: 114247723579226604}
 --- !u!114 &114885387932875290
@@ -1788,7 +1790,7 @@ SkinnedMeshRenderer:
   m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_ReflectionProbeUsage: 3
   m_Materials:
   - {fileID: 2100000, guid: f55a742eae66a174f9c8a987ff4fe1e6, type: 2}
   m_StaticBatchInfo:
