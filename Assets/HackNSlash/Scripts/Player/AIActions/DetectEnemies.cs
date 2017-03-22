@@ -34,7 +34,6 @@ namespace HackNSlash.Player.AIActions
         protected override void _OnStart()
         {
             enemiesInSight.Clear();
-            Debug.Log("_OnStart");
 
             sightColliderPub.OnTriggerEnterEvent += OnSight;
             sightColliderPub.OnTriggerExitEvent += OutOfSight;
@@ -42,8 +41,6 @@ namespace HackNSlash.Player.AIActions
 
         protected override void _OnEnd()
         {
-            Debug.Log("_OnEnd");
-
             sightColliderPub.OnTriggerEnterEvent -= OnSight;
             sightColliderPub.OnTriggerExitEvent -= OutOfSight;
         }
@@ -54,7 +51,6 @@ namespace HackNSlash.Player.AIActions
 
             if(enemiesInSight.Count > 0)
             {
-                Debug.LogFormat("LockTarget {0}", enemiesInSight[0]);
                 LockTarget((PlayerMain) enemiesInSight[0]);
             }
         }

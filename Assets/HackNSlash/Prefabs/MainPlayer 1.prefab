@@ -836,6 +836,7 @@ GameObject:
   - component: {fileID: 114259037452720370}
   - component: {fileID: 114841193946807306}
   - component: {fileID: 114389684647442196}
+  - component: {fileID: 114325590582205574}
   m_Layer: 8
   m_Name: MainPlayer 1
   m_TagString: Player
@@ -2500,6 +2501,19 @@ MonoBehaviour:
     elevatingPushStrenght: 0.5
     chargeTime: 0
     dashDistance: 4
+--- !u!114 &114325590582205574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1652443738420954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ad7ae96195a1347b04dde2c2d9f1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healPerSecond: 1
+  timeBeforeHealing: 10
 --- !u!114 &114389684647442196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2737,7 +2751,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1596658784767592}
   serializedVersion: 5
   lengthInSec: 0.1
-  speed: 1
+  simulationSpeed: 1
   looping: 1
   prewarm: 0
   playOnAwake: 1
@@ -5374,7 +5388,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1284379264940210}
   serializedVersion: 5
   lengthInSec: 5
-  speed: 1
+  simulationSpeed: 1
   looping: 1
   prewarm: 0
   playOnAwake: 1
@@ -7951,7 +7965,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1480311229362154}
   serializedVersion: 5
   lengthInSec: 0.1
-  speed: 1
+  simulationSpeed: 1
   looping: 0
   prewarm: 0
   playOnAwake: 1
@@ -10588,7 +10602,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1402620895430292}
   serializedVersion: 5
   lengthInSec: 0.1
-  speed: 1
+  simulationSpeed: 1
   looping: 1
   prewarm: 0
   playOnAwake: 1
