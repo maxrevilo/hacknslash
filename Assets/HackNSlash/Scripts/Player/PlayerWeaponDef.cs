@@ -37,4 +37,7 @@ public class PlayerWeaponDef {
 
     // If it's a dash, the distance reached by the dash.
     public float dashDistance = 15f;
+
+    // If the player has an skill resource this is the cost to do this attack
+    public float skillCost = 0f;
 }

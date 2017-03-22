@@ -14,8 +14,9 @@ public class ChargeAttackGraphics : Resetable {
 
     private int chargingHash;
     private int releaseChargeHash;
-    
-	protected override void Awake () {
+    private int forcedChargedAttack;
+
+    protected override void Awake () {
         base.Awake();
         playerAttack = GetComponent<PlayerAttack>();
         animator = GetComponent<Animator>();
@@ -26,9 +27,11 @@ public class ChargeAttackGraphics : Resetable {
 
         chargingHash = Animator.StringToHash("charging");
         releaseChargeHash = Animator.StringToHash("release_charge");
+        forcedChargedAttack = Animator.StringToHash("forced_charged_attack");
 
         playerAttack.OnChargingHeavyAttackEvent += ChargeHeavyAttack;
         playerAttack.OnReleaseHeavyAttackEvent += ReleaseHeavyAttackEvent;
+        playerAttack.OnForcedHeavyAttackEvent += ForcedHeavyAttackEvent;
     }
 
     protected override void OnDestroy() {
@@ -53,6 +56,14 @@ public class ChargeAttackGraphics : Resetable {
         if(fullyCharged) {
             animator.SetTrigger(releaseChargeHash);
         }
+        animator.SetBool(chargingHash, false);
+    }
+
+    void ForcedHeavyAttackEvent(PlayerMain playerMain)
+    {
+        foreach (ParticleSystem ps in chargingPS) ps.Stop();
+        animator.SetTrigger(forcedChargedAttack);
+        // Just in case
         animator.SetBool(chargingHash, false);
     }
 

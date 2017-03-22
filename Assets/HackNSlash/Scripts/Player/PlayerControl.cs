@@ -9,8 +9,9 @@ public class PlayerControl : Resetable {
     //private PlayerMain playerMain;
     private PlayerAttack playerAttack;
     private PlayerMotion playerMotion;
+    private PlayerSkillResource playerSkillResource;
 
-	private Camera mainCamera;
+    private Camera mainCamera;
 
     [SerializeField]
     private float timeToHeld = 0.3f;
@@ -30,6 +31,7 @@ public class PlayerControl : Resetable {
         LeanTouch.OnFingerDown += OnFingerDown;
         LeanTouch.OnFingerSet += OnFingerSet;
         LeanTouch.OnFingerUp += OnFingerUp;
+        playerSkillResource = GetComponent<PlayerSkillResource>();
     }
 
     protected override void OnDestroy() {
@@ -109,12 +111,25 @@ public class PlayerControl : Resetable {
 
     private void TapOnHoldDetected()
     {
-        ChargeHeavyAttack();
+        if(playerSkillResource == null)
+        {
+            ChargeHeavyAttack();
+        } else
+        {
+            if(playerSkillResource.amount > playerAttack.chargedWeaponDef.skillCost)
+            {
+                ForceReleaseHeavyAttack();
+                playerSkillResource.AddToAmount(-playerAttack.chargedWeaponDef.skillCost);
+            }
+        }
     }
 
     private void HeldTapReleaseDetected()
     {
-        ReleaseHeavyAttack();
+        if (playerSkillResource == null)
+        {
+            ReleaseHeavyAttack();
+        }
     }
 
     
@@ -135,6 +150,11 @@ public class PlayerControl : Resetable {
         Vector3 dashVector = raisePositionWorld - pressPositionWorld;
         dashVector.y = 0;
         playerAttack.Dash(dashVector.normalized);
+    }
+
+    void ForceReleaseHeavyAttack()
+    {
+        playerAttack.ForceReleaseHeavyAttack();
     }
 
     void ChargeHeavyAttack() {

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 public class HitArea : Resetable
 {
@@ -13,7 +14,7 @@ public class HitArea : Resetable
     public Vector3 originalScale;
     private HashSet<PlayerMain> playersReached;
 
-    ComboManager comboManager;
+    private ComboManager comboManager;
 
     private float timeOfLife;
 
@@ -27,7 +28,7 @@ public class HitArea : Resetable
     protected override void Start ()
     {
         base.Start();
-        if (playerWeaponDef == null) throw new Exception("playerWeaponDef not set");
+        Assert.IsNotNull(playerWeaponDef, "playerWeaponDef not set");
         comboManager = GetComponentInParent<ComboManager>();
     }
 

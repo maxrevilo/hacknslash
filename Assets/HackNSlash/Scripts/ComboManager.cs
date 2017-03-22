@@ -12,6 +12,9 @@ public class ComboManager : Resetable {
     public delegate void ComboFinishedEvent(float totalComboDamage);
     public event ComboFinishedEvent OnComboFinishedEvent;
 
+    public delegate void HitRegistered(HitArea hit);
+    public event HitRegistered OnHitRegistered;
+
     BattleGameScene battleScene;
 
     public float dmgInCombo { get; private set; }
@@ -47,6 +50,8 @@ public class ComboManager : Resetable {
 
     public void RegisterHit(HitArea hit)
     {
+        if (OnHitRegistered != null) OnHitRegistered(hit);
+
         if (hit.spawner == battleScene.mainPlayer)
         {
             dmgInCombo += hit.playerWeaponDef.attackDmg;

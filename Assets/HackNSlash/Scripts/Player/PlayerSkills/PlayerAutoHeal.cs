@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerConstitution))]
-public class AutoHeal : Resetable
+public class PlayerAutoHeal : Resetable
 {
     [SerializeField]
-    private float healPerSecond = 1;
+    private float healPerSecond = 10;
     [SerializeField]
-    private float timeBeforeHealing = 10f;
+    private float timeBeforeHealing = 15f;
 
     private CountDown timeBeforeHealingCD;
 

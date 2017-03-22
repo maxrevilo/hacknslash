@@ -13,8 +13,11 @@ public class PlayerAttack : Resetable {
     public delegate void ChargingHeavyAttackEvent(PlayerMain playerMain);
     public event ChargingHeavyAttackEvent OnChargingHeavyAttackEvent;
     
-    public delegate void ReleaseHeavyAttackEvent(PlayerMain playerMain, bool fullyCharged);
+    public delegate void ReleaseHeavyAttackEvent(PlayerMain playerMain, bool successful);
     public event ReleaseHeavyAttackEvent OnReleaseHeavyAttackEvent;
+
+    public delegate void ForcedHeavyAttackEvent(PlayerMain playerMain);
+    public event ForcedHeavyAttackEvent OnForcedHeavyAttackEvent;
 
     public delegate void AttackingEvent(PlayerMain playerMain, PlayerWeaponDef weapon);
     public event AttackingEvent OnAttackingEvent;
@@ -253,6 +256,14 @@ public class PlayerAttack : Resetable {
     {
         bool isCharged = isChargingAttack && chargedAttackChargeCountDown.HasFinished();
         FinishHeavyAttackCharge(isCharged);
+    }
+
+    public void ForceReleaseHeavyAttack()
+    {
+        chargedAttackChargeCountDown.Stop();
+        chargedAttackCooldown.Restart(chargedWeaponDef.attackCooldown);
+        chargedAttackRestitution.Restart(chargedWeaponDef.attackRestitution);
+        if (OnForcedHeavyAttackEvent != null) OnForcedHeavyAttackEvent(playerMain);
     }
 
     private void FinishHeavyAttackCharge(bool successful)
